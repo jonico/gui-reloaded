@@ -24,8 +24,7 @@ public class ReverseSynchronizationStatusAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof SynchronizationStatus) {
-				SynchronizationStatus status = (SynchronizationStatus)object;
+			if (object instanceof SynchronizationStatus status) {
 			
 				try {
 					ICcfParticipant p1 = Activator.getCcfParticipantForType(status.getSourceSystemKind());
@@ -54,8 +53,8 @@ public class ReverseSynchronizationStatusAction extends ActionDelegate {
 	}
 	
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 	}	
 

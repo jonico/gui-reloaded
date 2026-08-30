@@ -20,9 +20,8 @@ public class IdentityMappingConsistencyAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof Landscape) {
+			if (object instanceof Landscape landscape) {
 				try {
-					Landscape landscape = (Landscape)object;
 					IdentityMappingConsistencyCheckView.setLandscape(landscape);
 					IdentityMappingConsistencyCheckView.setSynchronizationStatus(null);
 					IdentityMappingConsistencyCheckView identityMappingConsistencyCheckView = (IdentityMappingConsistencyCheckView)Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IdentityMappingConsistencyCheckView.ID);	
@@ -31,9 +30,8 @@ public class IdentityMappingConsistencyAction extends ActionDelegate {
 					Activator.handleError(e);
 				}
 			}
-			if (object instanceof SynchronizationStatus) {
+			if (object instanceof SynchronizationStatus status) {
 				try {
-					SynchronizationStatus status = (SynchronizationStatus)object;
 					IdentityMappingConsistencyCheckView.setLandscape(status.getLandscape());
 					IdentityMappingConsistencyCheckView.setSynchronizationStatus(status);
 					IdentityMappingConsistencyCheckView identityMappingConsistencyCheckView = (IdentityMappingConsistencyCheckView)Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(IdentityMappingConsistencyCheckView.ID);	
@@ -46,8 +44,8 @@ public class IdentityMappingConsistencyAction extends ActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 		if (action != null) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isConsistencyCheck());

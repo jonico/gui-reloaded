@@ -28,8 +28,7 @@ public class AddSynchronizationStatusAction extends ActionDelegate {
 			if (object instanceof ProjectMappings || object instanceof MappingGroup) {
 				NewProjectMappingWizard wizard;
 				ProjectMappings projectMappings;
-				if (object instanceof MappingGroup) {
-					MappingGroup mappingGroup = (MappingGroup)object;	
+				if (object instanceof MappingGroup mappingGroup) {	
 					projectMappings = mappingGroup.getProjectMappingsParent();
 					wizard = new NewProjectMappingWizard(mappingGroup);					
 				} else {
@@ -52,8 +51,8 @@ public class AddSynchronizationStatusAction extends ActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 		if (action != null) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isAddProjectMapping());

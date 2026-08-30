@@ -17,10 +17,13 @@
 
 package com.collabnet.ccf.pt.schemageneration;
 
+import java.io.Serial;
+
 import com.collabnet.ccf.core.CCFRuntimeException;
 
 public class ProjectTrackerWebServiceException extends CCFRuntimeException{
 
+	@Serial
 	private static final long serialVersionUID = -1677050094927451251L;
 	public ProjectTrackerWebServiceException(String cause) {
 		super(cause);

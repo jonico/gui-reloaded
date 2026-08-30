@@ -17,6 +17,8 @@
 
 package com.collabnet.ccf.core;
 
+import java.io.Serial;
+
 
 /**
  * 
@@ -29,6 +31,7 @@ public class GenericArtifactParsingException extends Exception {
 	/**
 	 * version for serialization
 	 */
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

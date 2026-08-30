@@ -60,9 +60,7 @@ public class GenericArtifactField {
 	 */
 	public enum FieldActionValue {
 		APPEND, REPLACE, DELETE, UNKNOWN
-	};
-
-	/**
+	}/**
 	 * 
 	 * Possible values for the field value type, "Integer", "Double",
 	 * "DateTime", "Date", "String", "HTMLString", "Base64String", "Boolean" and
@@ -72,7 +70,7 @@ public class GenericArtifactField {
 	 */
 	public enum FieldValueTypeValue {
 		INTEGER, DOUBLE, DATETIME, DATE, STRING, HTMLSTRING, BASE64STRING, BOOLEAN, USER
-	};
+	}
 
 	public void getStringRepresentationOfFieldValueTypeValue(
 			GenericArtifactField.FieldValueTypeValue fieldValueTypeValue) {

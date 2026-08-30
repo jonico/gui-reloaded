@@ -323,8 +323,7 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof SynchronizationStatus) {
-			SynchronizationStatus compareTo = (SynchronizationStatus) obj;
+		if (obj instanceof SynchronizationStatus compareTo) {
 			return sourceSystemId.equals(compareTo.getSourceSystemId())
 					&& sourceRepositoryId.equals(compareTo
 							.getSourceRepositoryId())

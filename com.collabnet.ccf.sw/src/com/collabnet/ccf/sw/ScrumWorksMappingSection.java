@@ -153,7 +153,7 @@ public class ScrumWorksMappingSection extends MappingSection {
 			mappingGroupId.endsWith("-Product") ||
 			mappingGroupId.endsWith("-MetaData") ||
 			mappingGroupId.endsWith("-Release")) {
-				product = mappingGroupId.substring(0, mappingGroupId.lastIndexOf("-"));;
+				product = mappingGroupId.substring(0, mappingGroupId.lastIndexOf("-"));
 		} else {
 			product = mappingGroupId;
 		}

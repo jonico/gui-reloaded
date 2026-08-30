@@ -351,8 +351,7 @@ public class IdentityMapping implements IPropertySource {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof IdentityMapping) {
-			IdentityMapping compareTo = (IdentityMapping)obj;
+		if (obj instanceof IdentityMapping compareTo) {
 			return compareTo.getSourceSystemId().equals(sourceSystemId) &&
 			compareTo.getSourceRepositoryId().equals(sourceRepositoryId) &&
 			compareTo.getSourceArtifactId().equals(sourceArtifactId) &&

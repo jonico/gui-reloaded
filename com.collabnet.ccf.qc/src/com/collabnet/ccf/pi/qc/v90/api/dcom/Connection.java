@@ -18,6 +18,7 @@
 package com.collabnet.ccf.pi.qc.v90.api.dcom;
 
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,10 @@ public class Connection extends ActiveXComponent implements IConnection
 	
 	
 	private String majorVersion = null, minorVersion = null;
-    /**
+	/**
 	 *
 	 */
+	@Serial
 	private static final long serialVersionUID = 1L;
 	public Connection(String server, String domain, String project, String user, String pass) {
         this(server, user, pass);

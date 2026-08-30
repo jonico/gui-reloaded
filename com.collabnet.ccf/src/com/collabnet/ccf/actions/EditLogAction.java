@@ -23,9 +23,8 @@ public class EditLogAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof Log) {
+			if (object instanceof Log log) {
 				IWorkbenchPage page = Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
-				Log log = (Log)object;
 				IEditorInput input = new FileStoreEditorInput(EFS.getLocalFileSystem().getStore(log.getLogFile().toURI()));
 				try {
 					page.openEditor(input, "org.eclipse.ui.DefaultTextEditor");
@@ -38,8 +37,8 @@ public class EditLogAction extends ActionDelegate {
 	}	
 	
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 	}
 

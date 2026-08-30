@@ -135,7 +135,7 @@ public class NewProjectMappingWizard extends Wizard {
 			ICcfParticipant p1 = Activator.getCcfParticipantForType(status.getSourceSystemKind());
 			if (!p1.allowAsSourceRepository(status.getSourceRepositoryId())) {
 				showReverseNotAllowedDialog(status);
-				addError = true;;
+				addError = true;
 				return;
 			}
 			ICcfParticipant p2 = Activator.getCcfParticipantForType(status.getTargetSystemKind());

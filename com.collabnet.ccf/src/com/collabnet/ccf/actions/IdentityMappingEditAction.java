@@ -23,8 +23,7 @@ public class IdentityMappingEditAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof IdentityMapping) {
-				IdentityMapping identityMapping = (IdentityMapping)object;
+			if (object instanceof IdentityMapping identityMapping) {
 				try {
 					// Make sure we have latest.
 					identityMapping = dataProvider.getIdentityMapping(identityMapping);
@@ -40,8 +39,8 @@ public class IdentityMappingEditAction extends ActionDelegate {
 	}		
 	
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 		if (action != null) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isEditIdentityMapping());

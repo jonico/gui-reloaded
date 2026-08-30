@@ -62,8 +62,7 @@ public class Handler implements CallbackHandler {
 	 */
 	public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
 		for (int i = 0; i < callbacks.length; i++) {
-			if (callbacks[i] instanceof WSPasswordCallback) {
-				WSPasswordCallback pc = (WSPasswordCallback) callbacks[i];
+			if (callbacks[i] instanceof WSPasswordCallback pc) {
 				// set the password given a username
 				String identifier = pc.getIdentifer();
 				UserIdentifier userIdentifier = new UserIdentifier(identifier);

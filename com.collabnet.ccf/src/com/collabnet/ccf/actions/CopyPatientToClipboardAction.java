@@ -21,8 +21,7 @@ public class CopyPatientToClipboardAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof Patient) {
-				Patient patient = (Patient)object;
+			if (object instanceof Patient patient) {
 				TextTransfer plainTextTransfer = TextTransfer.getInstance();
 				Clipboard clipboard= new Clipboard(Display.getDefault());		
 				clipboard.setContents(
@@ -34,8 +33,8 @@ public class CopyPatientToClipboardAction extends ActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 	}
 }

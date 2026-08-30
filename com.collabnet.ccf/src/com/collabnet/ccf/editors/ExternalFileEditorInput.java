@@ -13,8 +13,8 @@ public class ExternalFileEditorInput extends FileStoreEditorInput {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ExternalFileEditorInput)
-			return ((ExternalFileEditorInput)obj).getName().equals(name);
+		if (obj instanceof ExternalFileEditorInput input)
+			return input.getName().equals(name);
 		else
 			return super.equals(obj);
 	}

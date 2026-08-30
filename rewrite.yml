@@ -1,0 +1,72 @@
+# OpenRewrite recipes used for the Java 8 -> Java 25 migration of the CCF Eclipse plugin set.
+#
+# Two deliberate departures from the stock composites:
+#
+# 1. NOT org.openrewrite.java.migrate.UpgradeToJava25. That composite bundles
+#    org.openrewrite.java.migrate.io.ReplaceSystemOutWithIOPrint, which rewrites every
+#    System.out call site. OpenRewrite cannot subtract a sub-recipe, so the composite is
+#    rebuilt here from the parts that are wanted.
+#
+# 2. NOT org.openrewrite.java.migrate.UpgradeToJava21 either, for the same reason: its
+#    if/else-if-to-switch family produced both uncompilable and behaviour-changing output on
+#    this codebase. Specifically, IfElseIfConstructToSwitch turned
+#        if (o instanceof Date) ... else if (o instanceof Calendar) ... else <fallback>
+#    into a pattern switch whose trailing `else` became `case null ->`, which is not the
+#    same thing at all (the fallback ran for *any* other type, not for null), and emitted
+#    `case X -> synchronized (df) { ... }`, which is not valid Java. 9 sites were affected.
+#    UpgradeToJava21 is therefore expanded below with the six switch-rewriting sub-recipes
+#    dropped. Everything else it does is kept.
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.collabnet.ccf.UpgradeToJava21WithoutSwitchRewrites
+displayName: Migrate to Java 21, minus the if/else-if-to-switch recipes
+description: >-
+  org.openrewrite.java.migrate.UpgradeToJava21 with lang.IfElseIfConstructToSwitch,
+  lang.NullCheckAsSwitchCase, lang.SwitchCaseAssignmentsToSwitchExpression,
+  lang.SwitchCaseReturnsToSwitchExpression, lang.SwitchExpressionYieldToArrow and
+  SwitchPatternMatching removed. Those six produce invalid or behaviour-changing code on
+  this codebase; see the comment at the top of this file.
+recipeList:
+  - org.openrewrite.java.migrate.UpgradeToJava17
+  - org.openrewrite.java.migrate.UpgradeBuildToJava21
+  - org.openrewrite.staticanalysis.RemoveExtraSemicolons
+  - org.openrewrite.java.migrate.lang.ThreadStopUnsupported
+  - org.openrewrite.java.migrate.net.URLConstructorToURICreate
+  - org.openrewrite.java.migrate.util.SequencedCollection
+  - org.openrewrite.java.migrate.util.UseLocaleOf
+  - org.openrewrite.staticanalysis.ReplaceDeprecatedRuntimeExecMethods
+  - org.openrewrite.java.migrate.UpgradePluginsForJava21
+  - org.openrewrite.java.migrate.DeleteDeprecatedFinalize
+  - org.openrewrite.java.migrate.RemovedSubjectMethods
+  - org.openrewrite.java.migrate.RemoveIllegalSemicolons
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: com.collabnet.ccf.gui.MigrateToJava25
+displayName: CCF GUI - Java 8 to Java 25
+description: Mechanical stack migration of the CCF Eclipse plugin set. There are no tests anywhere in
+  this repository, so JUnit4to5Migration is retained only as a no-op safety net.
+recipeList:
+  - com.collabnet.ccf.UpgradeToJava21WithoutSwitchRewrites
+  - org.openrewrite.java.migrate.UpgradeBuildToJava25
+  - org.openrewrite.java.migrate.UpgradePluginsForJava25
+  - org.openrewrite.java.migrate.MigrateZipErrorToZipException
+  - org.openrewrite.java.testing.junit5.JUnit4to5Migration
+
+# ---------------------------------------------------------------------------------------
+# Why no jakarta.* recipe is listed for this module
+#
+# All 71 javax.* import lines are either still-JDK packages or shared with vendored
+# proprietary SOAP bytecode, exactly as in the core repository:
+#
+#   Still javax in the JDK (65 lines):
+#     javax.xml.transform (31), javax.xml.parsers (3), javax.xml.namespace (1),
+#     javax.xml.datatype (1)                                - JAXP
+#     javax.management + javax.management.remote (18)        - JMX
+#     javax.net.ssl (6), javax.security.auth (3)             - JSSE/JAAS
+#
+#   Shared with vendored proprietary SOAP bytecode (6 lines):
+#     javax.xml.rpc.ServiceException (4, axis 1.4 / ccf.vendored:cee-5.0)
+#     javax.xml.ws.Service, BindingProvider (2, ccf.vendored:scrumworks-soap)
+#
+# javax.xml.ws is a JEP 320 removal, so it needs an explicit API dependency; it arrives
+# transitively from ccf-core, which pins jakarta.xml.ws-api 2.3.3 (javax package names).

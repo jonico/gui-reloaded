@@ -20,8 +20,8 @@
   <name>CCF Eclipse Plugin</name>
 
   <properties>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!--
       The Eclipse artifacts on Maven Central declare a dependency on
@@ -206,6 +206,12 @@
       <groupId>commons-httpclient</groupId>
       <artifactId>commons-httpclient</artifactId>
       <version>3.0.1</version>
+   <exclusions>
+    <exclusion>
+     <groupId>junit</groupId>
+     <artifactId>junit</artifactId>
+    </exclusion>
+   </exclusions>
     </dependency>
     <dependency>
       <groupId>axis</groupId>
@@ -245,6 +251,12 @@
         <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
       </exclusions>
     </dependency>
+  <dependency>
+   <groupId>com.sun.xml.ws</groupId>
+   <artifactId>jaxws-rt</artifactId>
+   <version>2.3.7</version>
+   <scope>provided</scope>
+  </dependency>
     <dependency>
       <groupId>org.eclipse.platform</groupId>
       <artifactId>org.eclipse.equinox.preferences</artifactId>
@@ -372,7 +384,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
+        <version>3.15.0</version>
         <configuration>
           <excludes>
             <!--
@@ -395,6 +407,38 @@
             <exclude>com/collabnet/ccf/pt/ProjectTrackerCcfParticipant.java</exclude>
           </excludes>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.openrewrite.maven</groupId>
+        <artifactId>rewrite-maven-plugin</artifactId>
+        <version>6.46.1</version>
+        <configuration>
+          <activeRecipes>
+            <recipe>com.collabnet.ccf.gui.MigrateToJava25</recipe>
+          </activeRecipes>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.openrewrite.recipe</groupId>
+            <artifactId>rewrite-migrate-java</artifactId>
+            <version>3.42.1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.openrewrite.recipe</groupId>
+            <artifactId>rewrite-testing-frameworks</artifactId>
+            <version>3.44.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.openrewrite.recipe</groupId>
+            <artifactId>rewrite-static-analysis</artifactId>
+            <version>2.41.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.openrewrite.recipe</groupId>
+            <artifactId>rewrite-java-dependencies</artifactId>
+            <version>1.60.2</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>

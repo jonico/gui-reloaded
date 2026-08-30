@@ -105,9 +105,7 @@ public class TeamForgeSelectionDialog extends CcfDialog {
         treeViewer.setSorter(new ViewerSorter() {
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
-				if (e1 instanceof ProjectRow && e2 instanceof ProjectRow) {
-					ProjectRow p1 = (ProjectRow)e1;
-					ProjectRow p2 = (ProjectRow)e2;
+				if (e1 instanceof ProjectRow p1 && e2 instanceof ProjectRow p2) {
 					return p1.getTitle().compareTo(p2.getTitle());
 				}
 				return super.compare(viewer, e1, e2);
@@ -130,12 +128,12 @@ public class TeamForgeSelectionDialog extends CcfDialog {
 	protected void okPressed() {
 		IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
 		Object firstSelection = selection.getFirstElement();
-		if (firstSelection instanceof ProjectRow) {
-			projectId = ((ProjectRow)firstSelection).getId();
+		if (firstSelection instanceof ProjectRow row) {
+			projectId = row.getId();
 		}
-		if (firstSelection instanceof TrackerRow) {
-			projectId = ((TrackerRow)firstSelection).getProjectId();
-			trackerId = ((TrackerRow)firstSelection).getId();
+		if (firstSelection instanceof TrackerRow row1) {
+			projectId = row1.getProjectId();
+			trackerId = row1.getId();
 		}
 		super.okPressed();
 	}
@@ -216,11 +214,11 @@ public class TeamForgeSelectionDialog extends CcfDialog {
 			return null;
 		}
 		public String getText(Object element) {
-			if (element instanceof ProjectRow) {
-				return ((ProjectRow)element).getTitle();
+			if (element instanceof ProjectRow row) {
+				return row.getTitle();
 			}
-			if (element instanceof TrackerRow) {
-				return ((TrackerRow)element).getTitle();
+			if (element instanceof TrackerRow row1) {
+				return row1.getTitle();
 			}
 			return super.getText(element);
 		}
@@ -231,8 +229,8 @@ public class TeamForgeSelectionDialog extends CcfDialog {
 			if (element instanceof TeamForgeSelectionDialog) {
 				return getProjects();
 			}
-			if (element instanceof ProjectRow) {
-				return getTrackers(((ProjectRow)element).getId());
+			if (element instanceof ProjectRow row) {
+				return getTrackers(row.getId());
 			}
 			return new Object[0];
 		}

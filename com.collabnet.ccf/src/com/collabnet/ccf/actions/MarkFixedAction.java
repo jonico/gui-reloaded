@@ -52,8 +52,7 @@ public class MarkFixedAction extends ActionDelegate {
 				Iterator iter = fSelection.iterator();
 				while (iter.hasNext()) {
 					Object object = iter.next();
-					if (object instanceof Patient) {
-						Patient patient = (Patient)object;
+					if (object instanceof Patient patient) {
 						Filter filter = new Filter(CcfDataProvider.HOSPITAL_ID, Integer.toString(patient.getId()), false);
 						Filter[] filters = { filter };
 						try {
@@ -76,8 +75,8 @@ public class MarkFixedAction extends ActionDelegate {
 	}	
 	
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 			if (action != null) action.setEnabled(isEnabledForSelection());
 		}
 	}	
@@ -88,8 +87,7 @@ public class MarkFixedAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof Patient) {
-				Patient patient = (Patient)object;
+			if (object instanceof Patient patient) {
 				if (patient.isFixed() != undo) return false;
 				if (undo && !Activator.getDefault().getActiveRole().isReopen()) return false;
 				if (!undo && !Activator.getDefault().getActiveRole().isMarkAsFixed()) return false;

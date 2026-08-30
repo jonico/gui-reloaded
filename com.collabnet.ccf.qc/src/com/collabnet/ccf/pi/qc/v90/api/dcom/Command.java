@@ -20,15 +20,19 @@ package com.collabnet.ccf.pi.qc.v90.api.dcom;
 
 import com.collabnet.ccf.pi.qc.v90.api.ICommand;
 import com.collabnet.ccf.pi.qc.v90.api.IRecordSet;
+
 import com.jacob.activeX.ActiveXComponent;
+
+import java.io.Serial;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
 public class Command extends ActiveXComponent implements ICommand
 {
-    /**
+	/**
 	 * 
 	 */
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public Command(Dispatch arg0){

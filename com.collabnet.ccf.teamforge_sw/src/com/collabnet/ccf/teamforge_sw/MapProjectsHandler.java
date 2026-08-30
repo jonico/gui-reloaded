@@ -20,14 +20,14 @@ public class MapProjectsHandler extends AbstractHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			Object[] items = ((IStructuredSelection) selection).toArray();
+		if (selection instanceof IStructuredSelection structuredSelection) {
+			Object[] items = structuredSelection.toArray();
 			for (Object item : items) {
 				if (item instanceof Landscape || item instanceof ProjectMappings) {
 					Landscape landscape = null;
 					ProjectMappings projectMappings = null;
-					if (item instanceof ProjectMappings) {
-						projectMappings = (ProjectMappings)item;
+					if (item instanceof ProjectMappings mappings) {
+						projectMappings = mappings;
 						landscape = projectMappings.getLandscape();
 					} else {
 						landscape = (Landscape)item;

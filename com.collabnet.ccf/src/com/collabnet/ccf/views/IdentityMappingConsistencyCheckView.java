@@ -264,15 +264,14 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 	
 	class ConsistencyLabelProvider extends LabelProvider {
 		public Image getImage(Object element) {
-			if (element instanceof SynchronizationStatus) {
-				if (((SynchronizationStatus)element).isPaused())
+			if (element instanceof SynchronizationStatus status) {
+				if (status.isPaused())
 					return Activator.getImage(Activator.IMAGE_SYNC_STATUS_ENTRY_PAUSED);
 				else
 					return Activator.getImage(Activator.IMAGE_SYNC_STATUS_ENTRY);
 			}
 			else if (element instanceof Exception) return Activator.getImage(Activator.IMAGE_ERROR);
-			else if (element instanceof IdentityMappingConsistencyCheck) {
-				IdentityMappingConsistencyCheck consistencyCheck = (IdentityMappingConsistencyCheck)element;
+			else if (element instanceof IdentityMappingConsistencyCheck consistencyCheck) {
 				switch (consistencyCheck.getType()) {
 				case IdentityMappingConsistencyCheck.MULTIPLE_SOURCE_TO_ONE_TARGET:
 					return Activator.getImage(Activator.IMAGE_MULTIPLE_SOURCE);
@@ -294,12 +293,11 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 		}
 		
 		public String getText(Object element) {
-			if (element instanceof Exception) {
-				if (((Exception)element).getMessage() == null) return super.getText(element);
-				else return ((Exception)element).getMessage();
+			if (element instanceof Exception exception) {
+				if (exception.getMessage() == null) return super.getText(element);
+				else return exception.getMessage();
 			}
-			else if (element instanceof IdentityMapping) {
-				IdentityMapping identityMapping = (IdentityMapping)element;
+			else if (element instanceof IdentityMapping identityMapping) {
 				return identityMapping.getEditableValue().toString();
 			}
 			else return super.getText(element);
@@ -311,8 +309,7 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 			if (element instanceof SynchronizationStatus) {
 				return this;
 			}
-			if (element instanceof IdentityMappingConsistencyCheck) {
-				IdentityMappingConsistencyCheck consistencyCheck = (IdentityMappingConsistencyCheck)element;
+			if (element instanceof IdentityMappingConsistencyCheck consistencyCheck) {
 				return consistencyCheck.getSynchronizationStatus();
 			}
 			return null;

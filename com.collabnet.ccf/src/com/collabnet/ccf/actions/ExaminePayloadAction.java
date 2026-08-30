@@ -48,10 +48,9 @@ public class ExaminePayloadAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof Patient) {
+			if (object instanceof Patient patient) {
 				IWorkbenchPage page = Activator.getDefault().getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage();
-				final Patient patient = (Patient) object;
 				if (patient.getGenericArtifact() != null
 						&& patient.getGenericArtifact().trim().length() > 0) {
 					try {
@@ -176,8 +175,8 @@ public class ExaminePayloadAction extends ActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection = (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection = selection;
 			if (action != null)
 				action.setEnabled(isEnabledForSelection());
 		}
@@ -205,8 +204,7 @@ public class ExaminePayloadAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof Patient) {
-				Patient patient = (Patient) object;
+			if (object instanceof Patient patient) {
 				if (patient.getGenericArtifact() == null
 						|| patient.getGenericArtifact().trim().length() == 0)
 					return false;

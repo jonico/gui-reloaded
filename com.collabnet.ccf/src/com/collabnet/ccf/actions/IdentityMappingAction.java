@@ -26,12 +26,12 @@ public class IdentityMappingAction extends ActionDelegate {
 			if (object instanceof Landscape || object instanceof SynchronizationStatus) {
 				Landscape landscape = null;
 				SynchronizationStatus status = null;
-				if (object instanceof SynchronizationStatus) {
-					status = (SynchronizationStatus)object;
+				if (object instanceof SynchronizationStatus synchronizationStatus) {
+					status = synchronizationStatus;
 					landscape = status.getLandscape();
 				}
-				else if (object instanceof Landscape) {
-					landscape = (Landscape)object;
+				else if (object instanceof Landscape landscape1) {
+					landscape = landscape1;
 				}
 				try {
 					IdentityMappingView.setLandscape(landscape);
@@ -59,8 +59,8 @@ public class IdentityMappingAction extends ActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 	}	
 }

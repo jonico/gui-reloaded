@@ -25,15 +25,15 @@ public class DeleteIdentityMappingsAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof SynchronizationStatus) {
-				statuses.add((SynchronizationStatus)object);
+			if (object instanceof SynchronizationStatus status) {
+				statuses.add(status);
 			}
 		}
 
 		String message;
 		String warningMessage = "WARNING:  This operation cannot be undone!";
 		if (statuses.size() == 1) {
-			message = "Delete identity mappings for " + statuses.get(0) + " project mapping?\n\n" + warningMessage;
+			message = "Delete identity mappings for " + statuses.getFirst() + " project mapping?\n\n" + warningMessage;
 		} else {
 			message = "Delete identity mappings for the " + statuses.size() + " selected project mappings?\n\n" + warningMessage;
 		}
@@ -60,8 +60,8 @@ public class DeleteIdentityMappingsAction extends ActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 		if (action != null) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isDeleteProjectMappingIdentityMappings());

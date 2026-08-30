@@ -50,9 +50,7 @@ public class GenericArtifact {
 	 */
 	public enum ArtifactModeValue {
 		CHANGEDFIELDSONLY, COMPLETE, UNKNOWN
-	};
-
-	/**
+	}/**
 	 *
 	 * Possible values for the artifact action, "create", "delete", "update",
 	 * "ignore", "resync"
@@ -61,9 +59,7 @@ public class GenericArtifact {
 	 */
 	public enum ArtifactActionValue {
 		CREATE, DELETE, UPDATE, IGNORE, RESYNC, UNKNOWN
-	};
-
-	/**
+	}/**
 	 *
 	 * Possible values for the artifact mode, "changedFieldsOnly" and "complete"
 	 *
@@ -71,9 +67,7 @@ public class GenericArtifact {
 	 */
 	public enum ArtifactTypeValue {
 		PLAINARTIFACT, DEPENDENCY, ATTACHMENT, UNKNOWN
-	};
-
-	/**
+	}/**
 	 *
 	 * Possible values for the includesFieldMetaData, "true" and "false"
 	 *
@@ -81,9 +75,7 @@ public class GenericArtifact {
 	 */
 	public enum IncludesFieldMetaDataValue {
 		TRUE, FALSE
-	};
-
-	/**
+	}/**
 	 * This is a hash map that indexes all contained field elements according to
 	 * their field type
 	 */

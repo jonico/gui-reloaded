@@ -244,7 +244,7 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
 					}
 				} catch (Exception e) {
 					Activator.handleError(e);
-				};
+				}
 			}
 		});
 	}
@@ -298,7 +298,7 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
 		public void removeListener(ILabelProviderListener listener) {
 		}
 		
-	};	
+	}	
 	
 	class ProjectMappingsSorter extends ViewerSorter {
 		private boolean reversed = false;
@@ -322,7 +322,7 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
 			if (s1 == null || s2 == null) {
 				result = super.compare(viewer, o1, o2);
 			} else {
-				int[] columnSortOrder = SORT_ORDERS_BY_COLUMN[columnNumber];;
+				int[] columnSortOrder = SORT_ORDERS_BY_COLUMN[columnNumber];
 				for (int i = 0; i < columnSortOrder.length; ++i) {
 					result = compareColumnValue(columnSortOrder[i], s1, s2);
 					if (result != 0)

@@ -27,15 +27,14 @@ public class HospitalAction extends ActionDelegate {
 			if (object instanceof Landscape || object instanceof SynchronizationStatus || object instanceof MappingGroup) {
 				Landscape landscape = null;
 				SynchronizationStatus status = null;
-				if (object instanceof SynchronizationStatus) {
-					status = (SynchronizationStatus)object;
+				if (object instanceof SynchronizationStatus synchronizationStatus) {
+					status = synchronizationStatus;
 					landscape = status.getLandscape();
 				}
-				else if (object instanceof Landscape) {
-					landscape = (Landscape)object;
+				else if (object instanceof Landscape landscape1) {
+					landscape = landscape1;
 				}
-				else if (object instanceof MappingGroup) {
-					MappingGroup mappingGroup = (MappingGroup)object;
+				else if (object instanceof MappingGroup mappingGroup) {
 					landscape = mappingGroup.getProjectMappingsParent().getLandscape();
 				}
 				try {
@@ -96,8 +95,8 @@ public class HospitalAction extends ActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 	}	
 }

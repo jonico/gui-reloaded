@@ -144,7 +144,7 @@ public class ClientArtifact {
 		if (values == null) {
 			return null;
 		}
-		return (String) values.get(0);
+		return (String) values.getFirst();
 	}
 	
 	public String getArtifactID(){

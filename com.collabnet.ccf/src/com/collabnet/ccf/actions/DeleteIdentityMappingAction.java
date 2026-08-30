@@ -38,8 +38,7 @@ public class DeleteIdentityMappingAction extends ActionDelegate {
 				Iterator iter = fSelection.iterator();
 				while (iter.hasNext()) {
 					Object object = iter.next();
-					if (object instanceof IdentityMapping) {
-						IdentityMapping identityMapping = (IdentityMapping)object;
+					if (object instanceof IdentityMapping identityMapping) {
 						Filter sourceRepositoryIdFilter = new Filter(CcfDataProvider.IDENTITY_MAPPING_SOURCE_REPOSITORY_ID, identityMapping.getSourceRepositoryId(), true);
 						Filter targetRepositoryIdFilter = new Filter(CcfDataProvider.IDENTITY_MAPPING_TARGET_REPOSITORY_ID, identityMapping.getTargetRepositoryId(), true);
 						Filter sourceArtifactIdFilter = new Filter(CcfDataProvider.IDENTITY_MAPPING_SOURCE_ARTIFACT_ID, identityMapping.getSourceArtifactId(), true);
@@ -55,9 +54,9 @@ public class DeleteIdentityMappingAction extends ActionDelegate {
 						}
 						try {
 							dataProvider.deleteIdentityMappings(identityMapping.getLandscape(), filters);
-							if (identityMapping instanceof InconsistentIdentityMapping) {
-								if (!consistencyChecks.contains(((InconsistentIdentityMapping)identityMapping).getConsistencyCheck())) {
-									consistencyChecks.add(((InconsistentIdentityMapping)identityMapping).getConsistencyCheck());
+							if (identityMapping instanceof InconsistentIdentityMapping mapping) {
+								if (!consistencyChecks.contains(mapping.getConsistencyCheck())) {
+									consistencyChecks.add(mapping.getConsistencyCheck());
 								}
 							}
 							if (reverseFilters != null) {
@@ -83,8 +82,8 @@ public class DeleteIdentityMappingAction extends ActionDelegate {
 	}	
 	
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 		if (action != null) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isDeleteIdentityMapping());

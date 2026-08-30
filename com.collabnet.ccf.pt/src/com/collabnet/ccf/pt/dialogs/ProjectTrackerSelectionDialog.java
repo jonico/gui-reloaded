@@ -144,17 +144,16 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 	protected void okPressed() {
 		IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
 		Object firstSelection = selection.getFirstElement();
-		if (firstSelection instanceof Project) {
-			Project project = (Project)firstSelection;
+		if (firstSelection instanceof Project project) {
 			if (project.getInternalName() == null) {
 				projectName = project.getName();
 			} else {
 				projectName = project.getInternalName();
 			}
 		}
-		if (firstSelection instanceof ArtifactType) {
-			projectName = ((ArtifactType)firstSelection).getProjectName();
-			artifactType = ((ArtifactType)firstSelection).getName();
+		if (firstSelection instanceof ArtifactType artifactType1) {
+			projectName = artifactType1.getProjectName();
+			artifactType = artifactType1.getName();
 		}
 		super.okPressed();
 	}
@@ -260,8 +259,8 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 					if (e.getMessage() != null && e.getMessage().contains("while initializing the call context")) {
 						return;
 					}
-					if (e instanceof WSException && e.getMessage() != null && e.getMessage().contains("View artifact")) {
-						if (((WSException)e).getCauseExceptionType() != null && ((WSException)e).getCauseExceptionType().contains("AccessControlException")) {
+					if (e instanceof WSException exception && e.getMessage() != null && e.getMessage().contains("View artifact")) {
+						if (exception.getCauseExceptionType() != null && exception.getCauseExceptionType().contains("AccessControlException")) {
 							MessageDialog.openError(getShell(), title, "You do not have permission to view artifact types for project " + project.getName() + ".");
 							return;
 						}
@@ -346,11 +345,11 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 			return null;
 		}
 		public String getText(Object element) {
-			if (element instanceof Project) {
-				return ((Project)element).getName();
+			if (element instanceof Project project) {
+				return project.getName();
 			}
-			if (element instanceof ArtifactType) {
-				return ((ArtifactType)element).getName();
+			if (element instanceof ArtifactType artifactType1) {
+				return artifactType1.getName();
 			}
 			return super.getText(element);
 		}
@@ -361,8 +360,8 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 			if (element instanceof ProjectTrackerSelectionDialog) {
 				return getProjects();
 			}
-			if (element instanceof Project) {
-				return getArtifactTypes((Project)element);
+			if (element instanceof Project project) {
+				return getArtifactTypes(project);
 			}
 			return new Object[0];
 		}

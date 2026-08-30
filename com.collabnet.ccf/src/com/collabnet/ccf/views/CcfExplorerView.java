@@ -409,15 +409,15 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 	
 	class LandscapeLabelProvider extends LabelProvider implements IFontProvider {
 		public Image getImage(Object element) {
-			if (element instanceof Landscape) return Activator.getImage((Landscape)element);
+			if (element instanceof Landscape landscape) return Activator.getImage(landscape);
 			else if (element instanceof ProjectMappings) return Activator.getImage(Activator.IMAGE_PROJECT_MAPPINGS);
 			else if (element instanceof Logs) return Activator.getImage(Activator.IMAGE_LOGS);
 			else if (element instanceof Log) return Activator.getImage(Activator.IMAGE_LOG);
-			else if (element instanceof MappingGroup) {
-				return ((MappingGroup)element).getImage();
+			else if (element instanceof MappingGroup group) {
+				return group.getImage();
 			}
-			else if (element instanceof SynchronizationStatus) {
-				if (((SynchronizationStatus)element).isPaused())
+			else if (element instanceof SynchronizationStatus status) {
+				if (status.isPaused())
 					return Activator.getImage(Activator.IMAGE_SYNC_STATUS_ENTRY_PAUSED);
 				else
 					return Activator.getImage(Activator.IMAGE_SYNC_STATUS_ENTRY);
@@ -427,23 +427,21 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 		}
 		
 		public String getText(Object element) {
-			if (element instanceof Landscape) return ((Landscape) element).getDescription();
-			else if (element instanceof Exception) {
-				if (((Exception)element).getMessage() == null) return super.getText(element);
-				else return ((Exception)element).getMessage();
+			if (element instanceof Landscape landscape) return landscape.getDescription();
+			else if (element instanceof Exception exception) {
+				if (exception.getMessage() == null) return super.getText(element);
+				else return exception.getMessage();
 			}
 			else return super.getText(element);
 		}
 
 		public Font getFont(Object obj) {
-			if (obj instanceof SynchronizationStatus) {
-				SynchronizationStatus synchronizationStatus = (SynchronizationStatus)obj;
+			if (obj instanceof SynchronizationStatus synchronizationStatus) {
 				if (synchronizationStatus.getHospitalEntries() > 0) {
 					return getItalicFont();
 				}
 			}
-			if (obj instanceof MappingGroup) {
-				MappingGroup mappingGroup = (MappingGroup)obj;
+			if (obj instanceof MappingGroup mappingGroup) {
 				if (mappingGroup.getHospitalEntries() > 0) {
 					return getItalicFont();
 				}
@@ -473,22 +471,21 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 			if (parentElement instanceof CcfExplorerView) {
 				return Activator.getDefault().getLandscapes();
 			}
-			else if (parentElement instanceof Landscape) {
+			else if (parentElement instanceof Landscape landscape) {
 				ProjectMappings projectMappings = null;
-				if (((Landscape)parentElement).getRole() == Landscape.ROLE_ADMINISTRATOR) {
-					projectMappings = new AdministratorProjectMappings((Landscape)parentElement);
+				if (landscape.getRole() == Landscape.ROLE_ADMINISTRATOR) {
+					projectMappings = new AdministratorProjectMappings(landscape);
 				} else {
-					projectMappings = new ProjectMappings((Landscape)parentElement);
+					projectMappings = new ProjectMappings(landscape);
 				}
-				Logs logs = new Logs((Landscape)parentElement);
+				Logs logs = new Logs(landscape);
 				Object[] children = { projectMappings, logs };
 				return children;
 			}
-			else if (parentElement instanceof MappingGroup) {
-				return ((MappingGroup)parentElement).getChildren();
+			else if (parentElement instanceof MappingGroup group) {
+				return group.getChildren();
 			}
-			else if (parentElement instanceof ProjectMappings) {
-				final ProjectMappings projectMappings = (ProjectMappings)parentElement;
+			else if (parentElement instanceof ProjectMappings projectMappings) {
 				BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
 					public void run() {
 						try {
@@ -498,8 +495,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 								List<Object> visibleMappingList = new ArrayList<Object>();
 								List<SynchronizationStatus> hiddenMappingList = new ArrayList<SynchronizationStatus>();
 								for (Object object : synchronizationStatuses) {
-									if (object instanceof SynchronizationStatus) {
-										SynchronizationStatus projectMapping = (SynchronizationStatus)object;
+									if (object instanceof SynchronizationStatus projectMapping) {
 										boolean visible = true;
 										if (!showHidden) {
 											for (IProjectMappingVisibilityChecker checker : visibilityCheckers) {
@@ -561,8 +557,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 				
 				return synchronizationStatuses;
 			}
-			else if (parentElement instanceof Logs) {
-				Logs logs = (Logs)parentElement;
+			else if (parentElement instanceof Logs logs) {
 				switch (logs.getType()) {
 				case Logs.TYPE_FOLDER:
 					Logs logs1 = new Logs(logs.getLandscape(), Logs.TYPE_1_2);
@@ -660,9 +655,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
-			if (e1 instanceof SynchronizationStatus && e2 instanceof SynchronizationStatus) {
-				SynchronizationStatus s1 = (SynchronizationStatus)e1;
-				SynchronizationStatus s2 = (SynchronizationStatus)e2;
+			if (e1 instanceof SynchronizationStatus s1 && e2 instanceof SynchronizationStatus s2) {
 				String cmp1;
 				String cmp2;
 				

@@ -17,6 +17,8 @@
 
 package com.collabnet.tracker.core;
 
+import java.io.Serial;
+
 /**
  * Exception used to represent a problem from PT
  * 
@@ -28,6 +30,7 @@ public class TrackerException extends Exception {
 	/**
 	 * 
 	 */
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public TrackerException(String message) {

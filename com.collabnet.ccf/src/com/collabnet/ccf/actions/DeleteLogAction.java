@@ -24,13 +24,13 @@ public class DeleteLogAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof Log) {
-				logList.add((Log)object);
+			if (object instanceof Log log) {
+				logList.add(log);
 			}
 		}
 		String message = null;
 		if (logList.size() == 1) {
-			Log log = logList.get(0);
+			Log log = logList.getFirst();
 			message = "Delete " + log + "?";
 		} else {
 			message = "Delete the " + logList.size() + " selected logs?";
@@ -51,8 +51,8 @@ public class DeleteLogAction extends ActionDelegate {
 	}
 	
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 	}	
 

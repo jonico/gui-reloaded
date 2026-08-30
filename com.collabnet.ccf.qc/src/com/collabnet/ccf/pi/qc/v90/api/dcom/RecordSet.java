@@ -18,6 +18,7 @@
 package com.collabnet.ccf.pi.qc.v90.api.dcom;
 
 
+import java.io.Serial;
 import java.util.Date;
 
 import com.collabnet.ccf.pi.qc.v90.api.IRecordSet;
@@ -28,9 +29,10 @@ import com.jacob.com.Variant;
 
 public class RecordSet extends ActiveXComponent implements IRecordSet
 {
-    /**
+	/**
 	 *
 	 */
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public RecordSet(Dispatch arg0){

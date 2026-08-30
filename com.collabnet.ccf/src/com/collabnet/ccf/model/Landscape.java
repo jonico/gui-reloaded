@@ -655,8 +655,7 @@ public class Landscape implements IPropertySource {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Landscape) {
-			Landscape compareTo = (Landscape)obj;
+		if (obj instanceof Landscape compareTo) {
 			return getDescription().equals(compareTo.getDescription()) && getRole() == compareTo.getRole();
 		}
 		return super.equals(obj);

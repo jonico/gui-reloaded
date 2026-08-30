@@ -1,5 +1,6 @@
 package com.collabnet.ccf.teamforge.schemageneration;
 
+import java.io.Serial;
 import java.net.URL;
 
 import org.apache.axis.MessageContext;
@@ -14,6 +15,7 @@ import com.collabnet.ccf.schemageneration.Proxy;
 
 public class TeamForgeHTTPSender extends CommonsHTTPSender {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	@Override

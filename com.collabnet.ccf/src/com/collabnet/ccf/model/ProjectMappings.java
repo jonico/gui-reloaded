@@ -20,8 +20,7 @@ public class ProjectMappings {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof ProjectMappings) {
-			ProjectMappings compareTo = (ProjectMappings)obj;
+		if (obj instanceof ProjectMappings compareTo) {
 			return landscape.equals(compareTo.getLandscape());
 		}
 		return super.equals(obj);

@@ -127,8 +127,7 @@ public class MappingGroup {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof MappingGroup) {
-			MappingGroup compareTo = (MappingGroup)obj;
+		if (obj instanceof MappingGroup compareTo) {
 			return compareTo.getId().equals(id);
 		}
 		return super.equals(obj);

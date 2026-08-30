@@ -40,8 +40,8 @@ public class StringInput extends PlatformObject implements IStorageEditorInput {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof StringInput) {
-			return getName().equals(((StringInput)obj).getName());
+		if (obj instanceof StringInput input) {
+			return getName().equals(input.getName());
 		}
 		return super.equals(obj);
 	}

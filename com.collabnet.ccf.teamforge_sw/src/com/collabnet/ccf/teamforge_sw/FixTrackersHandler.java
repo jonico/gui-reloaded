@@ -17,11 +17,10 @@ public class FixTrackersHandler extends AbstractHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			Object[] items = ((IStructuredSelection) selection).toArray();
+		if (selection instanceof IStructuredSelection structuredSelection) {
+			Object[] items = structuredSelection.toArray();
 			for (Object item : items) {
-				if (item instanceof MappingGroup) {
-					MappingGroup mappingGroup = (MappingGroup)item;
+				if (item instanceof MappingGroup mappingGroup) {
 					FixTrackersWizard wizard = new FixTrackersWizard(mappingGroup);
 					WizardDialog dialog = new CustomWizardDialog(Display.getDefault().getActiveShell(), wizard);
 					dialog.open();

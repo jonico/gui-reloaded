@@ -171,12 +171,10 @@ public class DomainProjectSelectionDialog extends CcfDialog {
 	protected void okPressed() {
 		IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
 		Object firstSelection = selection.getFirstElement();
-		if (firstSelection instanceof Domain) {
-			Domain selectedDomain = (Domain)firstSelection;
+		if (firstSelection instanceof Domain selectedDomain) {
 			domain = selectedDomain.toString();
 		}
-		if (firstSelection instanceof Project) {
-			Project selectedProject = (Project)firstSelection;
+		if (firstSelection instanceof Project selectedProject) {
 			domain = selectedProject.getDomain();
 			project = selectedProject.toString();
 		}
@@ -277,8 +275,7 @@ public class DomainProjectSelectionDialog extends CcfDialog {
 			if (element instanceof DomainProjectSelectionDialog) {
 				return domains.toArray();
 			}
-			if (element instanceof Domain) {
-				Domain domain = (Domain)element;
+			if (element instanceof Domain domain) {
 				domainProjects = getProjects(domain.toString());
 				if (domainProjects != null) {
 					return domainProjects.toArray();

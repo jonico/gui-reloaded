@@ -17,11 +17,14 @@
 
 package com.collabnet.ccf.pi.qc.v90.api;
 
+import java.io.Serial;
+
 public class DefectAlreadyLockedException extends Exception {
 
 	/**
 	 * 
 	 */
+	@Serial
 	private static final long serialVersionUID = -6064102938358202447L;
 	
 	public DefectAlreadyLockedException(String message){

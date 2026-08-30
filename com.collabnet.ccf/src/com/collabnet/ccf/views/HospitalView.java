@@ -891,8 +891,7 @@ public class HospitalView extends ViewPart {
 		
 		@Override
 		public void drop(DropTargetEvent event) {
-			if (event.data instanceof IStructuredSelection) {
-				IStructuredSelection selection = (IStructuredSelection)event.data;
+			if (event.data instanceof IStructuredSelection selection) {
 				HospitalAction action = new HospitalAction();
 				action.selectionChanged(null, selection);
 				action.run(null);		

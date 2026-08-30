@@ -101,9 +101,7 @@ public class ProjectMappingWizardSwpProductPage extends WizardPage {
 		viewer.setSorter(new ViewerSorter() {
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
-				if (e1 instanceof Product && e2 instanceof Product) {
-					Product p1 = (Product)e1;
-					Product p2 = (Product)e2;
+				if (e1 instanceof Product p1 && e2 instanceof Product p2) {
 					return p1.getName().toLowerCase().compareTo(p2.getName().toLowerCase());
 				}
 				return super.compare(viewer, e1, e2);

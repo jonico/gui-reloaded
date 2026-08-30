@@ -921,8 +921,7 @@ public class IdentityMappingView extends ViewPart {
 		
 		@Override
 		public void drop(DropTargetEvent event) {
-			if (event.data instanceof IStructuredSelection) {
-				IStructuredSelection selection = (IStructuredSelection)event.data;
+			if (event.data instanceof IStructuredSelection selection) {
 				IdentityMappingAction action = new IdentityMappingAction();
 				action.selectionChanged(null, selection);
 				action.run(null);		

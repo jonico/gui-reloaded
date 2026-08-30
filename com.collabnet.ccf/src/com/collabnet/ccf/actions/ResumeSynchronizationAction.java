@@ -31,8 +31,7 @@ public class ResumeSynchronizationAction extends ActionDelegate {
 				Iterator iter = fSelection.iterator();
 				while (iter.hasNext()) {
 					Object object = iter.next();
-					if (object instanceof SynchronizationStatus) {
-						SynchronizationStatus status = (SynchronizationStatus)object;				
+					if (object instanceof SynchronizationStatus status) {				
 						try {						
 							dataProvider.resumeSynchronization(status);
 							if (!projectMappingsList.contains(status.getProjectMappings())) {
@@ -43,8 +42,7 @@ public class ResumeSynchronizationAction extends ActionDelegate {
 							break;
 						}
 					}
-					if (object instanceof MappingGroup) {
-						MappingGroup mappingGroup = (MappingGroup)object;
+					if (object instanceof MappingGroup mappingGroup) {
 						try {
 							resumeSynchronization(mappingGroup);
 						} catch (Exception e) {
@@ -61,8 +59,8 @@ public class ResumeSynchronizationAction extends ActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 			if (action != null) action.setEnabled(isEnabledForSelection());
 		}
 	}
@@ -73,13 +71,11 @@ public class ResumeSynchronizationAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof SynchronizationStatus) {
-				SynchronizationStatus status = (SynchronizationStatus)object;
+			if (object instanceof SynchronizationStatus status) {
 				if (!status.isPaused() || status.isHiddenMapping())
 					return false;
 			}
-			if (object instanceof MappingGroup) {
-				MappingGroup mappingGroup = (MappingGroup)object;
+			if (object instanceof MappingGroup mappingGroup) {
 				if (!hasPausedMappings(mappingGroup)) {
 					return false;
 				}

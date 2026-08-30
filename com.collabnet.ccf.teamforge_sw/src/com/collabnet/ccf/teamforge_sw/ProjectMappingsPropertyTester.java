@@ -10,32 +10,28 @@ import com.collabnet.ccf.model.SynchronizationStatus;
 public class ProjectMappingsPropertyTester extends PropertyTester {
 
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		if (receiver instanceof ProjectMappings && property.equals("isTeamForgeSwpLandscape")) {
-			ProjectMappings projectMappings = (ProjectMappings)receiver;
+		if (receiver instanceof ProjectMappings projectMappings && property.equals("isTeamForgeSwpLandscape")) {
 			return isTeamForgeSwpLandscape(projectMappings);
 		}
-		if (receiver instanceof Landscape && property.equals("isTeamForgeSwpLandscape")) {
-			Landscape landscape = (Landscape)receiver;
+		if (receiver instanceof Landscape landscape && property.equals("isTeamForgeSwpLandscape")) {
 			return isTeamForgeSwpLandscape(landscape);
 		}
-		if (receiver instanceof SynchronizationStatus && property.equals("isTrackerPbisMapping")) {
-			SynchronizationStatus projectMapping = (SynchronizationStatus)receiver;
+		if (receiver instanceof SynchronizationStatus projectMapping && property.equals("isTrackerPbisMapping")) {
 			if (isTeamForgeSwpLandscape(projectMapping.getProjectMappings())) {
 				return projectMapping.toString().indexOf("-PBI") != -1;
 			}
 		}
-		if (receiver instanceof MappingGroup && property.equals("isTrackerPbisMapping")) {
-			SynchronizationStatus projectMapping = ((MappingGroup)receiver).getFirstMapping();
+		if (receiver instanceof MappingGroup group && property.equals("isTrackerPbisMapping")) {
+			SynchronizationStatus projectMapping = group.getFirstMapping();
 			if (projectMapping != null && isTeamForgeSwpLandscape(projectMapping.getProjectMappings())) {
 				return projectMapping.toString().indexOf("-PBI") != -1;
 			}
 		}
-		if (receiver instanceof SynchronizationStatus && property.equals("isTeamForgeScrumWorksMapping")) {
-			SynchronizationStatus projectMapping = (SynchronizationStatus)receiver;
+		if (receiver instanceof SynchronizationStatus projectMapping && property.equals("isTeamForgeScrumWorksMapping")) {
 			return isTeamForgeSwpLandscape(projectMapping.getProjectMappings());
 		}
-		if (receiver instanceof MappingGroup && property.equals("isTeamForgeScrumWorksMappingGroup")) {
-			SynchronizationStatus projectMapping = ((MappingGroup)receiver).getFirstMapping();
+		if (receiver instanceof MappingGroup group1 && property.equals("isTeamForgeScrumWorksMappingGroup")) {
+			SynchronizationStatus projectMapping = group1.getFirstMapping();
 			return projectMapping != null && isTeamForgeSwpLandscape(projectMapping.getProjectMappings());
 		}		
 		return false;

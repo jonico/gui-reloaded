@@ -414,7 +414,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 					direction2List.toArray(direction2Mappings);
 				} catch (Exception e) {
 					Activator.handleError(e);
-				};
+				}
 			}
 		});
 	}
@@ -565,7 +565,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 		public void removeListener(ILabelProviderListener listener) {
 		}
 		
-	};
+	}
 	
 	class ProjectMappingsSorter extends ViewerSorter {
 		private boolean reversed = false;
@@ -591,7 +591,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 			if (s1 == null || s2 == null) {
 				result = super.compare(viewer, o1, o2);
 			} else {
-				int[] columnSortOrder = SORT_ORDERS_BY_COLUMN[columnNumber];;
+				int[] columnSortOrder = SORT_ORDERS_BY_COLUMN[columnNumber];
 				for (int i = 0; i < columnSortOrder.length; ++i) {
 					result = compareColumnValue(columnSortOrder[i], s1, s2);
 					if (result != 0)
@@ -695,15 +695,15 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 			}
 			if (delegate != null) {
 				delegate.removeSelectionChangedListener(selectionListener);
-				if (delegate instanceof IPostSelectionProvider) {
-					((IPostSelectionProvider)delegate).removePostSelectionChangedListener(postSelectionListener);
+				if (delegate instanceof IPostSelectionProvider provider) {
+					provider.removePostSelectionChangedListener(postSelectionListener);
 				}
 			}
 			delegate = newDelegate;
 			if (newDelegate != null) {
 				newDelegate.addSelectionChangedListener(selectionListener);
-				if (newDelegate instanceof IPostSelectionProvider) {
-					((IPostSelectionProvider)newDelegate).addPostSelectionChangedListener(postSelectionListener);
+				if (newDelegate instanceof IPostSelectionProvider provider1) {
+					provider1.addPostSelectionChangedListener(postSelectionListener);
 				}
 				fireSelectionChanged(newDelegate.getSelection());
 				firePostSelectionChanged(newDelegate.getSelection());

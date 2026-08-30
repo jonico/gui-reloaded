@@ -51,8 +51,7 @@ public class IdentityMappingEditorInput implements IEditorInput {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof IdentityMappingEditorInput) {
-			IdentityMappingEditorInput compareTo = (IdentityMappingEditorInput)obj;
+		if (obj instanceof IdentityMappingEditorInput compareTo) {
 			return compareTo.getIdentityMapping().equals(identityMapping);
 		}
 		return super.equals(obj);

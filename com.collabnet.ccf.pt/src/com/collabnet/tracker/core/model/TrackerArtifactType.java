@@ -17,6 +17,7 @@
 
 package com.collabnet.tracker.core.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class TrackerArtifactType implements Serializable {
 	/**
 	 * 
 	 */
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private String namespace;
 	private String tagName;

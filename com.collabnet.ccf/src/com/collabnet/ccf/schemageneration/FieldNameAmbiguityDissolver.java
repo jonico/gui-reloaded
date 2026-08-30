@@ -124,7 +124,7 @@ public class FieldNameAmbiguityDissolver {
 							+ Integer.toString(number);
 			} else {
 				// create entry
-				fieldMapping.put(encodedName, new Boolean(isFlexField));
+				fieldMapping.put(encodedName, Boolean.valueOf(isFlexField));
 				reverseFieldMapping.put(encodedName, fieldName);
 				return encodedName;
 			}

@@ -34,8 +34,7 @@ public class ChangeSynchronizationStatusAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof SynchronizationStatus) {
-				final SynchronizationStatus status = (SynchronizationStatus)object;
+			if (object instanceof SynchronizationStatus status) {
 				reverseStatus = null;
 				try {
 					reverseStatus = dataProvider.getReverseSynchronizationStatus(status);
@@ -259,8 +258,8 @@ public class ChangeSynchronizationStatusAction extends ActionDelegate {
 	}
 	
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 
 // Rather than disabling action for non-paused mapping, we will automatically pause

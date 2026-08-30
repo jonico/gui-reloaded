@@ -30,8 +30,7 @@ public class ResetSynchronizationStatusAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof SynchronizationStatus) {
-				SynchronizationStatus status = (SynchronizationStatus)object;
+			if (object instanceof SynchronizationStatus status) {
 				statuses.add(status);
 				if (!status.isPaused()) {
 					needsPause = true;
@@ -79,8 +78,8 @@ public class ResetSynchronizationStatusAction extends ActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 		if (action != null) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isResetSynchronizationStatus());

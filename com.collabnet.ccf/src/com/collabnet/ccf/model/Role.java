@@ -252,16 +252,14 @@ public class Role implements Comparable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Role) {
-			Role compareTo = (Role)obj;
+		if (obj instanceof Role compareTo) {
 			return compareTo.getName().equals(name);
 		}
 		return super.equals(obj);
 	}
 
 	public int compareTo(Object obj) {
-		if (obj instanceof Role) {
-			Role compareTo = (Role)obj;
+		if (obj instanceof Role compareTo) {
 			return name.compareTo(compareTo.getName());
 		}
 		return 0;

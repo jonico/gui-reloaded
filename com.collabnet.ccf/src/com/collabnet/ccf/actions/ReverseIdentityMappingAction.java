@@ -22,8 +22,7 @@ public class ReverseIdentityMappingAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof IdentityMapping) {
-				IdentityMapping identityMapping = (IdentityMapping)object;
+			if (object instanceof IdentityMapping identityMapping) {
 				try {
 					IdentityMappingView.setLandscape(identityMapping.getLandscape());
 					Filter sourceRepositoryFilter = new Filter(CcfDataProvider.IDENTITY_MAPPING_TARGET_REPOSITORY_ID, identityMapping.getSourceRepositoryId(), true);
@@ -44,8 +43,8 @@ public class ReverseIdentityMappingAction extends ActionDelegate {
 	}
 
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 		}
 	}	
 }

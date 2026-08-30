@@ -29,8 +29,7 @@ public class CreateReverseIdentityMappingAction extends ActionDelegate {
 			public void run() {
 				while (iter.hasNext()) {
 					Object object = iter.next();
-					if (object instanceof InconsistentIdentityMapping) {
-						InconsistentIdentityMapping identityMapping = (InconsistentIdentityMapping)object;
+					if (object instanceof InconsistentIdentityMapping identityMapping) {
 						try {
 							dataProvider.createReverseIdentityMapping(identityMapping.getLandscape(), identityMapping);
 							if (!consistencyChecks.contains(identityMapping.getConsistencyCheck())) {
@@ -50,8 +49,8 @@ public class CreateReverseIdentityMappingAction extends ActionDelegate {
 	}
 	
 	public void selectionChanged(IAction action, ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			fSelection= (IStructuredSelection) sel;
+		if (sel instanceof IStructuredSelection selection) {
+			fSelection= selection;
 			if (action != null) action.setEnabled(isEnabledForSelection());
 		}
 	}	
@@ -62,8 +61,7 @@ public class CreateReverseIdentityMappingAction extends ActionDelegate {
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
-			if (object instanceof InconsistentIdentityMapping) {
-				InconsistentIdentityMapping identityMapping = (InconsistentIdentityMapping)object;
+			if (object instanceof InconsistentIdentityMapping identityMapping) {
 				if (identityMapping.getType() != InconsistentIdentityMapping.ONE_WAY) return false;
 			}
 		}

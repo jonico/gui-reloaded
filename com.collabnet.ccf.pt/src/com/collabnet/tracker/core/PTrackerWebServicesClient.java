@@ -283,7 +283,7 @@ public class PTrackerWebServicesClient {
 					else {
 						// TODO: consider the namespace of the attributes?
 						//attributeNode.setNodeValue(values.get(0));
-						String value = values.get(0);
+						String value = values.getFirst();
 						value = TrackerUtil.removeInvalidXmlCharacters(value);
 						if(value == null) value = "";
 						attributeNode.appendChild(doc.createTextNode(value));

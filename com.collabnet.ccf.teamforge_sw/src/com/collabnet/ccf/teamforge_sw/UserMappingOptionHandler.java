@@ -23,15 +23,14 @@ public class UserMappingOptionHandler extends AbstractHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			Object[] items = ((IStructuredSelection) selection).toArray();
+		if (selection instanceof IStructuredSelection structuredSelection) {
+			Object[] items = structuredSelection.toArray();
 			for (Object item : items) {
 				SynchronizationStatus projectMapping = null;
-				if (item instanceof SynchronizationStatus) {
-					projectMapping = (SynchronizationStatus)item;
+				if (item instanceof SynchronizationStatus status) {
+					projectMapping = status;
 				}
-				if (item instanceof MappingGroup) {
-					MappingGroup mappingGroup = (MappingGroup)item;
+				if (item instanceof MappingGroup mappingGroup) {
 					projectMapping = mappingGroup.getFirstMapping();
 				}
 				if (projectMapping != null) {

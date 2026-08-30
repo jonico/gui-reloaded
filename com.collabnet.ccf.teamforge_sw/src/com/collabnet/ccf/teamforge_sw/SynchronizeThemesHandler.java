@@ -18,17 +18,15 @@ public class SynchronizeThemesHandler extends AbstractHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			Object[] items = ((IStructuredSelection) selection).toArray();
+		if (selection instanceof IStructuredSelection structuredSelection) {
+			Object[] items = structuredSelection.toArray();
 			for (Object item : items) {
-				if (item instanceof SynchronizationStatus) {
-					SynchronizationStatus projectMapping = (SynchronizationStatus)item;
+				if (item instanceof SynchronizationStatus projectMapping) {
 					SynchronizeThemesWizard wizard = new SynchronizeThemesWizard(projectMapping);
 					WizardDialog dialog = new CustomWizardDialog(Display.getDefault().getActiveShell(), wizard);
 					dialog.open();
 				}
-				if (item instanceof MappingGroup) {
-					MappingGroup mappingGroup = (MappingGroup)item;
+				if (item instanceof MappingGroup mappingGroup) {
 					SynchronizeThemesWizard wizard = new SynchronizeThemesWizard(mappingGroup);
 					WizardDialog dialog = new CustomWizardDialog(Display.getDefault().getActiveShell(), wizard);
 					dialog.open();

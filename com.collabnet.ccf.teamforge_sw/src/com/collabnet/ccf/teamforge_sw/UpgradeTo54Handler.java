@@ -18,13 +18,13 @@ public class UpgradeTo54Handler extends AbstractHandler {
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			Object[] items = ((IStructuredSelection) selection).toArray();
+		if (selection instanceof IStructuredSelection structuredSelection) {
+			Object[] items = structuredSelection.toArray();
 			for (Object item : items) {
 				if (item instanceof Landscape || item instanceof ProjectMappings) {
 					Landscape landscape = null;
-					if (item instanceof ProjectMappings) {
-						landscape = ((ProjectMappings)item).getLandscape();
+					if (item instanceof ProjectMappings mappings) {
+						landscape = mappings.getLandscape();
 					} else {
 						landscape = (Landscape)item;
 					}

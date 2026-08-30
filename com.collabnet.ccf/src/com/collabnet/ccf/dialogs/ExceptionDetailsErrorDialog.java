@@ -271,8 +271,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
         buffer.append("\n"); //$NON-NLS-1$
         
         Throwable t = buildingStatus.getException();
-        if (t instanceof CoreException) {
-            CoreException ce = (CoreException)t;
+        if (t instanceof CoreException ce) {
             populateCopyBuffer(ce.getStatus(), buffer, nesting + 1);
         }
         
