@@ -33,13 +33,13 @@ public class EditLog4jAction extends ActionDelegate {
 			if (object instanceof Landscape) {
 				Landscape landscape = (Landscape)object;
 				File log4jFile = landscape.getLog4jFile();
-				if (log4jFile == null) {
+				if (null == log4jFile) {
 					MessageDialog.openError(Display.getDefault().getActiveShell(), "Edit CCF Log Settings", "Log settings file not found.");
 					return;
 				}
 				if (!log4jFile.exists()) {
 					File log4jRenameFile = landscape.getLog4jRenameFile();
-					if (log4jRenameFile == null || !log4jRenameFile.exists()) {
+					if (null == log4jRenameFile || !log4jRenameFile.exists()) {
 						MessageDialog.openError(Display.getDefault().getActiveShell(), "Edit CCF Log Settings", "Log settings file not found.");
 						return;						
 					}
@@ -53,7 +53,7 @@ public class EditLog4jAction extends ActionDelegate {
 				IEditorRegistry registry = Activator.getDefault().getWorkbench().getEditorRegistry();
 				IEditorDescriptor descriptor = registry.getDefaultEditor(log4jFile.getName());
 				String id;
-				if (descriptor == null) {
+				if (null == descriptor) {
 					id = "org.eclipse.ui.DefaultTextEditor"; //$NON-NLS-1$
 				} else {
 					id = descriptor.getId();
@@ -75,7 +75,7 @@ public class EditLog4jAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isEditLogSettings());
 		}
 	}	

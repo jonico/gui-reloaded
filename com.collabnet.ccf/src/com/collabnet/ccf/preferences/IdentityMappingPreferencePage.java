@@ -39,7 +39,7 @@ public class IdentityMappingPreferencePage extends ColumnChooserPreferencePage {
 
 	@Override
 	public void refresh() {
-		if (needsRefresh && IdentityMappingView.getView() != null) {
+		if (needsRefresh && null != IdentityMappingView.getView()) {
 			IdentityMappingView.getView().refreshTableLayout();
 		}
 	}

@@ -77,7 +77,7 @@ public class Activator extends AbstractUIPlugin {
 		StringBuffer value = new StringBuffer(team.getName() + " "
 				+ sprintDateFormat.format(startDate) + " - "
 				+ sprintDateFormat.format(endDate));
-		if (sprint.getName() != null && sprint.getName().trim().length() > 0) {
+		if (null != sprint.getName() && 0 < sprint.getName().trim().length()) {
 			value.append(" -- " + sprint.getName());
 		}
 		return value.toString();

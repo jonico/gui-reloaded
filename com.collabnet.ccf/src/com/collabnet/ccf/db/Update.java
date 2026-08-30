@@ -25,10 +25,10 @@ public class Update {
 	
 	public static String getUpdate(String sql, Update[] updates) {
 		StringBuffer updateStatement = new StringBuffer(sql);
-		if (updates != null) {
+		if (null != updates) {
 			updateStatement.append(" SET ");
 			for (int i = 0; i < updates.length; i++) {
-				if (i > 0) updateStatement.append(", ");
+				if (0 < i) updateStatement.append(", ");
 				updateStatement.append(updates[i].toString());
 			}
 		}
@@ -40,7 +40,7 @@ public class Update {
 		int start = 0;
 		while (!done) {
 			int apos = text.indexOf("'", start);
-			if (apos != -1) {
+			if (-1 != apos) {
 				text = text.substring(0, apos) + "''" + text.substring(apos + 1);
 				start = apos + 2;
 			} else {

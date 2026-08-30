@@ -165,7 +165,7 @@ public class Connection extends ActiveXComponent implements IConnection
 
     public ICommand getCommand()
     {
-    	if(command == null) {
+    	if(null == command) {
     		command = new Command(getPropertyAsComponent("Command"));
     	}
         return command;
@@ -173,11 +173,11 @@ public class Connection extends ActiveXComponent implements IConnection
 
     public void disconnect()
     {
-    	if(factory != null) {
+    	if(null != factory) {
 	    	factory.safeRelease();
 	    	factory = null;
     	}
-    	if(command != null) {
+    	if(null != command) {
 	    	command.safeRelease();
 	    	command = null;
     	}

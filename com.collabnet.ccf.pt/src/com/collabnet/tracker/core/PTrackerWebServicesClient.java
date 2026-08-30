@@ -149,7 +149,7 @@ public class PTrackerWebServicesClient {
 	}
 
 	public List<ClientArtifact> getAllArtifacts(String artifactType, String nameSpace) throws Exception {
-		if (nameSpace == null) nameSpace = mClient.getDefaultNamespace();
+		if (null == nameSpace) nameSpace = mClient.getDefaultNamespace();
         EngineConfiguration config = mClient.getEngineConfiguration();
         DispatcherService service = new DispatcherServiceLocator(config);
         URL portAddress = mClient.constructServiceURL("/ws/Dispatcher");
@@ -228,7 +228,7 @@ public class PTrackerWebServicesClient {
 			String artifactType = ca.getTagName();
 			//int nsCtr;
 			// check if the namespace alrady exists in the xml so far
-			if (nameSpaces.get(nsXNameSpace) == null) {
+			if (null == nameSpaces.get(nsXNameSpace)) {
 				nameSpaces.put(nsXNameSpace, ++nameSpaceCount);
 			}
 
@@ -240,7 +240,7 @@ public class PTrackerWebServicesClient {
 			Element modByNode = doc.createElementNS(DEFAULT_NAMESPACE, "ns1:"+MODIFIED_BY_FIELD_NAME);
 			modByNode.appendChild(doc.createTextNode(mClient.getUserName()));
 			artifactNode.appendChild(modByNode);
-			if(lastReadOn != null){
+			if(null != lastReadOn){
 				Element lastReadNode = doc.createElementNS(DEFAULT_NAMESPACE, "ns1:"+LAST_READ_ON_FIELD_NAME);
 				lastReadNode.appendChild(doc.createTextNode(Long.toString(lastReadOn)));
 				artifactNode.appendChild(lastReadNode);
@@ -262,12 +262,12 @@ public class PTrackerWebServicesClient {
 		    		String[] parts = attribute.substring(1).split("\\}");
 		    		String attributeNamespace = parts[0];
 		    		attribute = parts[1];
-		    		if (nameSpaces.get(attributeNamespace) == null) {
+		    		if (null == nameSpaces.get(attributeNamespace)) {
 						nameSpaces.put(attributeNamespace, ++nameSpaceCount);
 					}
 		    		nsNumberString = "ns" + nameSpaces.get(attributeNamespace) + ":";
 		    		Element attributeNode = doc.createElementNS(attributeNamespace, nsNumberString + attribute);
-					if (values.size() > 1 ||(attributeNamespace.equals(DEFAULT_NAMESPACE) &&
+					if (1 < values.size() ||(attributeNamespace.equals(DEFAULT_NAMESPACE) &&
 									attribute.equals("id"))) {
 						for (String value: values) {
 							if(!(StringUtils.isEmpty(value))){
@@ -285,7 +285,7 @@ public class PTrackerWebServicesClient {
 						//attributeNode.setNodeValue(values.get(0));
 						String value = values.get(0);
 						value = TrackerUtil.removeInvalidXmlCharacters(value);
-						if(value == null) value = "";
+						if(null == value) value = "";
 						attributeNode.appendChild(doc.createTextNode(value));
 					}
 					artifactNode.appendChild(attributeNode);
@@ -440,8 +440,8 @@ public class PTrackerWebServicesClient {
 			name = child.getNodeName();
 			value = child.getTextContent();
 			if(name.contains("queryReference")) {
-				if(value == null || value.length() < 1) {
-					if(altQueryRef == null)
+				if(null == value || 1 > value.length()) {
+					if(null == altQueryRef)
 						throw new Exception(msg);
 					child.setTextContent(altQueryRef);
 				}
@@ -484,7 +484,7 @@ public class PTrackerWebServicesClient {
 	 */
 	public boolean isChanged(String artitfactNamespaceAndType, String taskId, String dateString) throws Exception {
 		List<String> ids = this.getChangedIds(artitfactNamespaceAndType, taskId, taskId, dateString);
-		if (ids == null)
+		if (null == ids)
 			return true;
 		return ids.contains(taskId);
 	}
@@ -526,7 +526,7 @@ public class PTrackerWebServicesClient {
 		Document result = toDocument(r);
 		ClientArtifactListXMLHelper helper = new ClientArtifactListXMLHelper(result);
 
-		if (helper.getErrorSize() > 0) {
+		if (0 < helper.getErrorSize()) {
 			// if we have an error, we will make it update so that we can try to
 			// sync
 			return new ArrayList<String>(0);
@@ -788,8 +788,8 @@ public class PTrackerWebServicesClient {
 		String key;
 		for (ArtifactType type : artifactTypes){
 			key = TrackerUtil.getKey(type.getNamespace(), type.getTagName());
-			if (repositoryData == null) repositoryData = new TrackerClientData();
-			if(repositoryData.getArtifactTypeFromKey(key) == null)
+			if (null == repositoryData) repositoryData = new TrackerClientData();
+			if(null == repositoryData.getArtifactTypeFromKey(key))
 				repositoryData.addArtifactType(new TrackerArtifactType(type));
 		}
 
@@ -819,7 +819,7 @@ public class PTrackerWebServicesClient {
 				new ArtifactType(artifactType, namespace, ""), artifactId);
 		TrackerUtil.debug("getMetaDataForArtifact():done ");
 		TrackerArtifactType type = repositoryData.getArtifactTypeFromKey(TrackerUtil.getKey(namespace, artifactType));
-		if (type == null) {
+		if (null == type) {
 			type = new TrackerArtifactType(metaData.getArtifactType().getDisplayName(), metaData.getArtifactType()
 					.getTagName(), metaData.getArtifactType().getNamespace());
 		}
@@ -910,7 +910,7 @@ public class PTrackerWebServicesClient {
 	 */
 	public String getProjectNameFromUrl() {
 		String aUrl = mClient.getURL();
-		if(aUrl == null)
+		if(null == aUrl)
 			return "";
 
 		int prefixIndex = aUrl.indexOf("//");

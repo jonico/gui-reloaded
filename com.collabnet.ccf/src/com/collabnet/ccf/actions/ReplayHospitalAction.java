@@ -48,7 +48,7 @@ public class ReplayHospitalAction extends ActionDelegate {
 				}
 			}			
 		});
-		if (patientsUpdated && HospitalView.getView() != null) {
+		if (patientsUpdated && null != HospitalView.getView()) {
 			HospitalView.getView().refresh();
 		}
 	}
@@ -56,13 +56,13 @@ public class ReplayHospitalAction extends ActionDelegate {
 	public void selectionChanged(IAction action, ISelection sel) {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
-			if (action != null) action.setEnabled(isEnabledForSelection());
+			if (null != action) action.setEnabled(isEnabledForSelection());
 		}
 	}	
 	
 	@SuppressWarnings("unchecked")
 	private boolean isEnabledForSelection() {
-		if (fSelection == null) return false;
+		if (null == fSelection) return false;
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();

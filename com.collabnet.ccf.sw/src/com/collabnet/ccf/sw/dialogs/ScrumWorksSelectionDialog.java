@@ -96,7 +96,7 @@ public class ScrumWorksSelectionDialog extends CcfDialog {
 		});
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
-				if (okButton != null) {
+				if (null != okButton) {
 					IStructuredSelection productSelection = (IStructuredSelection)viewer.getSelection();
 					okButton.setEnabled(!productSelection.isEmpty());
 				}
@@ -119,7 +119,7 @@ public class ScrumWorksSelectionDialog extends CcfDialog {
 
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
 			okButton.setEnabled(false);
 		}

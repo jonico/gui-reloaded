@@ -50,7 +50,7 @@ public class NewLandscapeWizardPropertiesFolderPage extends WizardPage {
 		GridData data = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
 		fileGroup1.setLayoutData(data);
 		
-		if (ccfParticipant1 != null && ccfParticipant2 != null) {
+		if (null != ccfParticipant1 && null != ccfParticipant2) {
 			fileGroup1.setText(getGroup1Text());
 		}
 
@@ -85,17 +85,17 @@ public class NewLandscapeWizardPropertiesFolderPage extends WizardPage {
 				String[] filterExtensions = { "*.xml" }; //$NON-NLS-1$
 				d.setFilterExtensions(filterExtensions);
 				String file = d.open();
-				if(file!=null) {
+				if(null!=file) {
 					IPath path = new Path(file);
 					configFileText1.setText(path.toOSString());
-					if (configFileText2 != null && configFileText2.getText().trim().length() == 0) {
+					if (null != configFileText2 && 0 == configFileText2.getText().trim().length()) {
 						File parent = path.toFile().getParentFile();
-						if (parent != null && parent.getName().equals("config")) {
+						if (null != parent && parent.getName().equals("config")) {
 							parent = parent.getParentFile();
-							if (parent != null) {
+							if (null != parent) {
 								String folderName = parent.getName();
 								int twoIndex = folderName.indexOf("2");
-								if (twoIndex != -1) {
+								if (-1 != twoIndex) {
 									String reverseFolderName = folderName.substring(twoIndex + 1) + "2" + folderName.substring(0, twoIndex);
 									configFileText2.setText(path.toOSString().replaceAll(folderName, reverseFolderName));
 								}
@@ -113,7 +113,7 @@ public class NewLandscapeWizardPropertiesFolderPage extends WizardPage {
 		fileGroup2.setLayout(fileLayout2);
 		data = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
 		fileGroup2.setLayoutData(data);
-		if (ccfParticipant1 != null && ccfParticipant2 != null) {
+		if (null != ccfParticipant1 && null != ccfParticipant2) {
 			fileGroup2.setText(getGroup2Text());
 		}
 		
@@ -148,17 +148,17 @@ public class NewLandscapeWizardPropertiesFolderPage extends WizardPage {
 				String[] filterExtensions = { "*.xml" }; //$NON-NLS-1$
 				d.setFilterExtensions(filterExtensions);
 				String file = d.open();
-				if(file!=null) {
+				if(null!=file) {
 					IPath path = new Path(file);
 					configFileText2.setText(path.toOSString());
-					if (configFileText1 != null && configFileText1.getText().trim().length() == 0) {
+					if (null != configFileText1 && 0 == configFileText1.getText().trim().length()) {
 						File parent = path.toFile().getParentFile();
-						if (parent != null && parent.getName().equals("config")) {
+						if (null != parent && parent.getName().equals("config")) {
 							parent = parent.getParentFile();
-							if (parent != null) {
+							if (null != parent) {
 								String folderName = parent.getName();
 								int twoIndex = folderName.indexOf("2");
-								if (twoIndex != -1) {
+								if (-1 != twoIndex) {
 									String reverseFolderName = folderName.substring(twoIndex + 1) + "2" + folderName.substring(0, twoIndex);
 									configFileText1.setText(path.toOSString().replaceAll(folderName, reverseFolderName));
 								}
@@ -176,14 +176,14 @@ public class NewLandscapeWizardPropertiesFolderPage extends WizardPage {
 	}
 	
 	public String getConfigurationFolder1() {
-		if (parent1 != null) {
+		if (null != parent1) {
 			return parent1.getAbsolutePath();
 		}
 		return null;
 	}
 	
 	public String getConfigurationFolder2() {
-		if (configFileText2.getText().trim().length() > 0 && parent2 != null) {
+		if (0 < configFileText2.getText().trim().length() && null != parent2) {
 			return parent2.getAbsolutePath();
 		}
 		return null;
@@ -193,11 +193,11 @@ public class NewLandscapeWizardPropertiesFolderPage extends WizardPage {
 		String propFileName1 = ccfParticipant1.getPropertiesFileName();
 		String propFileName2 = ccfParticipant2.getPropertiesFileName();
 		setErrorMessage(null);
-		if (configFileText1.getText().trim().length() == 0 && configFileText2.getText().trim().length() == 0) {
+		if (0 == configFileText1.getText().trim().length() && 0 == configFileText2.getText().trim().length()) {
 			setErrorMessage("At least one config.xml file must be selected");
 			return false;			
 		}
-		if (configFileText1.getText().trim().length() > 0) {
+		if (0 < configFileText1.getText().trim().length()) {
 			if (!configFileText1.getText().endsWith("config.xml")) return false;
 			File file = new File(configFileText1.getText());
 			if (!file.exists()) {				
@@ -233,7 +233,7 @@ public class NewLandscapeWizardPropertiesFolderPage extends WizardPage {
 			}
 		}
 		
-		if (configFileText2.getText().trim().length() > 0) {
+		if (0 < configFileText2.getText().trim().length()) {
 			if (!configFileText2.getText().endsWith("config.xml")) return false;
 			File file = new File(configFileText2.getText());
 			if (!file.exists()) {				
@@ -269,7 +269,7 @@ public class NewLandscapeWizardPropertiesFolderPage extends WizardPage {
 			}
 		}
 		
-		if (configFileText1.getText().trim().length() > 0 && configFileText2.getText().trim().length() > 0 && configFileText1.getText().trim().equals(configFileText2.getText().trim())) {
+		if (0 < configFileText1.getText().trim().length() && 0 < configFileText2.getText().trim().length() && configFileText1.getText().trim().equals(configFileText2.getText().trim())) {
 			setErrorMessage("Same config.xml file cannot be used for both directions");
 			return false;					
 		}
@@ -305,14 +305,14 @@ public class NewLandscapeWizardPropertiesFolderPage extends WizardPage {
 
 	public void setCcfParticipant1(ICcfParticipant ccfParticipant1) {
 		this.ccfParticipant1 = ccfParticipant1;
-		if (fileGroup1 != null) fileGroup1.setText(getGroup1Text());
-		if (fileGroup2 != null) fileGroup2.setText(getGroup2Text());
+		if (null != fileGroup1) fileGroup1.setText(getGroup1Text());
+		if (null != fileGroup2) fileGroup2.setText(getGroup2Text());
 	}
 
 	public void setCcfParticipant2(ICcfParticipant ccfParticipant2) {
 		this.ccfParticipant2 = ccfParticipant2;
-		if (fileGroup1 != null) fileGroup1.setText(getGroup1Text());
-		if (fileGroup2 != null) fileGroup2.setText(getGroup2Text());
+		if (null != fileGroup1) fileGroup1.setText(getGroup1Text());
+		if (null != fileGroup2) fileGroup2.setText(getGroup2Text());
 	}
 
 }

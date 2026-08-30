@@ -75,7 +75,7 @@ public class ChangeProjectMappingDialog extends CcfDialog implements IPageComple
 		}
 		oldXslFileName = status.getXslFileName();
 		oldUsesGraphicalMapping = status.usesGraphicalMapping();
-		if (reverseStatus != null) {
+		if (null != reverseStatus) {
 			oldReverseUsesGraphicalMapping = reverseStatus.usesGraphicalMapping();
 			if (!reverseStatus.isPaused()) {
 				reverseNeedsPause = true;
@@ -99,18 +99,18 @@ public class ChangeProjectMappingDialog extends CcfDialog implements IPageComple
 			pauseLabel.setText("Synchronization will be paused for " + delay + " seconds before project mapping is changed, then resumed automatically.\n\n");		
 		}
 		
-		if (ccfParticipant1 != null) {
+		if (null != ccfParticipant1) {
 			mappingSection1 = ccfParticipant1.getMappingSection(1);
-			if (mappingSection1 != null) {
+			if (null != mappingSection1) {
 				mappingSection1.getComposite(composite, status.getLandscape());
 				mappingSection1.initializeComposite(status, IMappingSection.TYPE_SOURCE);
 				mappingSection1.setProjectPage(this);
 			}
 		}
 		
-		if (ccfParticipant2 != null) {
+		if (null != ccfParticipant2) {
 			mappingSection2 = ccfParticipant2.getMappingSection(2);
-			if (mappingSection2 != null) {
+			if (null != mappingSection2) {
 				mappingSection2.getComposite(composite, status.getLandscape());
 				mappingSection2.initializeComposite(status, IMappingSection.TYPE_TARGET);
 				mappingSection2.setProjectPage(this);
@@ -153,14 +153,14 @@ public class ChangeProjectMappingDialog extends CcfDialog implements IPageComple
 		groupText = new Text(groupGroup, SWT.BORDER);
 		gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.FILL_HORIZONTAL);
 		groupText.setLayoutData(gd);
-		if (status.getGroup() != null) {
+		if (null != status.getGroup()) {
 			groupText.setText(status.getGroup());
 		}
 		groupText.addVerifyListener(new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
 		    	String text = e.text;
 		    	for (int i = 0; i < text.length(); i++) {
-		    		if (text.substring(i, i+1).trim().length() > 0 && !text.substring(i, i+1).matches("\\p{Alnum}+")) {
+		    		if (0 < text.substring(i, i+1).trim().length() && !text.substring(i, i+1).matches("\\p{Alnum}+")) {
 		    			e.doit = false;
 		    			break;
 		    		}
@@ -177,7 +177,7 @@ public class ChangeProjectMappingDialog extends CcfDialog implements IPageComple
 		groupBrowseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {		
 				GroupSelectionDialog dialog = new GroupSelectionDialog(getShell(), database);
-				if (dialog.open() == GroupSelectionDialog.OK) {
+				if (GroupSelectionDialog.OK == dialog.open()) {
 					groupText.setText(dialog.getSelectedGroup());
 				}
 			}			
@@ -244,7 +244,7 @@ public class ChangeProjectMappingDialog extends CcfDialog implements IPageComple
 					newTargetRepositorySchemaToGenericArtifactFileName = status.getTargetRepositorySchemaToGenericArtifactFileName();
 					newMfdFileName = status.getMFDFileName();
 					
-					if (reverseStatus != null && !newXslFileName.equals(oldXslFileName)) {
+					if (null != reverseStatus && !newXslFileName.equals(oldXslFileName)) {
 						Filter reverseSourceSystemFilter = new Filter(CcfDataProvider.SYNCHRONIZATION_STATUS_SOURCE_SYSTEM_ID, reverseStatus.getSourceSystemId(), true);
 						Filter reverseSourceRepositoryFilter = new Filter(CcfDataProvider.SYNCHRONIZATION_STATUS_SOURCE_REPOSITORY_ID, reverseStatus.getSourceRepositoryId(), true);
 						Filter reverseTargetSystemFilter = new Filter(CcfDataProvider.SYNCHRONIZATION_STATUS_TARGET_SYSTEM_ID, reverseStatus.getTargetSystemId(), true);
@@ -262,22 +262,22 @@ public class ChangeProjectMappingDialog extends CcfDialog implements IPageComple
 					if (oldUsesGraphicalMapping) {
 						status.switchToGraphicalMapping();
 					}
-					if (reverseStatus != null && oldReverseUsesGraphicalMapping) {
+					if (null != reverseStatus && oldReverseUsesGraphicalMapping) {
 						reverseStatus.switchToGraphicalMapping();
 					}
 					
 					dataProvider.setFieldMappingMode(status);
-					if (reverseStatus != null) {
+					if (null != reverseStatus) {
 						dataProvider.setFieldMappingMode(reverseStatus);
 					}
 					
-					if (groupText.getText().trim().length() > 0 && !groupText.getText().trim().equals(oldGroup)) {
+					if (0 < groupText.getText().trim().length() && !groupText.getText().trim().equals(oldGroup)) {
 						if (!dataProvider.groupExists(groupText.getText().trim(), database)) {
 							dataProvider.addGroup(groupText.getText().trim(), database);
 						}
 					}
 					Activator.notifyProjectMappingChangeListeners(status);
-					if (reverseStatus != null) {
+					if (null != reverseStatus) {
 						Activator.notifyProjectMappingChangeListeners(reverseStatus);
 					}
 				} catch (Exception e) {
@@ -353,7 +353,7 @@ public class ChangeProjectMappingDialog extends CcfDialog implements IPageComple
 
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
 			okButton.setEnabled(false);
 		}
@@ -361,20 +361,20 @@ public class ChangeProjectMappingDialog extends CcfDialog implements IPageComple
     }
 
 	private boolean canFinish() {
-		if (mappingSection1 != null && !mappingSection1.isPageComplete()) {
+		if (null != mappingSection1 && !mappingSection1.isPageComplete()) {
 			return false;
 		}
-		if (mappingSection2 != null && !mappingSection2.isPageComplete()) {
+		if (null != mappingSection2 && !mappingSection2.isPageComplete()) {
 			return false;
 		}
 		return true;
 	}
 	
 	private boolean validate() {
-		if (mappingSection1 != null && !mappingSection1.validate(status.getLandscape())) {
+		if (null != mappingSection1 && !mappingSection1.validate(status.getLandscape())) {
 			return false;
 		}
-		if (mappingSection2 != null && !mappingSection2.validate(status.getLandscape())) {
+		if (null != mappingSection2 && !mappingSection2.validate(status.getLandscape())) {
 			return false;
 		}		
 		return true;

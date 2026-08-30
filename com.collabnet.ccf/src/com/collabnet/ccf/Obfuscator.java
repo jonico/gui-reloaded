@@ -14,22 +14,22 @@ public class Obfuscator {
 	}
 	
 	private static byte cyclicShiftBitsRight(int b, int i) {
-		if (b < 0) {
+		if (0 > b) {
 			b+=256;
 		}
 		int j = (((b >>> i) % 256) | (b << (8-i)));
-		if (j > 127) {
+		if (127 < j) {
 			j-=256;
 		}
 		return (byte) j;
 	}
 	
 	private static byte cyclicShiftBitsLeft(int b, int i) {
-		if (b < 0) {
+		if (0 > b) {
 			b+=256;
 		}
 		int j = ((b << i) | ((b >>> (8-i)) % 256));
-		if (j > 127) {
+		if (127 < j) {
 			j-=256;
 		}
 		return (byte) j;

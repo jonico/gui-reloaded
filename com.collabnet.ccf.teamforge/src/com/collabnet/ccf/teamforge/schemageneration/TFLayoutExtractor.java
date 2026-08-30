@@ -59,7 +59,7 @@ public class TFLayoutExtractor implements RepositoryLayoutExtractor {
 	}
 
 	private TrackerFieldValueDO[] getPriorityFieldValues() {
-		if (priorityFieldValues == null) {
+		if (null == priorityFieldValues) {
 			// we manually have to create the field info for the priority field
 			List<TrackerFieldValueDO> fieldValues = new ArrayList<TrackerFieldValueDO>();
 			TrackerFieldValueDO fieldValue = new TrackerFieldValueDO(soapClient.supports60(), soapClient.supports50());
@@ -127,7 +127,7 @@ public class TFLayoutExtractor implements RepositoryLayoutExtractor {
 		StringBuffer documentation = new StringBuffer();
 		documentation.append(fieldName + " (" + fieldType + " / "
 				+ fieldValueType + ")\n");
-		if (fieldValues != null && fieldValues.length != 0) {
+		if (null != fieldValues && 0 != fieldValues.length) {
 			documentation.append(" Values: [");
 			Set<String> sortedValues = new TreeSet<String>();
 			for (IFieldValueDO fieldValueSoapDO : fieldValues) {
@@ -228,10 +228,10 @@ public class TFLayoutExtractor implements RepositoryLayoutExtractor {
 	 * @return project id
 	 */
 	public static String extractProjectFromRepositoryId(String repositoryId) {
-		if(repositoryId != null){
+		if(null != repositoryId){
 			String[] splitRepo = repositoryId.split("-");
-			if(splitRepo != null){
-				if(splitRepo.length != 2){
+			if(null != splitRepo){
+				if(2 != splitRepo.length){
 					throw new IllegalArgumentException("Repository id is not valid.");
 				}
 				else {
@@ -382,8 +382,8 @@ public class TFLayoutExtractor implements RepositoryLayoutExtractor {
 				} catch (IllegalArgumentException e) {
 				}
 
-				if (fieldConfig != null
-						&& fieldConfig.getFieldType() == FIELD_TYPE.CONFIGURABLE
+				if (null != fieldConfig
+						&& FIELD_TYPE.CONFIGURABLE == fieldConfig.getFieldType()
 						&& !fieldName.equals(SFEEFields.reportedReleaseId
 								.getFieldName())
 						&& !fieldName.equals(SFEEFields.resolvedReleaseId

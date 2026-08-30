@@ -87,7 +87,7 @@ public class Activator extends AbstractUIPlugin {
      * Returns null if there is no such image.
      */
     public ImageDescriptor getImageDescriptor(String id) {
-    	if (imageDescriptors == null);
+    	if (null == imageDescriptors);
     		this.initializeImages();
 		return (ImageDescriptor) imageDescriptors.get(id);
     }

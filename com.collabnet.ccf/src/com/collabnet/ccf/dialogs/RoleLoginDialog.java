@@ -80,7 +80,7 @@ public class RoleLoginDialog extends CcfDialog {
 
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
 			okButton.setEnabled(false);
 		}

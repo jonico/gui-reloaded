@@ -45,7 +45,7 @@ public class DeletePatientAction extends ActionDelegate {
 				}
 			}			
 		});
-		if (patientsDeleted && HospitalView.getView() != null) {
+		if (patientsDeleted && null != HospitalView.getView()) {
 			HospitalView.getView().refresh();
 		}
 	}	
@@ -54,7 +54,7 @@ public class DeletePatientAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isDeleteHospitalEntry());
 		}
 	}	

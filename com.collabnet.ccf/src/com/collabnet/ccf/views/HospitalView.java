@@ -205,7 +205,7 @@ public class HospitalView extends ViewPart {
 		
 		getSite().setSelectionProvider(tableViewer);	
 		
-		if (recreatingTable && patients != null) {
+		if (recreatingTable && null != patients) {
 			tableViewer.setInput(patients);
 			parentComposite.layout();
 			parentComposite.redraw();
@@ -241,7 +241,7 @@ public class HospitalView extends ViewPart {
 		HospitalView.filters = filters;
 		HospitalView.filtering = filtering;
 		if (filtering) {
-			if (description == null) {
+			if (null == description) {
 				contentDescription = "(Filters Active)";
 			} else {
 				contentDescription = description;
@@ -274,12 +274,12 @@ public class HospitalView extends ViewPart {
 		int sortIndex = 0;
 		boolean sortReversed = false;
 		String sortColumn = settings.get("HospitalView.sortColumn");
-		if (sortColumn != null) {
+		if (null != sortColumn) {
 			int index = columnHeaderList.indexOf(sortColumn);
-			if (index != -1) {
+			if (-1 != index) {
 				String columnName = allColumns.get(index);
 				int nameIndex = selectedColumns.indexOf(columnName);
-				if (nameIndex != -1) {
+				if (-1 != nameIndex) {
 					sortIndex = nameIndex;
 					sortReversed = settings.getBoolean("HospitalView.sortReversed");					
 				}
@@ -312,7 +312,7 @@ public class HospitalView extends ViewPart {
 		DisposeListener disposeListener = new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				TableColumn col = (TableColumn)e.getSource();
-				if (col.getWidth() > 0) settings.put("HospitalView." + col.getText(), col.getWidth()); //$NON-NLS-1$
+				if (0 < col.getWidth()) settings.put("HospitalView." + col.getText(), col.getWidth()); //$NON-NLS-1$
 			}			
 		};
 		
@@ -347,7 +347,7 @@ public class HospitalView extends ViewPart {
 	
 	private void setSortColumn(TableViewer tableViewer, int column) {
 		HospitalSorter oldSorter = (HospitalSorter)tableViewer.getSorter();
-		if (oldSorter != null && column == oldSorter.getColumnNumber()) {
+		if (null != oldSorter && column == oldSorter.getColumnNumber()) {
 			oldSorter.setReversed(!oldSorter.isReversed());
 			if (oldSorter.isReversed()) tableViewer.getTable().setSortDirection(SWT.DOWN);
 			else tableViewer.getTable().setSortDirection(SWT.UP);	
@@ -367,7 +367,7 @@ public class HospitalView extends ViewPart {
 	private void setColumnWidth(TableLayout layout,
 			DisposeListener disposeListener, TableColumn col, int defaultWidth) {
 		String columnWidth = settings.get("HospitalView." + col.getText()); //$NON-NLS-1$
-		if (columnWidth == null || columnWidth.equals("0")) layout.addColumnData(new ColumnWeightData(defaultWidth, true)); //$NON-NLS-1$
+		if (null == columnWidth || columnWidth.equals("0")) layout.addColumnData(new ColumnWeightData(defaultWidth, true)); //$NON-NLS-1$
 		else layout.addColumnData(new ColumnPixelData(Integer.parseInt(columnWidth), true));
 		col.addDisposeListener(disposeListener);
 	}
@@ -405,14 +405,14 @@ public class HospitalView extends ViewPart {
 	private void getPatients() {
 		BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
 			public void run() {
-				if (landscape == null || landscape.getDescription() == null) {
+				if (null == landscape || null == landscape.getDescription()) {
 					landscape = new Landscape();
 					landscape.setDatabaseUrl(Activator.getDefault().getPreferenceStore().getString(Activator.PREFERENCES_DATABASE_URL));
 					landscape.setDatabaseDriver(Activator.getDefault().getPreferenceStore().getString(Activator.PREFERENCES_DATABASE_DRIVER));
 					landscape.setDatabaseUser(Activator.getDefault().getPreferenceStore().getString(Activator.PREFERENCES_DATABASE_USER));
 					landscape.setDatabasePassword(Activator.decodePassword(Activator.getDefault().getPreferenceStore().getString(Activator.PREFERENCES_DATABASE_PASSWORD)));
 				}
-				if (contentDescription == null) setContentDescription("");
+				if (null == contentDescription) setContentDescription("");
 				else setContentDescription(contentDescription);
 				try {
 					if (filtering) patients = dataProvider.getPatients(landscape, filters);
@@ -456,7 +456,7 @@ public class HospitalView extends ViewPart {
 		updateFilterList(filterList, CcfDataProvider.HOSPITAL_TARGET_ARTIFACT_VERSION, true);
 		updateFilterList(filterList, CcfDataProvider.HOSPITAL_ARTIFACT_TYPE, true);
 		updateFilterList(filterList, CcfDataProvider.HOSPITAL_GENERIC_ARTIFACT, true);
-		if (filterList.size() > 0) {
+		if (0 < filterList.size()) {
 			
 			Filter[] previousFilters = new Filter[filterList.size()];
 			filterList.toArray(previousFilters);
@@ -472,7 +472,7 @@ public class HospitalView extends ViewPart {
 	
 	private void updateFilterList(List<Filter> filterList, String columnName, boolean stringValue) {
 		String filterValue = settings.get(Filter.HOSPITAL_FILTER_VALUE + columnName);
-		if (filterValue != null && filterValue.length() > 0) {
+		if (null != filterValue && 0 < filterValue.length()) {
 			Filter filter = new Filter(columnName, filterValue, stringValue, settings.getInt(Filter.HOSPITAL_FILTER_TYPE + columnName));
 			filterList.add(filter);			
 		}
@@ -495,7 +495,7 @@ public class HospitalView extends ViewPart {
 	class HospitalLabelProvider implements ITableLabelProvider {
 
 		public Image getColumnImage(Object element, int columnIndex) {
-			if (columnIndex == 0) {
+			if (0 == columnIndex) {
 				Patient patient = (Patient)element;
 				
 				if (patient.isOutdated()) {
@@ -508,7 +508,7 @@ public class HospitalView extends ViewPart {
 				
 				String errorCode = patient.getErrorCode();
 				if (patient.isFixed()) return Activator.getImage(Activator.IMAGE_HOSPITAL_ENTRY_FIXED);
-				else if (errorCode != null && errorCode.equals("replay")) return Activator.getImage(Activator.IMAGE_HOSPITAL_ENTRY_REPLAY);
+				else if (null != errorCode && errorCode.equals("replay")) return Activator.getImage(Activator.IMAGE_HOSPITAL_ENTRY_REPLAY);
 				else return Activator.getImage(Activator.IMAGE_HOSPITAL_ENTRY);
 			}
 			return null;
@@ -520,37 +520,37 @@ public class HospitalView extends ViewPart {
 			Patient patient = (Patient)element;
 			switch (index) {
 			case 0:
-				if (patient.getId() == 0) return "";
+				if (0 == patient.getId()) return "";
 				else return Integer.toString(patient.getId());
 			case 1:
-				if (patient.getTimeStamp() == null) return "";
+				if (null == patient.getTimeStamp()) return "";
 				else return patient.getTimeStamp();		
 			case 2:
-				if (patient.getExceptionClassName() == null) return "";
+				if (null == patient.getExceptionClassName()) return "";
 				else return patient.getExceptionClassName();
 			case 3:
-				if (patient.getExceptionMessage() == null) return "";
+				if (null == patient.getExceptionMessage()) return "";
 				else return patient.getExceptionMessage();	
 			case 4:
-				if (patient.getCauseExceptionClassName() == null) return "";
+				if (null == patient.getCauseExceptionClassName()) return "";
 				else return patient.getCauseExceptionClassName();
 			case 5:
-				if (patient.getCauseExceptionMessage() == null) return "";
+				if (null == patient.getCauseExceptionMessage()) return "";
 				else return patient.getCauseExceptionMessage();
 			case 6:
-				if (patient.getStackTrace() == null) return "";
+				if (null == patient.getStackTrace()) return "";
 				else return patient.getStackTrace();	
 			case 7:
-				if (patient.getAdaptorName() == null) return "";
+				if (null == patient.getAdaptorName()) return "";
 				else return patient.getAdaptorName();	
 			case 8:
-				if (patient.getOriginatingComponent() == null) return "";
+				if (null == patient.getOriginatingComponent()) return "";
 				else return patient.getOriginatingComponent();	
 			case 9:
-				if (patient.getDataType() == null) return "";
+				if (null == patient.getDataType()) return "";
 				else return patient.getDataType();	
 			case 10:
-				if (patient.getData() == null) return "";
+				if (null == patient.getData()) return "";
 				else return patient.getData();	
 			case 11:
 				if (patient.isFixed()) return "true";
@@ -559,55 +559,55 @@ public class HospitalView extends ViewPart {
 				if (patient.isReprocessed()) return "true";
 				else return "";	
 			case 13:
-				if (patient.getSourceSystemId() == null) return "";
+				if (null == patient.getSourceSystemId()) return "";
 				else return patient.getSourceSystemId();	
 			case 14:
-				if (patient.getSourceRepositoryId() == null) return "";
+				if (null == patient.getSourceRepositoryId()) return "";
 				else return patient.getSourceRepositoryId();
 			case 15:
-				if (patient.getTargetSystemId() == null) return "";
+				if (null == patient.getTargetSystemId()) return "";
 				else return patient.getTargetSystemId();	
 			case 16:
-				if (patient.getTargetRepositoryId() == null) return "";
+				if (null == patient.getTargetRepositoryId()) return "";
 				else return patient.getTargetRepositoryId();	
 			case 17:
-				if (patient.getSourceSystemKind() == null) return "";
+				if (null == patient.getSourceSystemKind()) return "";
 				else return patient.getSourceSystemKind();
 			case 18:
-				if (patient.getSourceRepositoryKind() == null) return "";
+				if (null == patient.getSourceRepositoryKind()) return "";
 				else return patient.getSourceRepositoryKind();	
 			case 19:
-				if (patient.getTargetSystemKind() == null) return "";
+				if (null == patient.getTargetSystemKind()) return "";
 				else return patient.getTargetSystemKind();
 			case 20:
-				if (patient.getTargetRepositoryKind() == null) return "";
+				if (null == patient.getTargetRepositoryKind()) return "";
 				else return patient.getTargetRepositoryKind();	
 			case 21:
-				if (patient.getSourceArtifactId() == null) return "";
+				if (null == patient.getSourceArtifactId()) return "";
 				else return patient.getSourceArtifactId();	
 			case 22:
-				if (patient.getTargetArtifactId() == null) return "";
+				if (null == patient.getTargetArtifactId()) return "";
 				else return patient.getTargetArtifactId();	
 			case 23:
-				if (patient.getErrorCode() == null) return "";
+				if (null == patient.getErrorCode()) return "";
 				else return patient.getErrorCode();
 			case 24:
-				if (patient.getSourceLastModificationTime() == null) return "";
+				if (null == patient.getSourceLastModificationTime()) return "";
 				else return patient.getSourceLastModificationTime().toString();
 			case 25:
-				if (patient.getTargetLastModificationTime() == null) return "";
+				if (null == patient.getTargetLastModificationTime()) return "";
 				else return patient.getTargetLastModificationTime().toString();
 			case 26:
-				if (patient.getSourceArtifactVersion() == null) return "";
+				if (null == patient.getSourceArtifactVersion()) return "";
 				else return patient.getSourceArtifactVersion();
 			case 27:
-				if (patient.getTargetArtifactVersion() == null) return "";
+				if (null == patient.getTargetArtifactVersion()) return "";
 				else return patient.getTargetArtifactVersion();	
 			case 28:
-				if (patient.getArtifactType() == null) return "";
+				if (null == patient.getArtifactType()) return "";
 				else return patient.getArtifactType();	
 			case 29:
-				if (patient.getGenericArtifact() == null) return "";
+				if (null == patient.getGenericArtifact()) return "";
 				else return patient.getGenericArtifact();					
 			default:
 				break;
@@ -655,14 +655,14 @@ public class HospitalView extends ViewPart {
 
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
-			if (e1 == null || e2 == null) return super.compare(viewer, e1, e2);
+			if (null == e1 || null == e2) return super.compare(viewer, e1, e2);
 			
 			Patient p1 = (Patient)e1;
 			Patient p2 = (Patient)e2;
 			int result = 0;
 			
 			result = compareColumnValue(p1, p2);
-			if (result == 0) {
+			if (0 == result) {
 				if (p1.getId() > p2.getId()) result = 1;
 				else if (p2.getId() > p1.getId()) result = -1;
 			}
@@ -779,16 +779,16 @@ public class HospitalView extends ViewPart {
 			case 24:
 				Timestamp ts1 = p1.getSourceLastModificationTime();
 				Timestamp ts2 = p2.getSourceLastModificationTime();
-				if (ts1 == null && ts2 == null) return 0;
-				else if (ts1 == null) return -1;
-				else if (ts2 == null) return 1;
+				if (null == ts1 && null == ts2) return 0;
+				else if (null == ts1) return -1;
+				else if (null == ts2) return 1;
 				else return ts1.compareTo(ts2);
 			case 25:
 				ts1 = p1.getTargetLastModificationTime();
 				ts2 = p2.getTargetLastModificationTime();
-				if (ts1 == null && ts2 == null) return 0;
-				else if (ts1 == null) return -1;
-				else if (ts2 == null) return 1;
+				if (null == ts1 && null == ts2) return 0;
+				else if (null == ts1) return -1;
+				else if (null == ts2) return 1;
 				else return ts1.compareTo(ts2);
 			case 26:
 				value1 = p1.getSourceArtifactVersion();
@@ -809,8 +809,8 @@ public class HospitalView extends ViewPart {
 			default:
 				break;
 			}
-			if (value1 == null) value1 = "";
-			if (value2 == null) value2 = "";
+			if (null == value1) value1 = "";
+			if (null == value2) value2 = "";
 			return value1.compareTo(value2);
 		}
 		
@@ -835,7 +835,7 @@ public class HospitalView extends ViewPart {
 		}
 		public void run() {
 			HospitalFilterDialog dialog = new HospitalFilterDialog(Display.getDefault().getActiveShell(), filters, filtersActive);
-			if (dialog.open() == HospitalFilterDialog.OK) {
+			if (HospitalFilterDialog.OK == dialog.open()) {
 				filtering = dialog.isFiltering();
 				filtersActive = dialog.filtersActive();
 				
@@ -856,7 +856,7 @@ public class HospitalView extends ViewPart {
 		}
 		public void run() {
 			PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(Display.getDefault().getActiveShell(), HospitalPreferencePage.ID, null, null);
-			if (pref != null) pref.open();		
+			if (null != pref) pref.open();		
 		}
 	}
 	
@@ -868,7 +868,7 @@ public class HospitalView extends ViewPart {
 		}
 		public void run() {
 			PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(Display.getDefault().getActiveShell(), CcfPreferencePage.ID, null, null);
-			if (pref != null) pref.open();			
+			if (null != pref) pref.open();			
 		}
 	}
 	
@@ -900,8 +900,8 @@ public class HospitalView extends ViewPart {
 		}
 		
 		public void dragEnter(DropTargetEvent event) {
-			if (event.detail == DND.DROP_DEFAULT) {
-				if ((event.operations & DND.DROP_COPY) != 0) {
+			if (DND.DROP_DEFAULT == event.detail) {
+				if (0 != (event.operations & DND.DROP_COPY)) {
 					event.detail = DND.DROP_COPY;
 				} else {
 					event.detail = DND.DROP_NONE;
@@ -914,7 +914,7 @@ public class HospitalView extends ViewPart {
 		}
 		
 		public void dragOperationChanged(DropTargetEvent event) {
-			if ((event.detail == DND.DROP_DEFAULT) || (event.operations & DND.DROP_COPY) != 0) {
+			if ((DND.DROP_DEFAULT == event.detail) || 0 != (event.operations & DND.DROP_COPY)) {
 
 				event.detail = DND.DROP_COPY;
 			} else {

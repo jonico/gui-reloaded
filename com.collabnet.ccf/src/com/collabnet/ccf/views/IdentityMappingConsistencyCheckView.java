@@ -82,14 +82,14 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 		layoutData.horizontalAlignment = GridData.FILL;
 		layoutData.verticalAlignment = GridData.FILL;
 		treeViewer.getControl().setLayoutData(layoutData);
-		if (landscape != null) getInconsistencies();
+		if (null != landscape) getInconsistencies();
 		treeViewer.setInput(this);
 		treeViewer.setAutoExpandLevel(2);
 		
 		treeViewer.addOpenListener(new IOpenListener() {
 			public void open(OpenEvent se) {
 				IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
-				if (selection != null && selection.size() == 1) {
+				if (null != selection && 1 == selection.size()) {
 					ActionDelegate action = null;
 					if (selection.getFirstElement() instanceof SynchronizationStatus && Activator.getDefault().getActiveRole().isChangeProjectMapping()) {
 						action = new ChangeSynchronizationStatusAction();
@@ -100,16 +100,16 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 					else if (selection.getFirstElement() instanceof Exception) {
 						Exception exception = (Exception)selection.getFirstElement();
 						StringBuffer errorMessage = new StringBuffer("An unexpected error occurred.  Review error log for more details.");
-						if (exception.getLocalizedMessage() != null) {
+						if (null != exception.getLocalizedMessage()) {
 							errorMessage.append("\n\n" + exception.getLocalizedMessage());
 						}
-						if (exception.getCause() != null && exception.getCause().getLocalizedMessage() != null) {
+						if (null != exception.getCause() && null != exception.getCause().getLocalizedMessage()) {
 							errorMessage.append("\n\nCause:\n\n" + exception.getCause().getLocalizedMessage());
 						}
 						Activator.handleError(exception);
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Exception", errorMessage.toString());					
 					}
-					if (action != null) {
+					if (null != action) {
 						action.selectionChanged(null, selection);
 						action.run(null);						
 					}
@@ -147,7 +147,7 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 	}
 	
 	private void getInconsistencies() {
-		if (landscape == null) return;
+		if (null == landscape) return;
 		BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
 			public void run() {
 				CcfDataProvider dataProvider = getDataProvider();
@@ -157,10 +157,10 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 				try {
 					SynchronizationStatus[] allMappings = dataProvider.getSynchronizationStatuses(landscape, null);
 					for (SynchronizationStatus status : allMappings) {
-						if (synchronizationStatus == null || status.equals(synchronizationStatus)) {
+						if (null == synchronizationStatus || status.equals(synchronizationStatus)) {
 							IdentityMappingConsistencyCheck multipleSourceCheck = new IdentityMappingConsistencyCheck(status, IdentityMappingConsistencyCheck.MULTIPLE_SOURCE_TO_ONE_TARGET);
 							IdentityMapping[] inconsistentMappings = dataProvider.getIdentityMappingConsistencyCheckViolations(multipleSourceCheck);
-							if (inconsistentMappings.length > 0) {
+							if (0 < inconsistentMappings.length) {
 								if (!problemProjectMappings.contains(status)) problemProjectMappings.add(status);
 								problemChecks.add(multipleSourceCheck);
 								for (IdentityMapping mapping : inconsistentMappings) {
@@ -169,7 +169,7 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 							}
 							IdentityMappingConsistencyCheck multipleTargetCheck = new IdentityMappingConsistencyCheck(status, IdentityMappingConsistencyCheck.MULTIPLE_TARGET_TO_ONE_SOURCE);
 							inconsistentMappings = dataProvider.getIdentityMappingConsistencyCheckViolations(multipleTargetCheck);
-							if (inconsistentMappings.length > 0) {
+							if (0 < inconsistentMappings.length) {
 								if (!problemProjectMappings.contains(status)) problemProjectMappings.add(status);
 								problemChecks.add(multipleTargetCheck);
 								for (IdentityMapping mapping : inconsistentMappings) {
@@ -178,7 +178,7 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 							}
 							IdentityMappingConsistencyCheck oneWayCheck = new IdentityMappingConsistencyCheck(status, IdentityMappingConsistencyCheck.ONE_WAY);					
 							inconsistentMappings = dataProvider.getIdentityMappingConsistencyCheckViolations(oneWayCheck);
-							if (inconsistentMappings.length > 0) {
+							if (0 < inconsistentMappings.length) {
 								if (!problemProjectMappings.contains(status)) problemProjectMappings.add(status);
 								problemChecks.add(oneWayCheck);
 								for (IdentityMapping mapping : inconsistentMappings) {
@@ -193,8 +193,8 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 					problemChecks.toArray(consistencyChecks);
 					inconsistentIdentityMappings = new IdentityMapping[problemIdentityMappings.size()];
 					problemIdentityMappings.toArray(inconsistentIdentityMappings);
-					if (synchronizationStatus == null) {
-						if (landscape != null) {
+					if (null == synchronizationStatus) {
+						if (null != landscape) {
 							setContentDescription(landscape.getDescription());
 						}
 					} else {
@@ -244,7 +244,7 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 	}
 	
 	public CcfDataProvider getDataProvider() {
-		if (dataProvider == null) dataProvider = new CcfDataProvider();
+		if (null == dataProvider) dataProvider = new CcfDataProvider();
 		return dataProvider;
 	}
 	
@@ -295,7 +295,7 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 		
 		public String getText(Object element) {
 			if (element instanceof Exception) {
-				if (((Exception)element).getMessage() == null) return super.getText(element);
+				if (null == ((Exception)element).getMessage()) return super.getText(element);
 				else return ((Exception)element).getMessage();
 			}
 			else if (element instanceof IdentityMapping) {
@@ -327,8 +327,8 @@ public class IdentityMappingConsistencyCheckView extends ViewPart implements IPr
 		}
 		
 		public Object[] getChildren(Object parentElement) {
-			if (parentElement instanceof IdentityMappingConsistencyCheckView && landscape != null) {
-				if (projectMappings == null || projectMappings.length == 0) {
+			if (parentElement instanceof IdentityMappingConsistencyCheckView && null != landscape) {
+				if (null == projectMappings || 0 == projectMappings.length) {
 					String[] noInconsistencies = { "No inconsistencies found" };
 					return noInconsistencies;
 				} else {

@@ -47,7 +47,7 @@ public class NewLandscapeWizard extends Wizard {
 	
 	public IWizardPage getNextPage(IWizardPage page) {
 		if (page instanceof NewLandscapeWizardMainPage) {
-			if (mainPage.getRole() == Landscape.ROLE_OPERATOR) {
+			if (Landscape.ROLE_OPERATOR == mainPage.getRole()) {
 				return databasePage;
 			} else {
 				return propertiesPage;
@@ -58,7 +58,7 @@ public class NewLandscapeWizard extends Wizard {
 	
 	public boolean canFinish() {
 		if (!mainPage.isPageComplete()) return false;
-		if (mainPage.getRole() == Landscape.ROLE_OPERATOR) {
+		if (Landscape.ROLE_OPERATOR == mainPage.getRole()) {
 			return databasePage.isPageComplete();
 		}
 		return propertiesPage.isPageComplete();
@@ -67,20 +67,20 @@ public class NewLandscapeWizard extends Wizard {
 	@Override
 	public boolean performFinish() {
 		Database database = null;
-		if (mainPage.getRole() == Landscape.ROLE_OPERATOR) {
+		if (Landscape.ROLE_OPERATOR == mainPage.getRole()) {
 			database = new Database();
 			database.setUrl(databasePage.getUrl());
 			database.setDriver(databasePage.getDriver());
 			database.setUser(databasePage.getUser());
 			database.setPassword(databasePage.getPassword());
-			if (mainPage.getGroup() != null) {
+			if (null != mainPage.getGroup()) {
 				addGroupIfNecessary(mainPage.getGroup(), database);
 			}
 		}
 		boolean landscapeAdded = Activator.getDefault().storeLandscape(mainPage.getDescription().replaceAll("/", "%slash%"), mainPage.getRole(), mainPage.getGroup(), database, mainPage.getSelectedParticipant1(), mainPage.getSelectedParticipant2(), propertiesPage.getConfigurationFolder1(), propertiesPage.getConfigurationFolder2());
 		if (landscapeAdded) {
 			newLandscape = Activator.getDefault().getLandscape(mainPage.getDescription());
-			if (CcfExplorerView.getView() != null) {
+			if (null != CcfExplorerView.getView()) {
 				CcfExplorerView.getView().refresh();
 			}
 		}
@@ -88,7 +88,7 @@ public class NewLandscapeWizard extends Wizard {
 	}
 	
 	public boolean isUnique(String description) {
-		if (existingLandscapes == null) {
+		if (null == existingLandscapes) {
 			existingLandscapes = Activator.getDefault().getLandscapes();
 		}
 		for (Landscape checkLandscape : existingLandscapes) {
@@ -119,28 +119,28 @@ public class NewLandscapeWizard extends Wizard {
 	}
 	
 	public String getDatabaseUrl() {
-		if (databasePage == null) {
+		if (null == databasePage) {
 			return Activator.DATABASE_DEFAULT_URL;
 		}
 		return databasePage.getUrl();
 	}
 	
 	public String getDatabaseDriver() {
-		if (databasePage == null) {
+		if (null == databasePage) {
 			return Activator.DATABASE_DEFAULT_DRIVER;
 		}
 		return databasePage.getDriver();
 	}
 	
 	public String getDatabaseUser() {
-		if (databasePage == null) {
+		if (null == databasePage) {
 			return Activator.DATABASE_DEFAULT_USER;
 		}
 		return databasePage.getUser();
 	}
 	
 	public String getDatabasePassword() {
-		if (databasePage == null) {
+		if (null == databasePage) {
 			return Activator.DATABASE_DEFAULT_PASSWORD;
 		}
 		return databasePage.getPassword();

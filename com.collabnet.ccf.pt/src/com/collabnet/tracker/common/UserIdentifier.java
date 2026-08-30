@@ -139,13 +139,13 @@ public class UserIdentifier {
 		StringTokenizer st = new StringTokenizer(userAndDomain, DELIMITER);
 		int numTokens = st.countTokens();
 
-		if (numTokens < 2 || numTokens > 3) {
+		if (2 > numTokens || 3 < numTokens) {
 			throw new IOException("Invlaid UserIdentifier, " + "User and Domain must be specified ");
 		} else {
 			userName = st.nextToken();
 			domain = st.nextToken();
 
-			if (numTokens == 3) {
+			if (3 == numTokens) {
 				project = st.nextToken();
 			}
 		}

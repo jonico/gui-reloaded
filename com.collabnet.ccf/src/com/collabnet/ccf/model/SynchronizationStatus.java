@@ -390,7 +390,7 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	public File getMappingFile(String fileName) {
 		File file = null;
 		File xsltFolder = getXSLTFolder();
-		if (xsltFolder != null) {
+		if (null != xsltFolder) {
 			file = new File(xsltFolder, fileName);
 		}
 		return file;
@@ -409,7 +409,7 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	public boolean mappingFileExists(String fileName) {
 		File file = null;
 		File xsltFolder = getXSLTFolder();
-		if (xsltFolder != null) {
+		if (null != xsltFolder) {
 			file = new File(xsltFolder, fileName);
 			return file.exists();
 		}
@@ -436,9 +436,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public File getSampleXslFile() {
-		if (sampleXslFile == null) {
+		if (null == sampleXslFile) {
 			File xsltFolder = getXSLTFolder();
-			if (xsltFolder != null) {
+			if (null != xsltFolder) {
 				ICcfParticipant sourceParticipant = null;
 				ICcfParticipant targetParticipant = null;
 				try {
@@ -447,10 +447,10 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 				} catch (Exception e) {
 					Activator.handleError(e);
 				}
-				if (sourceParticipant != null && targetParticipant != null) {
+				if (null != sourceParticipant && null != targetParticipant) {
 					String sourceEntityType = sourceParticipant.getEntityType(getSourceRepositoryId());
 					String targetEntityType = targetParticipant.getEntityType(getTargetRepositoryId());
-					if (sourceEntityType != null && targetEntityType != null) {
+					if (null != sourceEntityType && null != targetEntityType) {
 						String sampleFileName = "sample-" + sourceParticipant.getType() + sourceEntityType + "-" + targetParticipant.getType() + targetEntityType + ".xsl";
 						sampleXslFile = new File(xsltFolder, sampleFileName);
 						if (!sampleXslFile.exists()) {
@@ -458,7 +458,7 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 						}
 					}
 				}
-				if (sampleXslFile == null) {
+				if (null == sampleXslFile) {
 					sampleXslFile = new File(xsltFolder,
 							Activator.SAMPLE_XSL_FILE_NAME);
 				}
@@ -470,7 +470,7 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	
 	public File getFallbackCreateInitialMFDFile() {
 		File xsltFolder = getXSLTFolder();
-		if (xsltFolder != null) {
+		if (null != xsltFolder) {
 			return new File(xsltFolder, Activator.CREATE_INITIAL_MFD_FILE_NAME);
 		} else {
 			return null;
@@ -478,9 +478,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public File getCreateInitialMFDFile() {
-		if (createInitialMFDFile == null) {
+		if (null == createInitialMFDFile) {
 			File xsltFolder = getXSLTFolder();
-			if (xsltFolder != null) {
+			if (null != xsltFolder) {
 				ICcfParticipant ccfParticipant = null;
 				String createInitialMFDFileName = Activator.CREATE_INITIAL_MFD_FILE_NAME;
 				try {
@@ -488,7 +488,7 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 				} catch (Exception e) {
 					Activator.handleError(e);
 				}
-				if (ccfParticipant == null) {
+				if (null == ccfParticipant) {
 					createInitialMFDFileName = Activator.CREATE_INITIAL_MFD_FILE_PREFIX
 					+ Activator.CREATE_INITIAL_MFD_FILE_SEPARATOR
 					+ Activator.CREATE_INITIAL_MFD_FILE_UNKNOWN_ENTITY
@@ -502,7 +502,7 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 					Activator.handleError(e);
 					ccfParticipant = null;
 				}
-				if (ccfParticipant == null) {
+				if (null == ccfParticipant) {
 					createInitialMFDFileName = createInitialMFDFileName
 					+ Activator.CREATE_INITIAL_MFD_FILE_UNKNOWN_ENTITY
 					+ Activator.CREATE_INITIAL_MFD_FILE_SUFFIX;					
@@ -519,9 +519,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public File getXslFile() {
-		if (xslFile == null) {
+		if (null == xslFile) {
 			File xsltFolder = getXSLTFolder();
-			if (xsltFolder != null) {
+			if (null != xsltFolder) {
 				xslFile = new File(xsltFolder, getXslFileName());
 			}
 		}
@@ -529,9 +529,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public File getGraphicalXslFile() {
-		if (graphicalXslFile == null) {
+		if (null == graphicalXslFile) {
 			File xsltFolder = getXSLTFolder();
-			if (xsltFolder != null) {
+			if (null != xsltFolder) {
 				graphicalXslFile = new File(xsltFolder,
 						getGraphicalXslFileName());
 			}
@@ -540,9 +540,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public File getSourceRepositorySchemaFile() {
-		if (sourceRepositorySchemaFile == null) {
+		if (null == sourceRepositorySchemaFile) {
 			File xsltFolder = getXSLTFolder();
-			if (xsltFolder != null) {
+			if (null != xsltFolder) {
 				sourceRepositorySchemaFile = new File(xsltFolder,
 						getSourceRepositorySchemaFileName());
 			}
@@ -551,9 +551,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public File getTargetRepositorySchemaFile() {
-		if (targetRepositorySchemaFile == null) {
+		if (null == targetRepositorySchemaFile) {
 			File xsltFolder = getXSLTFolder();
-			if (xsltFolder != null) {
+			if (null != xsltFolder) {
 				targetRepositorySchemaFile = new File(xsltFolder,
 						getTargetRepositorySchemaFileName());
 			}
@@ -562,9 +562,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public File getGenericArtifactToSourceRepositorySchemaFile() {
-		if (genericArtifactToSourceRepositorySchemaFile == null) {
+		if (null == genericArtifactToSourceRepositorySchemaFile) {
 			File xsltFolder = getXSLTFolder();
-			if (xsltFolder != null) {
+			if (null != xsltFolder) {
 				genericArtifactToSourceRepositorySchemaFile = new File(
 						xsltFolder,
 						getGenericArtifactToSourceRepositorySchemaFileName());
@@ -574,9 +574,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public File getGenericArtifactToTargetRepositorySchemaFile() {
-		if (genericArtifactToTargetRepositorySchemaFile == null) {
+		if (null == genericArtifactToTargetRepositorySchemaFile) {
 			File xsltFolder = getXSLTFolder();
-			if (xsltFolder != null) {
+			if (null != xsltFolder) {
 				genericArtifactToTargetRepositorySchemaFile = new File(
 						xsltFolder,
 						getGenericArtifactToTargetRepositorySchemaFileName());
@@ -586,9 +586,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public File getSourceRepositorySchemaToGenericArtifactFile() {
-		if (sourceRepositorySchemaToGenericArtifactFile == null) {
+		if (null == sourceRepositorySchemaToGenericArtifactFile) {
 			File xsltFolder = getXSLTFolder();
-			if (xsltFolder != null) {
+			if (null != xsltFolder) {
 				sourceRepositorySchemaToGenericArtifactFile = new File(
 						xsltFolder,
 						getSourceRepositorySchemaToGenericArtifactFileName());
@@ -598,9 +598,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public File getTargetRepositorySchemaToGenericArtifactFile() {
-		if (targetRepositorySchemaToGenericArtifactFile == null) {
+		if (null == targetRepositorySchemaToGenericArtifactFile) {
 			File xsltFolder = getXSLTFolder();
-			if (xsltFolder != null) {
+			if (null != xsltFolder) {
 				targetRepositorySchemaToGenericArtifactFile = new File(
 						xsltFolder,
 						getTargetRepositorySchemaToGenericArtifactFileName());
@@ -630,9 +630,9 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public ProjectMappings getProjectMappings() {
-		if (projectMappings == null) {
-			if (landscape != null
-					&& landscape.getRole() == Landscape.ROLE_OPERATOR) {
+		if (null == projectMappings) {
+			if (null != landscape
+					&& Landscape.ROLE_OPERATOR == landscape.getRole()) {
 				projectMappings = new ProjectMappings(landscape);
 			} else {
 				projectMappings = new AdministratorProjectMappings(landscape);
@@ -650,7 +650,7 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	}
 
 	public String toString() {
-		if (hospitalEntries > 0)
+		if (0 < hospitalEntries)
 			return sourceRepositoryId + " => " + targetRepositoryId + " ("
 					+ hospitalEntries + ")";
 		else
@@ -681,7 +681,7 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 	public boolean isHiddenMapping() {
 		try {
 			IProjectMappingVisibilityChecker[] visibilityCheckers = Activator.getVisibilityCheckers();
-			if (visibilityCheckers != null && visibilityCheckers.length > 0) {
+			if (null != visibilityCheckers && 0 < visibilityCheckers.length) {
 				for (IProjectMappingVisibilityChecker checker : visibilityCheckers) {
 					if (!checker.isProjectMappingVisible(this)) {
 						return true;
@@ -730,7 +730,7 @@ public class SynchronizationStatus implements IPropertySource, Comparable {
 		if (P_ID_TARGET_REPOSITORY_KIND.equals(id))
 			return targetRepositoryKind;
 		if (P_ID_SOURCE_LAST_MODIFICATION_TIME.equals(id)) {
-			if (sourceLastModificationTime != null)
+			if (null != sourceLastModificationTime)
 				return sourceLastModificationTime.toString();
 		}
 		if (P_ID_SOURCE_LAST_ARTIFACT_VERSION.equals(id))

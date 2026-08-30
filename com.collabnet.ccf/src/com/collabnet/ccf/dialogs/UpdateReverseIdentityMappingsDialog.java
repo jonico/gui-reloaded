@@ -60,7 +60,7 @@ public class UpdateReverseIdentityMappingsDialog extends CcfDialog {
 		composite.setLayout(layout);
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
-		if (reverseUpdates.size() > 0) {
+		if (0 < reverseUpdates.size()) {
 			Group reverseUpdatesGroup = new Group(composite, SWT.NONE);
 			GridLayout reverseUpdatesLayout = new GridLayout();
 			reverseUpdatesLayout.numColumns = 1;
@@ -93,7 +93,7 @@ public class UpdateReverseIdentityMappingsDialog extends CcfDialog {
 			}
 		}
 		
-		if (updates.size() > 0) {
+		if (0 < updates.size()) {
 			Group updatesGroup = new Group(composite, SWT.NONE);
 			GridLayout updatesLayout = new GridLayout();
 			updatesLayout.numColumns = 1;
@@ -133,7 +133,7 @@ public class UpdateReverseIdentityMappingsDialog extends CcfDialog {
 	protected void okPressed() {
 		CcfDataProvider dataProvider = new CcfDataProvider();
 		
-		if (reverseTableViewer != null) {
+		if (null != reverseTableViewer) {
 			reverseUpdates = new ArrayList<Update>();
 			TableItem[] items = reverseTableViewer.getTable().getItems();
 			for (TableItem item : items) {
@@ -141,7 +141,7 @@ public class UpdateReverseIdentityMappingsDialog extends CcfDialog {
 					reverseUpdates.add((Update)item.getData());
 				}
 			}
-			if (reverseUpdates.size() > 0) {			
+			if (0 < reverseUpdates.size()) {			
 				Filter sourceRepositoryIdFilter = new Filter(CcfDataProvider.IDENTITY_MAPPING_SOURCE_REPOSITORY_ID, reverseIdentityMapping.getSourceRepositoryId(), true);
 				Filter targetRepositoryIdFilter = new Filter(CcfDataProvider.IDENTITY_MAPPING_TARGET_REPOSITORY_ID, reverseIdentityMapping.getTargetRepositoryId(), true);
 				Filter sourceArtifactIdFilter = new Filter(CcfDataProvider.IDENTITY_MAPPING_SOURCE_ARTIFACT_ID, reverseIdentityMapping.getSourceArtifactId(), true);
@@ -161,7 +161,7 @@ public class UpdateReverseIdentityMappingsDialog extends CcfDialog {
 			}		
 		}
 		
-		if (updatesTableViewer != null) {
+		if (null != updatesTableViewer) {
 			updates = new ArrayList<Update>();
 			TableItem[] items = updatesTableViewer.getTable().getItems();
 			for (TableItem item : items) {
@@ -169,7 +169,7 @@ public class UpdateReverseIdentityMappingsDialog extends CcfDialog {
 					updates.add((Update)item.getData());
 				}
 			}
-			if (updates.size() > 0) {			
+			if (0 < updates.size()) {			
 				Filter sourceRepositoryIdFilter = new Filter(CcfDataProvider.IDENTITY_MAPPING_SOURCE_REPOSITORY_ID, identityMapping.getSourceRepositoryId(), true);
 				Filter targetRepositoryIdFilter = new Filter(CcfDataProvider.IDENTITY_MAPPING_TARGET_REPOSITORY_ID, identityMapping.getTargetRepositoryId(), true);
 				Filter sourceArtifactIdFilter = new Filter(CcfDataProvider.IDENTITY_MAPPING_SOURCE_ARTIFACT_ID, identityMapping.getSourceArtifactId(), true);
@@ -196,7 +196,7 @@ public class UpdateReverseIdentityMappingsDialog extends CcfDialog {
 		DisposeListener disposeListener = new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				TableColumn col = (TableColumn)e.getSource();
-				if (col.getWidth() > 0) settings.put("UpdateReverseIdentityMappingDialog." + col.getText(), col.getWidth()); //$NON-NLS-1$
+				if (0 < col.getWidth()) settings.put("UpdateReverseIdentityMappingDialog." + col.getText(), col.getWidth()); //$NON-NLS-1$
 			}			
 		};
 	
@@ -204,7 +204,7 @@ public class UpdateReverseIdentityMappingsDialog extends CcfDialog {
 		col.setResizable(true);
 		col.setText("Update");
 		String columnWidth = settings.get("UpdateReverseIdentityMapping." + col.getText()); //$NON-NLS-1$
-		if (columnWidth == null || columnWidth.equals("0")) layout.addColumnData(new ColumnWeightData(800, true)); //$NON-NLS-1$
+		if (null == columnWidth || columnWidth.equals("0")) layout.addColumnData(new ColumnWeightData(800, true)); //$NON-NLS-1$
 		else layout.addColumnData(new ColumnPixelData(Integer.parseInt(columnWidth), true));
 		col.addDisposeListener(disposeListener);
 	}

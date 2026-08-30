@@ -118,7 +118,7 @@ public class CCFJMXMonitorBean {
 	 * @return true if CCF is alive, false if not
 	 */
 	public boolean isAlive() {
-		if (connection == null) {
+		if (null == connection) {
 			try {
 				connect();
 			} catch (IOException e) {
@@ -140,7 +140,7 @@ public class CCFJMXMonitorBean {
 	}
 	
 	private void close() {
-		if (connector != null) {
+		if (null != connector) {
 			try {
 				connection=null;
 				connector.close();

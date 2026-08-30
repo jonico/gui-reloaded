@@ -54,7 +54,7 @@ public class GroupSelectionDialog extends CcfDialog {
 		composite.setLayout(layout);
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
-		if (groups.length == 0) {
+		if (0 == groups.length) {
 			Label noGroupsLabel = new Label(composite, SWT.WRAP);
 			noGroupsLabel.setText("No groups have yet been defined.  Please enter the name of a new group to assign to this Landscape.");
 			GridData gd = new GridData();
@@ -75,7 +75,7 @@ public class GroupSelectionDialog extends CcfDialog {
 				public void verifyText(VerifyEvent e) {
 			    	String text = e.text;
 			    	for (int i = 0; i < text.length(); i++) {
-			    		if (text.substring(i, i+1).trim().length() > 0 && !text.substring(i, i+1).matches("\\p{Alnum}+")) {
+			    		if (0 < text.substring(i, i+1).trim().length() && !text.substring(i, i+1).matches("\\p{Alnum}+")) {
 			    			e.doit = false;
 			    			break;
 			    		}
@@ -120,11 +120,11 @@ public class GroupSelectionDialog extends CcfDialog {
 
 	@Override
 	protected void okPressed() {
-		if (groupText != null) {
+		if (null != groupText) {
 			selectedGroup = groupText.getText().trim();
 			addGroup();
 		}
-		if (groupList != null) {
+		if (null != groupList) {
 			String[] selection = groupList.getSelection();
 			selectedGroup = selection[0];
 		}
@@ -133,7 +133,7 @@ public class GroupSelectionDialog extends CcfDialog {
 	
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
 			okButton.setEnabled(false);
 		}
@@ -141,10 +141,10 @@ public class GroupSelectionDialog extends CcfDialog {
     }
 	
 	private boolean canFinish() {
-		if (groupList != null && groupList.getSelectionCount() > 0) {
+		if (null != groupList && 0 < groupList.getSelectionCount()) {
 			return true;
 		}
-		if (groupText != null && groupText.getText().trim().length() > 0) {
+		if (null != groupText && 0 < groupText.getText().trim().length()) {
 			return true;
 		}
 		return false;

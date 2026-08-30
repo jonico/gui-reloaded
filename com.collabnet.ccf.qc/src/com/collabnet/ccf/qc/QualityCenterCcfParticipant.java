@@ -106,7 +106,7 @@ public class QualityCenterCcfParticipant extends CcfParticipant {
 	
 	public String getUrl(Landscape landscape, int systemNumber) {
 		Properties properties;
-		if (systemNumber == 1) {
+		if (1 == systemNumber) {
 			properties = landscape.getProperties1();
 		} else {
 			properties = landscape.getProperties2();
@@ -165,10 +165,10 @@ public class QualityCenterCcfParticipant extends CcfParticipant {
 
 	public String getEntityType(String repositoryId) {
 		int index = repositoryId.indexOf("-");
-		if (index != -1) {
+		if (-1 != index) {
 			String project = repositoryId.substring(index + 1);
 			index = project.indexOf("-");
-			if (index != -1) {
+			if (-1 != index) {
 				return project.substring(index + 1);
 			}
 		}

@@ -45,7 +45,7 @@ public class MapUsersWizardPage extends WizardPage {
 		
 		getUsers();
 		
-		if (createUserList.size() > 0) {
+		if (0 < createUserList.size()) {
 			Group createGroup = new Group(outerContainer, SWT.NONE);
 			createGroup.setText("Create TeamForge users:");
 			createGroup.setLayout(new GridLayout());
@@ -56,7 +56,7 @@ public class MapUsersWizardPage extends WizardPage {
 			createList.setLayoutData(data);
 		}
 		
-		if (activateUserList.size() > 0) {
+		if (0 < activateUserList.size()) {
 			Group activateGroup = new Group(outerContainer, SWT.NONE);
 			activateGroup.setText("Activate TeamForge users:");
 			activateGroup.setLayout(new GridLayout());
@@ -67,7 +67,7 @@ public class MapUsersWizardPage extends WizardPage {
 			activateList.setLayoutData(data);
 		}
 		
-		if (addProjectMemberList.size() > 0) {
+		if (0 < addProjectMemberList.size()) {
 			Group addGroup = new Group(outerContainer, SWT.NONE);
 			addGroup.setText("Add project members:");
 			addGroup.setLayout(new GridLayout());
@@ -78,7 +78,7 @@ public class MapUsersWizardPage extends WizardPage {
 			addList.setLayoutData(data);
 		}
 		
-		if (createUserList.size() > 0 || activateUserList.size() > 0 || addProjectMemberList.size() > 0) {
+		if (0 < createUserList.size() || 0 < activateUserList.size() || 0 < addProjectMemberList.size()) {
 			refresh(false);
 		}
 
@@ -104,17 +104,17 @@ public class MapUsersWizardPage extends WizardPage {
 	public void refresh(boolean getUsers) {
 		setErrorMessage(null);
 		List<String> duplicateUsers = ((MapUsersWizard)getWizard()).getDuplicateUsers();
-		if (duplicateUsers != null && duplicateUsers.size() > 0) {
+		if (null != duplicateUsers && 0 < duplicateUsers.size()) {
 			setErrorMessage("One or more user could not be created because a similar user name (different case) already exists.");
 		}
 		if (getUsers) {
 			getUsers();
 		}
-		if (createList != null) {
+		if (null != createList) {
 			createList.removeAll();
 			for (User user : createUserList) {
 				String userText;
-				if (duplicateUsers != null && duplicateUsers.contains(user.getUserName())) {
+				if (null != duplicateUsers && duplicateUsers.contains(user.getUserName())) {
 					userText = user.getDisplayName() + " - User name already exists with different case";
 				} else {
 					userText = user.getDisplayName();
@@ -122,13 +122,13 @@ public class MapUsersWizardPage extends WizardPage {
 				createList.add(userText);
 			}
 		}
-		if (activateList != null) {
+		if (null != activateList) {
 			activateList.removeAll();
 			for (UserDO user : activateUserList) {
 				activateList.add(user.getFullName());
 			}
 		}
-		if (addList != null) {
+		if (null != addList) {
 			addList.removeAll();
 			for (User user : addProjectMemberList) {
 				addList.add(user.getDisplayName());
@@ -150,7 +150,7 @@ public class MapUsersWizardPage extends WizardPage {
 				try {
 					monitor.subTask("TeamForge project member list");
 					projectId = ((AbstractMappingWizard)getWizard()).getProject();
-					if (projectId == null) {
+					if (null == projectId) {
 						String trackerId = ((AbstractMappingWizard)getWizard()).getTracker();
 						TrackerDO trackerDO = ((AbstractMappingWizard)getWizard()).getSoapClient().getTrackerInformation(trackerId);
 						projectId = trackerDO.getProjectId();
@@ -166,7 +166,7 @@ public class MapUsersWizardPage extends WizardPage {
 					monitor.subTask("SWP product users");
 					Product product = null;
 					product =  ((MapUsersWizard)getWizard()).getScrumWorksEndpoint().getProductById(getProductId());
-					if (product == null) {
+					if (null == product) {
 						product =  ((MapUsersWizard)getWizard()).getScrumWorksEndpoint().getProductByName(getProduct());
 					}
 					monitor.worked(1);
@@ -174,7 +174,7 @@ public class MapUsersWizardPage extends WizardPage {
 					monitor.worked(1);
 					for (Sprint sprint : sprints) {
 						List<String> sprintUsers = ((AbstractMappingWizard)getWizard()).getScrumWorksEndpoint().getUsersForSprint(sprint.getId());
-						if (sprintUsers != null) {
+						if (null != sprintUsers) {
 							for (String sprintUser : sprintUsers) {
 								if (!productUserList.contains(sprintUser)) {
 									productUserList.add(sprintUser);
@@ -185,14 +185,14 @@ public class MapUsersWizardPage extends WizardPage {
 					monitor.worked(1);
 					List<User> swpUsers = ((AbstractMappingWizard)getWizard()).getScrumWorksEndpoint().getUsers();
 					monitor.worked(1);
-					if (swpUsers != null) {
+					if (null != swpUsers) {
 						for (User swpUser : swpUsers) {
 							if (productUserList.contains(swpUser.getDisplayName())) {
 								UserDO userDO = null;
 								try {
 									userDO = ((AbstractMappingWizard)getWizard()).getSoapClient().getUserData(swpUser.getUserName());
 								} catch (Exception e) {}
-								if (userDO == null) {
+								if (null == userDO) {
 									createUserList.add(swpUser);
 								} else {
 									if (!userDO.getStatus().equals("Active")) {
@@ -219,9 +219,9 @@ public class MapUsersWizardPage extends WizardPage {
 			Activator.handleError(e);
 			getUsersError = e;
 		}
-		if (getUsersError != null) {
+		if (null != getUsersError) {
 			setErrorMessage("An unexpected error occurred while retrieving users.  See error log for details.");
-		} else if (createUserList.size() == 0 && activateUserList.size() == 0 && addProjectMemberList.size() == 0) {
+		} else if (0 == createUserList.size() && 0 == activateUserList.size() && 0 == addProjectMemberList.size()) {
 			setMessage("All " + getProduct() + " users are already members of TeamForge project.");
 		} else {
 			setMessage("Map " + getProduct() + " users to TeamForge.");

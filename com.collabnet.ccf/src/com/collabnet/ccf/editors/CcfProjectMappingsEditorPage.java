@@ -157,11 +157,11 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 		tableViewer1.setContentProvider(new ArrayContentProvider());
 		tableViewer1.setLabelProvider(new ProjectMappingsLabelProvider());
 		
-		if (getLandscape().getRole() == Landscape.ROLE_ADMINISTRATOR) {
+		if (Landscape.ROLE_ADMINISTRATOR == getLandscape().getRole()) {
 			tableViewer1.addOpenListener(new IOpenListener() {
 				public void open(OpenEvent oe) {
 					IStructuredSelection selection = (IStructuredSelection)tableViewer1.getSelection();
-					if (selection != null && selection.size() == 1 && Activator.getDefault().getActiveRole().isChangeProjectMapping()) {
+					if (null != selection && 1 == selection.size() && Activator.getDefault().getActiveRole().isChangeProjectMapping()) {
 						ActionDelegate action = new ChangeSynchronizationStatusAction();
 						action.selectionChanged(null, selection);
 						action.run(null);						
@@ -224,11 +224,11 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 		tableViewer2.setContentProvider(new ArrayContentProvider());
 		tableViewer2.setLabelProvider(new ProjectMappingsLabelProvider());
 		
-		if (getLandscape().getRole() == Landscape.ROLE_ADMINISTRATOR) {
+		if (Landscape.ROLE_ADMINISTRATOR == getLandscape().getRole()) {
 			tableViewer2.addOpenListener(new IOpenListener() {
 				public void open(OpenEvent oe) {
 					IStructuredSelection selection = (IStructuredSelection)tableViewer2.getSelection();
-					if (selection != null && selection.size() == 1 && Activator.getDefault().getActiveRole().isChangeProjectMapping()) {
+					if (null != selection && 1 == selection.size() && Activator.getDefault().getActiveRole().isChangeProjectMapping()) {
 						ActionDelegate action = new ChangeSynchronizationStatusAction();
 						action.selectionChanged(null, selection);
 						action.run(null);						
@@ -302,7 +302,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 		DragSourceListener dragSourceListener1 = new ActiveViewSelectionDragAdapter(tableViewer) {
 			@Override
 			protected boolean isDragable(ISelection selection) {
-				if (selection == null || selection.isEmpty()) return false;
+				if (null == selection || selection.isEmpty()) return false;
 				IStructuredSelection structuredSelection = (IStructuredSelection)selection;
 				return structuredSelection.size() == 1;
 			}			
@@ -324,13 +324,13 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 	}
 	
 	private void fillContextMenu(IMenuManager manager, final TableViewer tableViewer) {	
-		if (getLandscape().getRole() == Landscape.ROLE_ADMINISTRATOR ) {
+		if (Landscape.ROLE_ADMINISTRATOR == getLandscape().getRole() ) {
 			MenuManager sub = new MenuManager("New", IWorkbenchActionConstants.GROUP_ADD); //$NON-NLS-1$
 			Action addProjectMappingAction = new Action("Project Mapping") {	
 				@Override
 				public void run() {
 					ProjectMappings projectMappings = null;
-					if (getLandscape().getRole() == Landscape.ROLE_ADMINISTRATOR) {
+					if (Landscape.ROLE_ADMINISTRATOR == getLandscape().getRole()) {
 						projectMappings = new AdministratorProjectMappings(getLandscape());
 					} else {
 						projectMappings = new ProjectMappings(getLandscape());
@@ -339,13 +339,13 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 					if (tableViewer == tableViewer1) wizard.setDirection(0);
 					else wizard.setDirection(1);
 					String dialogId = null;
-					if (getLandscape() != null) {
+					if (null != getLandscape()) {
 						dialogId = getLandscape().getType1() + "_" + getLandscape().getType2();
 					}
 					WizardDialog dialog = new CustomWizardDialog(Display.getDefault().getActiveShell(), wizard, dialogId);
-					if (dialog.open() == WizardDialog.OK) {
+					if (WizardDialog.OK == dialog.open()) {
 						refresh();
-						if (CcfExplorerView.getView() != null) {
+						if (null != CcfExplorerView.getView()) {
 							CcfExplorerView.getView().refresh(projectMappings);
 						}
 					}					
@@ -360,11 +360,11 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 	
 	private void refresh() {
 		getMappings();
-		if (tableViewer1 != null) {
+		if (null != tableViewer1) {
 			tableViewer1.setInput(direction1Mappings);
 			tableViewer1.refresh();
 		}
-		if (tableViewer2 != null) {
+		if (null != tableViewer2) {
 			tableViewer2.setInput(direction2Mappings);
 			tableViewer2.refresh();
 		}
@@ -382,7 +382,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 				try {
 					SynchronizationStatus[] projectMappings = dataProvider.getSynchronizationStatuses(getLandscape(), null);
 					IProjectMappingVisibilityChecker[] visibilityCheckers = Activator.getVisibilityCheckers();
-					if (visibilityCheckers != null && visibilityCheckers.length > 0) {
+					if (null != visibilityCheckers && 0 < visibilityCheckers.length) {
 						List<SynchronizationStatus> visibleMappingList = new ArrayList<SynchronizationStatus>();
 						for (SynchronizationStatus projectMapping : projectMappings) {
 							boolean visible = true;
@@ -423,7 +423,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 		DisposeListener disposeListener = new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				TableColumn col = (TableColumn)e.getSource();
-				if (col.getWidth() > 0) settings.put("projectMappingTable." + table.getData() + "." + col.getText(), col.getWidth()); //$NON-NLS-1$
+				if (0 < col.getWidth()) settings.put("projectMappingTable." + table.getData() + "." + col.getText(), col.getWidth()); //$NON-NLS-1$
 			}			
 		};
 		
@@ -471,7 +471,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 	private void setColumnWidth(Table table, TableLayout layout,
 			DisposeListener disposeListener, TableColumn col, int defaultWidth) {
 		String columnWidth = settings.get("projectMappingTable." + table.getData() + "." + col.getText()); //$NON-NLS-1$
-		if (columnWidth == null || columnWidth.equals("0")) layout.addColumnData(new ColumnWeightData(defaultWidth, defaultWidth, true)); //$NON-NLS-1$
+		if (null == columnWidth || columnWidth.equals("0")) layout.addColumnData(new ColumnWeightData(defaultWidth, defaultWidth, true)); //$NON-NLS-1$
 		else layout.addColumnData(new ColumnPixelData(Integer.parseInt(columnWidth), true));
 		col.addDisposeListener(disposeListener);
 	}
@@ -487,7 +487,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 	
 	public void setSortColumn(final TableViewer tableViewer, int column) {
 		ProjectMappingsSorter oldSorter = (ProjectMappingsSorter)tableViewer.getSorter();
-		if (oldSorter != null && column == oldSorter.getColumnNumber()) {
+		if (null != oldSorter && column == oldSorter.getColumnNumber()) {
 			oldSorter.setReversed(!oldSorter.isReversed());
 			if (oldSorter.isReversed()) tableViewer.getTable().setSortDirection(SWT.DOWN);
 			else tableViewer.getTable().setSortDirection(SWT.UP);	
@@ -504,7 +504,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 	}
 	
 	public void changed(ProjectMappings projectMappings) {
-		if (projectMappings == null || projectMappings.getLandscape().equals(getLandscape())) {
+		if (null == projectMappings || projectMappings.getLandscape().equals(getLandscape())) {
 			refresh();
 		}
 	}
@@ -512,7 +512,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 	class ProjectMappingsLabelProvider implements ITableLabelProvider {
 
 		public Image getColumnImage(Object element, int columnIndex) {
-			if (columnIndex == 0) {
+			if (0 == columnIndex) {
 				SynchronizationStatus status = (SynchronizationStatus)element;
 				if (status.isPaused())
 					return Activator.getImage(Activator.IMAGE_SYNC_STATUS_ENTRY_PAUSED);
@@ -536,7 +536,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 				value = status.getConflictResolutionPriority();
 				break;
 			case 3:
-				if (status.getSourceLastModificationTime() != null)
+				if (null != status.getSourceLastModificationTime())
 					value = status.getSourceLastModificationTime().toString();
 				break;
 			case 4:
@@ -548,7 +548,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 			default:
 				break;
 			}
-			if (value == null) value = "";
+			if (null == value) value = "";
 			return value;
 		}
 
@@ -588,13 +588,13 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
             SynchronizationStatus s1 = (SynchronizationStatus)o1;
             SynchronizationStatus s2 = (SynchronizationStatus)o2;
 			int result = 0;
-			if (s1 == null || s2 == null) {
+			if (null == s1 || null == s2) {
 				result = super.compare(viewer, o1, o2);
 			} else {
 				int[] columnSortOrder = SORT_ORDERS_BY_COLUMN[columnNumber];;
 				for (int i = 0; i < columnSortOrder.length; ++i) {
 					result = compareColumnValue(columnSortOrder[i], s1, s2);
-					if (result != 0)
+					if (0 != result)
 						break;
 				}
 			}
@@ -608,41 +608,41 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 			String value2 = null;
 			switch (columnNumber) {
 				case 0:
-                    if (s1.getSourceRepositoryId() == null) value1 = ""; //$NON-NLS-1$
+                    if (null == s1.getSourceRepositoryId()) value1 = ""; //$NON-NLS-1$
                     else value1 = s1.getSourceRepositoryId();
-                    if (s2.getSourceRepositoryId() == null) value2 = ""; //$NON-NLS-1$
+                    if (null == s2.getSourceRepositoryId()) value2 = ""; //$NON-NLS-1$
                     else value2 = s2.getSourceRepositoryId();
                     break;
 				case 1:
-                    if (s1.getTargetRepositoryId() == null) value1 = ""; //$NON-NLS-1$
+                    if (null == s1.getTargetRepositoryId()) value1 = ""; //$NON-NLS-1$
                     else value1 = s1.getTargetRepositoryId();
-                    if (s2.getTargetRepositoryId() == null) value2 = ""; //$NON-NLS-1$
+                    if (null == s2.getTargetRepositoryId()) value2 = ""; //$NON-NLS-1$
                     else value2 = s2.getTargetRepositoryId();
                     break;
 				case 2:
-                    if (s1.getConflictResolutionPriority() == null) value1 = ""; //$NON-NLS-1$
+                    if (null == s1.getConflictResolutionPriority()) value1 = ""; //$NON-NLS-1$
                     else value1 = s1.getConflictResolutionPriority();
-                    if (s2.getConflictResolutionPriority() == null) value2 = ""; //$NON-NLS-1$
+                    if (null == s2.getConflictResolutionPriority()) value2 = ""; //$NON-NLS-1$
                     else value2 = s2.getConflictResolutionPriority();
                     break;
 				case 3: /* date */
-					if (s1.getSourceLastModificationTime() == null || s2.getSourceLastModificationTime() == null) {
-						if (s1.getSourceLastModificationTime() == null) value1 = "";
+					if (null == s1.getSourceLastModificationTime() || null == s2.getSourceLastModificationTime()) {
+						if (null == s1.getSourceLastModificationTime()) value1 = "";
 						else value1 = s1.getSourceLastModificationTime().toString();
-						if (s2.getSourceLastModificationTime() == null) value2 = "";
+						if (null == s2.getSourceLastModificationTime()) value2 = "";
 						else value2 = s2.getSourceLastModificationTime().toString();
 					}
 					else return s1.getSourceLastModificationTime().compareTo(s2.getSourceLastModificationTime());
 				case 4:
-                    if (s1.getSourceLastArtifactVersion() == null) value1 = ""; //$NON-NLS-1$
+                    if (null == s1.getSourceLastArtifactVersion()) value1 = ""; //$NON-NLS-1$
                     else value1 = s1.getSourceLastArtifactVersion();
-                    if (s2.getSourceLastArtifactVersion() == null) value2 = ""; //$NON-NLS-1$
+                    if (null == s2.getSourceLastArtifactVersion()) value2 = ""; //$NON-NLS-1$
                     else value2 = s2.getSourceLastArtifactVersion();
                     break;
 				case 5:
-                    if (s1.getSourceLastArtifactId() == null) value1 = ""; //$NON-NLS-1$
+                    if (null == s1.getSourceLastArtifactId()) value1 = ""; //$NON-NLS-1$
                     else value1 = s1.getSourceLastArtifactId();
-                    if (s2.getSourceLastArtifactId() == null) value2 = ""; //$NON-NLS-1$
+                    if (null == s2.getSourceLastArtifactId()) value2 = ""; //$NON-NLS-1$
                     else value2 = s2.getSourceLastArtifactId();
                     break;        
 				default:
@@ -693,14 +693,14 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 			if (delegate == newDelegate) {
 				return;
 			}
-			if (delegate != null) {
+			if (null != delegate) {
 				delegate.removeSelectionChangedListener(selectionListener);
 				if (delegate instanceof IPostSelectionProvider) {
 					((IPostSelectionProvider)delegate).removePostSelectionChangedListener(postSelectionListener);
 				}
 			}
 			delegate = newDelegate;
-			if (newDelegate != null) {
+			if (null != newDelegate) {
 				newDelegate.addSelectionChangedListener(selectionListener);
 				if (newDelegate instanceof IPostSelectionProvider) {
 					((IPostSelectionProvider)newDelegate).addPostSelectionChangedListener(postSelectionListener);
@@ -751,7 +751,7 @@ public class CcfProjectMappingsEditorPage extends CcfEditorPage implements IProj
 		}
 
 		public void setSelection(ISelection selection) {
-			if (delegate != null) {
+			if (null != delegate) {
 				delegate.setSelection(selection);
 			}
 		}

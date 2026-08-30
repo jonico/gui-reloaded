@@ -36,7 +36,7 @@ public class ChangeProjectMappingGroupAction extends ActionDelegate {
 		SynchronizationStatus[] projectMappingArray = new SynchronizationStatus[projectMappingList.size()];
 		projectMappingList.toArray(projectMappingArray);
 		ChangeProjectMappingGroupDialog dialog = new ChangeProjectMappingGroupDialog(Display.getDefault().getActiveShell(), projectMappingArray);
-		if (dialog.open() == ChangeProjectMappingGroupDialog.CANCEL) {
+		if (ChangeProjectMappingGroupDialog.CANCEL == dialog.open()) {
 			return;
 		}
 		for (ProjectMappings projectMappings: projectMappingsList) {
@@ -48,7 +48,7 @@ public class ChangeProjectMappingGroupAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isChangeProjectMapping());
 		}
 	}	

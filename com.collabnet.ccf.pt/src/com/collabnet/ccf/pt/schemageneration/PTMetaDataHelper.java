@@ -42,7 +42,7 @@ public class PTMetaDataHelper {
 	}
 	public static PTMetaDataHelper getInstance(){
 		synchronized(PTMetaDataHelper.class){
-			if(instance == null){
+			if(null == instance){
 				instance = new PTMetaDataHelper();
 			}
 		}
@@ -91,7 +91,7 @@ public class PTMetaDataHelper {
 	public TrackerArtifactType getTrackerArtifactType(String repositoryKey, String artifactTypeNamespace,
 					String artifactTypeTagName, PTrackerWebServicesClient twsclient){
 		ArtifactTypeMetadata meta = getInstance().getArtifactTypeMetadata(repositoryKey);
-		if(meta == null){
+		if(null == meta){
 			meta = this.populateArtifactTypeMetadata(repositoryKey,
 					artifactTypeNamespace, artifactTypeTagName, twsclient);
 		}
@@ -103,7 +103,7 @@ public class PTMetaDataHelper {
 	public TrackerArtifactType getTrackerArtifactType(String key) {
 		ArtifactTypeMetadata meta = getInstance().getArtifactTypeMetadata(key);
 		TrackerArtifactType trackerArtifactType = null;
-		if(meta != null){
+		if(null != meta){
 			TrackerArtifactType newArtifactType =
 				new TrackerArtifactType(meta.getArtifactType().getDisplayName(),
 						meta.getArtifactType().getTagName(),meta.getArtifactType().getNamespace());

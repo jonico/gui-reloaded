@@ -109,7 +109,7 @@ public class TeamForgeCcfParticipant extends CcfParticipant {
 	
 	public String getUrl(Landscape landscape, int systemNumber) {
 		Properties properties;
-		if (systemNumber == 1) {
+		if (1 == systemNumber) {
 			properties = landscape.getProperties1();
 		} else {
 			properties = landscape.getProperties2();

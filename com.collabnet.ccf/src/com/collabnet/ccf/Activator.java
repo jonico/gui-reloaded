@@ -304,7 +304,7 @@ public class Activator extends AbstractUIPlugin {
 	// Initialize the CCF participants by searching the registry for users of the
 	// CCF participants extension point.	
 	public static ICcfParticipant[] getCcfParticipants() throws Exception {
-		if (ccfParticipants == null) {
+		if (null == ccfParticipants) {
 			ArrayList<ICcfParticipant> ccfParticipantList = new ArrayList<ICcfParticipant>();
 			IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 			IConfigurationElement[] configurationElements = extensionRegistry.getConfigurationElementsFor(CCF_PARTICIPANTS);
@@ -318,14 +318,14 @@ public class Activator extends AbstractUIPlugin {
 				ccfParticipant.setDescription(configurationElement.getAttribute("description")); //$NON-NLS-1$
 				ccfParticipant.setPropertiesFileName(configurationElement.getAttribute("propertyFile")); //$NON-NLS-1$
 				String imageKey = configurationElement.getAttribute("image"); //$NON-NLS-1$
-				if (imageKey != null) {
+				if (null != imageKey) {
 					ImageDescriptor imageDescriptor = imageDescriptorFromPlugin(PLUGIN_ID, "icons/" + imageKey); //$NON-NLS-1$
 					Image image = imageDescriptor.createImage();
 					ccfParticipantImages.add(image);
 					ccfParticipant.setImage(image);
 				}
 				String seq = configurationElement.getAttribute("sequence"); //$NON-NLS-1$
-				if (seq != null) ccfParticipant.setSequence(Integer.parseInt(seq));				
+				if (null != seq) ccfParticipant.setSequence(Integer.parseInt(seq));				
 				ccfParticipantList.add(ccfParticipant);
 			}
 			ccfParticipants = new ICcfParticipant[ccfParticipantList.size()];
@@ -365,7 +365,7 @@ public class Activator extends AbstractUIPlugin {
 	public static ICcfParticipant getCcfParticipantForType(String type) throws Exception {
 		String key = type;
 		int pausedIndex = type.indexOf("_paused");
-		if (pausedIndex > -1) {
+		if (-1 < pausedIndex) {
 			key = type.substring(0, pausedIndex);
 		}		
 		ICcfParticipant ccfParticipant = null;
@@ -382,7 +382,7 @@ public class Activator extends AbstractUIPlugin {
 	// Initialize the visibility checkers by searching the registry for users of the
 	// visibility checkers extension point.	
 	public static IProjectMappingVisibilityChecker[] getVisibilityCheckers() throws Exception {
-		if (visibilityCheckers == null) {
+		if (null == visibilityCheckers) {
 			ArrayList<IProjectMappingVisibilityChecker> visibilityCheckerList = new ArrayList<IProjectMappingVisibilityChecker>();
 			IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 			IConfigurationElement[] configurationElements = extensionRegistry.getConfigurationElementsFor(CCF_VISIBILITY_CHECKERS);
@@ -400,7 +400,7 @@ public class Activator extends AbstractUIPlugin {
 	// Initialize the mapping change listeners by searching the registry for users of the
 	// mapping change listeners extension point.	
 	public static IProjectMappingChangeListener[] getMappingChangeListeners() throws Exception {
-		if (mappingChangeListeners == null) {
+		if (null == mappingChangeListeners) {
 			ArrayList<IProjectMappingChangeListener> changeListenerList = new ArrayList<IProjectMappingChangeListener>();
 			IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 			IConfigurationElement[] configurationElements = extensionRegistry.getConfigurationElementsFor(CCF_MAPPING_CHANGE_LISTENERS);
@@ -427,7 +427,7 @@ public class Activator extends AbstractUIPlugin {
 		landscape.setDescription(description);
 		landscape.setRole(role);
 		landscape.setGroup(group);
-		if (database != null) {
+		if (null != database) {
 			landscape.setDatabaseUrl(database.getUrl());
 			landscape.setDatabaseDriver(database.getDriver());
 			landscape.setDatabaseUser(database.getUser());
@@ -447,7 +447,7 @@ public class Activator extends AbstractUIPlugin {
 	
 	public boolean storeRole(Role role) {
 		Preferences prefs = getInstancePreferences().node(PREF_CCF_ROLES_NODE).node(role.getName());
-		if (role.getPassword() == null) {
+		if (null == role.getPassword()) {
 			prefs.put(PREF_CCF_ROLES_PASSWORD, "");
 		} else {
 			prefs.put(PREF_CCF_ROLES_PASSWORD, encode(role.getPassword()));
@@ -489,9 +489,9 @@ public class Activator extends AbstractUIPlugin {
 		prefs.putInt("role", landscape.getRole());
 		prefs.put("type1", landscape.getType1()); //$NON-NLS-1$
 		prefs.put("type2", landscape.getType2()); //$NON-NLS-1$
-		if (landscape.getRole() == Landscape.ROLE_ADMINISTRATOR) {
+		if (Landscape.ROLE_ADMINISTRATOR == landscape.getRole()) {
 			prefs.put("configFolder1", landscape.getConfigurationFolder1()); //$NON-NLS-1$
-			if (landscape.getConfigurationFolder2() != null) prefs.put("configFolder2", landscape.getConfigurationFolder2()); //$NON-NLS-1$
+			if (null != landscape.getConfigurationFolder2()) prefs.put("configFolder2", landscape.getConfigurationFolder2()); //$NON-NLS-1$
 		} else {
 			prefs.put("databaseUrl", landscape.getDatabaseUrl()); //$NON-NLS-1$
 			prefs.put("databaseDriver", landscape.getDatabaseDriver()); //$NON-NLS-1$
@@ -499,13 +499,13 @@ public class Activator extends AbstractUIPlugin {
 			String previousPassword = prefs.get("databasePassword", null);
 			boolean passwordPreviouslyEncoded = previousPassword != null && previousPassword.startsWith(OBFUSCATED_PASSWORD_PREFIX);
 			prefs.put("databasePassword", encodePassword(landscape.getDatabasePassword(), passwordPreviouslyEncoded)); //$NON-NLS-1$	
-			if (landscape.getGroup() != null) prefs.put("group", landscape.getGroup());
-			if (landscape.getCcfHost1() != null) prefs.put("ccfHost1", landscape.getCcfHost1()); //$NON-NLS-1$
-			if (landscape.getCcfHost2() != null) prefs.put("ccfHost2", landscape.getCcfHost2()); //$NON-NLS-1$
-			if (landscape.getLogsPath1() != null) prefs.put("logsPath1", landscape.getLogsPath1()); //$NON-NLS-1$
-			if (landscape.getLogsPath2() != null) prefs.put("logsPath2", landscape.getLogsPath2()); //$NON-NLS-1$
-			if (landscape.getJmxPort1() != null) prefs.put("jmxPort1", landscape.getJmxPort1()); //$NON-NLS-1$
-			if (landscape.getJmxPort2() != null) prefs.put("jmxPort2", landscape.getJmxPort2()); //$NON-NLS-1$
+			if (null != landscape.getGroup()) prefs.put("group", landscape.getGroup());
+			if (null != landscape.getCcfHost1()) prefs.put("ccfHost1", landscape.getCcfHost1()); //$NON-NLS-1$
+			if (null != landscape.getCcfHost2()) prefs.put("ccfHost2", landscape.getCcfHost2()); //$NON-NLS-1$
+			if (null != landscape.getLogsPath1()) prefs.put("logsPath1", landscape.getLogsPath1()); //$NON-NLS-1$
+			if (null != landscape.getLogsPath2()) prefs.put("logsPath2", landscape.getLogsPath2()); //$NON-NLS-1$
+			if (null != landscape.getJmxPort1()) prefs.put("jmxPort1", landscape.getJmxPort1()); //$NON-NLS-1$
+			if (null != landscape.getJmxPort2()) prefs.put("jmxPort2", landscape.getJmxPort2()); //$NON-NLS-1$
 		}
 		prefs.put("participantId1", landscape.getParticipantId1()); //$NON-NLS-1$
 		prefs.put("participantId2", landscape.getParticipantId2()); //$NON-NLS-1$
@@ -520,7 +520,7 @@ public class Activator extends AbstractUIPlugin {
 	
 	public boolean deleteRole(Role role) {
 		Preferences node = role.getNode();
-		if (node != null) {
+		if (null != node) {
 			try {
 				node.removeNode();
 				getInstancePreferences().node(PREF_CCF_ROLES_NODE).flush();
@@ -535,7 +535,7 @@ public class Activator extends AbstractUIPlugin {
 	
 	public boolean deleteLandscape(Landscape landscape) {
 		Preferences node = landscape.getNode();
-		if (node != null) {
+		if (null != node) {
 			try {
 				node.removeNode();
 			} catch (BackingStoreException e) {
@@ -557,9 +557,9 @@ public class Activator extends AbstractUIPlugin {
 	
 	public Role getActiveRole() {
 		String activeRole = getPreferenceStore().getString(Activator.PREFERENCES_ACTIVE_ROLE);
-		if (activeRole != null) {
+		if (null != activeRole) {
 			Preferences node = getInstancePreferences().node(PREF_CCF_ROLES_NODE).node(activeRole);
-			if (node != null) {
+			if (null != node) {
 				return getRole(activeRole, node);
 			}
 		}
@@ -605,7 +605,7 @@ public class Activator extends AbstractUIPlugin {
 				Role role = getRole(childrenNames[i], node);
 				roles.add(role);
 			}
-			if (roles.size() == 0) {
+			if (0 == roles.size()) {
 				Role role = new Role("Default");
 				roles.add(role);
 				getPreferenceStore().setValue(PREFERENCES_ACTIVE_ROLE, "Default");
@@ -627,7 +627,7 @@ public class Activator extends AbstractUIPlugin {
 			for (int i = 0; i < childrenNames.length; i++) {
 				Preferences node = getInstancePreferences().node(PREF_CCF_LANDSCAPES_NODE).node(childrenNames[i]); //$NON-NLS-1$
 				Landscape landscape = null;
-				if (node.getInt("role", Landscape.ROLE_ADMINISTRATOR) == Landscape.ROLE_OPERATOR) {
+				if (Landscape.ROLE_OPERATOR == node.getInt("role", Landscape.ROLE_ADMINISTRATOR)) {
 					landscape = new OperatorLandscape();
 				} else {
 					landscape = new AdministratorLandscape();
@@ -635,7 +635,7 @@ public class Activator extends AbstractUIPlugin {
 				landscape.setDescription(childrenNames[i].replaceAll("%slash%", "/")); //$NON-NLS-1$ //$NON-NLS-2$
 				landscape.setType1(node.get("type1", "")); //$NON-NLS-1$ //$NON-NLS-2$
 				landscape.setType2(node.get("type2", "")); //$NON-NLS-1$ //$NON-NLS-2$				
-				if (landscape.getRole() == Landscape.ROLE_OPERATOR) {
+				if (Landscape.ROLE_OPERATOR == landscape.getRole()) {
 					landscape.setDatabaseUrl(node.get("databaseUrl", DATABASE_DEFAULT_URL)); //$NON-NLS-1$
 					landscape.setDatabaseDriver(node.get("databaseDriver", DATABASE_DEFAULT_DRIVER)); //$NON-NLS-1$
 					landscape.setDatabaseUser(node.get("databaseUser", DATABASE_DEFAULT_USER)); //$NON-NLS-1$
@@ -652,13 +652,13 @@ public class Activator extends AbstractUIPlugin {
 					String defaultJmxPort2 = null;
 					
 					ICcfParticipant ccfParticipant1 = Activator.getCcfParticipantForType(landscape.getType1());
-					if (ccfParticipant1 != null) {
+					if (null != ccfParticipant1) {
 						defaultJmxPort1 = ccfParticipant1.getDefaultJmxPort();
 						landscape.setJmxPort1(node.get("jmxPort1", defaultJmxPort1)); //$NON-NLS-1$
 					}
 					
 					ICcfParticipant ccfParticipant2 = Activator.getCcfParticipantForType(landscape.getType2());
-					if (ccfParticipant2 != null) {
+					if (null != ccfParticipant2) {
 						defaultJmxPort2 = ccfParticipant2.getDefaultJmxPort();
 						landscape.setJmxPort2(node.get("jmxPort2", defaultJmxPort1)); //$NON-NLS-1$
 					}
@@ -669,7 +669,7 @@ public class Activator extends AbstractUIPlugin {
 				landscape.setNode(node);
 				landscape.setParticipantId1(node.get("participantId1", "")); //$NON-NLS-1$ //$NON-NLS-2$
 				landscape.setParticipantId2(node.get("participantId2", "")); //$NON-NLS-1$ //$NON-NLS-2$
-				if (getCcfParticipantForType(landscape.getType1()) != null && getCcfParticipantForType(landscape.getType2()) != null) {
+				if (null != getCcfParticipantForType(landscape.getType1()) && null != getCcfParticipantForType(landscape.getType2())) {
 					landscapes.add(landscape);
 				}
 			}
@@ -693,7 +693,7 @@ public class Activator extends AbstractUIPlugin {
 			boolean switchConfigFolders = false;
 			String folder1 = landscape.getConfigurationFolder1();
 			String folder2 = landscape.getConfigurationFolder2();
-			if (folder1 != null && folder2 != null) {
+			if (null != folder1 && null != folder2) {
 				if (landscape.getType1().equals("QC")) {
 					if (landscape.getType2().equals("TF") || landscape.getType2().equals("PT")) {
 						if (!folder1.endsWith("QC2TF\\config") && !folder1.endsWith("QC2TF\\config\\") &&
@@ -748,7 +748,7 @@ public class Activator extends AbstractUIPlugin {
 						messageException = exception;
 					}
 					String title;
-					if (errorDialogTitle == null) {
+					if (null == errorDialogTitle) {
 						title = "Database Error";
 					} else {
 						title = errorDialogTitle;
@@ -767,7 +767,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 	
 	public static void handleError(String message, Exception exception) {
-		if (message == null) getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, exception.getMessage(), exception));
+		if (null == message) getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, exception.getMessage(), exception));
 		else getDefault().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, message, exception));
 	}
 
@@ -776,7 +776,7 @@ public class Activator extends AbstractUIPlugin {
      * Returns null if there is no such image.
      */
     public ImageDescriptor getImageDescriptor(String id) {
-    	if (imageDescriptors == null);
+    	if (null == imageDescriptors);
     		this.initializeImages();
 		return (ImageDescriptor) imageDescriptors.get(id);
     }
@@ -794,9 +794,9 @@ public class Activator extends AbstractUIPlugin {
 	}
 	
 	public static Image getImage(Landscape landscape) {
-		if (landscape.getRole() == Landscape.ROLE_OPERATOR) return getImage(IMAGE_LANDSCAPE_OPERATOR);
+		if (Landscape.ROLE_OPERATOR == landscape.getRole()) return getImage(IMAGE_LANDSCAPE_OPERATOR);
 		Image image = getImage("landscape_" + landscape.getType1() + "_" + landscape.getType2() + ".gif"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		if (image == null) image = getImage("landscape.gif"); //$NON-NLS-1$
+		if (null == image) image = getImage("landscape.gif"); //$NON-NLS-1$
 		return image;
 	}
 	
@@ -909,14 +909,14 @@ public class Activator extends AbstractUIPlugin {
 	}
 	
 	public static String encode(String string) {
-		if (string == null) {
+		if (null == string) {
 			return null;
 		}
 		return Obfuscator.obfuscateString(string);
 	}
 	
 	private static String decode(String string) {
-		if (string == null) {
+		if (null == string) {
 			return null;
 		}
 		return Obfuscator.deObfuscateString(string);
@@ -925,8 +925,8 @@ public class Activator extends AbstractUIPlugin {
 	public static String encodePassword(String password, boolean previouslyEncoded) {
 		String encodedPassword = password;
 		int encryptPasswords = plugin.getPreferenceStore().getInt(PREFERENCES_ENCRYPT_PASSWORDS);
-		if (encryptPasswords == ENCRYPT_PASSWORDS_ALWAYS || ((encryptPasswords == ENCRYPT_PASSWORDS_IF_PREVIOUSLY_ENCRYPTED) && previouslyEncoded)) {
-			if (encodedPassword != null && encodedPassword.length() > 0) {
+		if (ENCRYPT_PASSWORDS_ALWAYS == encryptPasswords || ((ENCRYPT_PASSWORDS_IF_PREVIOUSLY_ENCRYPTED == encryptPasswords) && previouslyEncoded)) {
+			if (null != encodedPassword && 0 < encodedPassword.length()) {
 				encodedPassword = OBFUSCATED_PASSWORD_PREFIX + encode(encodedPassword);
 			}
 		}
@@ -935,8 +935,8 @@ public class Activator extends AbstractUIPlugin {
 	
 	public static String decodePassword(String password) {
 		String decodedPassword = password;
-		if (decodedPassword != null && decodedPassword.startsWith(OBFUSCATED_PASSWORD_PREFIX)) {
-			if (decodedPassword.length() > 4) {
+		if (null != decodedPassword && decodedPassword.startsWith(OBFUSCATED_PASSWORD_PREFIX)) {
+			if (4 < decodedPassword.length()) {
 				decodedPassword = decode(decodedPassword.substring(4));
 			} else {
 				decodedPassword = "";
@@ -947,7 +947,7 @@ public class Activator extends AbstractUIPlugin {
 	
 	public IProxyService getProxyService() {
 		IProxyService proxyService = null;
-		if (proxyServiceTracker != null) {
+		if (null != proxyServiceTracker) {
 			proxyService = (IProxyService)proxyServiceTracker.getService();
 		}
 		return proxyService;
@@ -955,14 +955,14 @@ public class Activator extends AbstractUIPlugin {
 	
 	public static Proxy getPlatformProxy(String url) {
 		IProxyService service = getDefault().getProxyService();
-		if (service != null && service.isProxiesEnabled()) {
+		if (null != service && service.isProxiesEnabled()) {
 			String host = Proxy.getDomain(url);
 			IProxyData data = null;
 			if (url.toLowerCase().startsWith("https://")) //$NON-NLS-1$
 				data = service.getProxyDataForHost(host, IProxyData.HTTPS_PROXY_TYPE);
 			else
 				data = service.getProxyDataForHost(host, IProxyData.HTTP_PROXY_TYPE);
-			if (data != null && data.getHost() != null) {
+			if (null != data && null != data.getHost()) {
 				return new Proxy(data.getHost(), data.getPort(), data.isRequiresAuthentication(),
 						data.getUserId(), data.getPassword());
 			}

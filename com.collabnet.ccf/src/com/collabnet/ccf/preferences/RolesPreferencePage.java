@@ -181,7 +181,7 @@ public class RolesPreferencePage extends PreferencePage implements IWorkbenchPre
 		addButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
 				NewRoleDialog dialog = new NewRoleDialog(getShell());
-				if (dialog.open() == NewRoleDialog.OK) {
+				if (NewRoleDialog.OK == dialog.open()) {
 					changes = true;
 					final Role newRole = dialog.getRole();
 					List<Role> roleList = new ArrayList<Role>();
@@ -435,7 +435,7 @@ public class RolesPreferencePage extends PreferencePage implements IWorkbenchPre
 		consistencyCheckButton.addSelectionListener(optionListener);
 		maintainRolesButton.addSelectionListener(optionListener);
 		
-		if (activeRole != null) {
+		if (null != activeRole) {
 			roleTableViewer.setSelection(new IStructuredSelection() {
 				public Object getFirstElement() {
 					return activeRole;
@@ -491,7 +491,7 @@ public class RolesPreferencePage extends PreferencePage implements IWorkbenchPre
 		for (Role role : roles) {
 			Activator.getDefault().storeRole(role);
 		}
-		if (activeRole != null) {
+		if (null != activeRole) {
 			Activator.getDefault().getPreferenceStore().setValue(Activator.PREFERENCES_ACTIVE_ROLE, activeRole.getName());
 		}
 		Activator.notifyRoleChanged(Activator.getDefault().getActiveRole());
@@ -525,7 +525,7 @@ public class RolesPreferencePage extends PreferencePage implements IWorkbenchPre
 	
 	@Override
 	public void dispose() {
-		if (italicFont != null) {
+		if (null != italicFont) {
 			if (!italicFont.isDisposed()) italicFont.dispose();
 			italicFont = null;
 		}
@@ -534,7 +534,7 @@ public class RolesPreferencePage extends PreferencePage implements IWorkbenchPre
 
 	private Role[] getRoles() {
 		Role[] storedRoles = Activator.getDefault().getRoles();
-		if (lastActiveRole != null) {
+		if (null != lastActiveRole) {
 			for (Role role : storedRoles) {
 				if (role.getName().equals(lastActiveRole)) {
 					activeRole = role;
@@ -542,7 +542,7 @@ public class RolesPreferencePage extends PreferencePage implements IWorkbenchPre
 				}
 			}
 		}
-		if (lastActiveRole == null && storedRoles.length > 0) {
+		if (null == lastActiveRole && 0 < storedRoles.length) {
 			lastActiveRole = storedRoles[0].getName();
 		}
 		return storedRoles;
@@ -551,10 +551,10 @@ public class RolesPreferencePage extends PreferencePage implements IWorkbenchPre
 	private void setActiveRole() {		
 		IStructuredSelection selection = (IStructuredSelection)roleTableViewer.getSelection();
 		Role role = (Role)selection.getFirstElement();
-		if (activeRole == null || !role.getName().equals(activeRole.getName())) {
+		if (null == activeRole || !role.getName().equals(activeRole.getName())) {
 			if (role.isPasswordRequired()) {
 				RoleLoginDialog dialog = new RoleLoginDialog(getShell(), role);
-				if (dialog.open() != RoleLoginDialog.OK) {
+				if (RoleLoginDialog.OK != dialog.open()) {
 					return;
 				}
 			}
@@ -579,9 +579,9 @@ public class RolesPreferencePage extends PreferencePage implements IWorkbenchPre
 		passwordText.setEnabled(maintainRoles);
 		
 		optionGroup.setEnabled(selection.size() == 1 && maintainRoles);
-		if (selection.size() == 1) {
+		if (1 == selection.size()) {
 			Role role = (Role)selection.getFirstElement();
-			if (role.getPassword() == null) passwordText.setText("");
+			if (null == role.getPassword()) passwordText.setText("");
 			else passwordText.setText(role.getPassword());
 			newLandscapeButton.setSelection(role.isAddLandscape());
 			editLandscapeButton.setSelection(role.isEditLandscape());
@@ -647,7 +647,7 @@ public class RolesPreferencePage extends PreferencePage implements IWorkbenchPre
 		public Font getFont(Object obj) {
 			Role role = (Role)obj;
 			if (role == activeRole) {
-				if (italicFont == null) {
+				if (null == italicFont) {
 					Font defaultFont = JFaceResources.getDefaultFont();
 			        FontData[] data = defaultFont.getFontData();
 			        for (int i = 0; i < data.length; i++) {

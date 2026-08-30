@@ -174,7 +174,7 @@ public abstract class CcfParticipant implements ICcfParticipant {
 		} catch (IOException e) {
 			throw e;
 		} finally {
-			if (out != null) {
+			if (null != out) {
 				try {
 					out.close();
 				} catch (Exception e) {

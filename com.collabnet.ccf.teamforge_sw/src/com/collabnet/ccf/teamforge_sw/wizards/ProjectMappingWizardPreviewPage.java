@@ -185,7 +185,7 @@ public class ProjectMappingWizardPreviewPage extends WizardPage {
 		super.setVisible(visible);
 		if (visible) {		
 			String selectedProjectId = null;
-			if (((ProjectMappingWizard)getWizard()).getSelectedProject() != null) {
+			if (null != ((ProjectMappingWizard)getWizard()).getSelectedProject()) {
 				selectedProjectId = ((ProjectMappingWizard)getWizard()).getSelectedProject().getId();
 				projectDescriptionGroup.setVisible(false);
 				setMessage("Select the conflict resolution option to use for each mapping.");
@@ -193,22 +193,22 @@ public class ProjectMappingWizardPreviewPage extends WizardPage {
 				projectDescriptionGroup.setVisible(true);
 				setMessage("Select the conflict resolution option to use for each mapping and enter a description for the new TeamForge project.");
 			}
-			if (product == null || !product.equals(((ProjectMappingWizard)getWizard()).getSelectedProduct().getName()) ||
-				projectId == null || !projectId.equals(selectedProjectId) ||
-				taskTracker == null || !taskTracker.equals(((ProjectMappingWizard)getWizard()).getSelectedTaskTracker().getId()) ||
-				pbiTracker == null || !pbiTracker.equals(((ProjectMappingWizard)getWizard()).getSelectedPbiTracker().getId())) {
+			if (null == product || !product.equals(((ProjectMappingWizard)getWizard()).getSelectedProduct().getName()) ||
+				null == projectId || !projectId.equals(selectedProjectId) ||
+				null == taskTracker || !taskTracker.equals(((ProjectMappingWizard)getWizard()).getSelectedTaskTracker().getId()) ||
+				null == pbiTracker || !pbiTracker.equals(((ProjectMappingWizard)getWizard()).getSelectedPbiTracker().getId())) {
 				product = ((ProjectMappingWizard)getWizard()).getSelectedProduct().getName();
-				if (((ProjectMappingWizard)getWizard()).getSelectedProject() == null) {
+				if (null == ((ProjectMappingWizard)getWizard()).getSelectedProject()) {
 					projectId = null;
 				} else {
 					projectId = ((ProjectMappingWizard)getWizard()).getSelectedProject().getId();
 				}
-				if (((ProjectMappingWizard)getWizard()).getSelectedTaskTracker() == null) {
+				if (null == ((ProjectMappingWizard)getWizard()).getSelectedTaskTracker()) {
 					taskTracker = null;
 				} else {
 					taskTracker = ((ProjectMappingWizard)getWizard()).getSelectedTaskTracker().getId();
 				}
-				if (((ProjectMappingWizard)getWizard()).getSelectedPbiTracker() == null) {
+				if (null == ((ProjectMappingWizard)getWizard()).getSelectedPbiTracker()) {
 					pbiTracker = null;
 				} else {
 					pbiTracker = ((ProjectMappingWizard)getWizard()).getSelectedPbiTracker().getId();
@@ -310,19 +310,19 @@ public class ProjectMappingWizardPreviewPage extends WizardPage {
 	private void refreshMappings() {
 		ProjectMappingWizard wizard = (ProjectMappingWizard)getWizard();
 		String pbiTracker;
-		if (wizard.getSelectedPbiTracker() == null) {
+		if (null == wizard.getSelectedPbiTracker()) {
 			pbiTracker = "<new tracker id>";
 		} else {
 			pbiTracker = wizard.getSelectedPbiTracker().getId();
 		}
 		String taskTracker;
-		if (wizard.getSelectedTaskTracker() == null) {
+		if (null == wizard.getSelectedTaskTracker()) {
 			taskTracker = "<new tracker id>";
 		} else {
 			taskTracker = wizard.getSelectedTaskTracker().getId();
 		}
 		String project;
-		if (wizard.getSelectedProject() == null) {
+		if (null == wizard.getSelectedProject()) {
 			project = "<new project id>";
 		} else {
 			project = wizard.getSelectedProject().getId();

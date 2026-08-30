@@ -52,19 +52,19 @@ public class CreateReverseIdentityMappingAction extends ActionDelegate {
 	public void selectionChanged(IAction action, ISelection sel) {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
-			if (action != null) action.setEnabled(isEnabledForSelection());
+			if (null != action) action.setEnabled(isEnabledForSelection());
 		}
 	}	
 	
 	@SuppressWarnings("unchecked")
 	private boolean isEnabledForSelection() {
-		if (fSelection == null || !Activator.getDefault().getActiveRole().isCreateReverseIdentityMapping()) return false;
+		if (null == fSelection || !Activator.getDefault().getActiveRole().isCreateReverseIdentityMapping()) return false;
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
 			if (object instanceof InconsistentIdentityMapping) {
 				InconsistentIdentityMapping identityMapping = (InconsistentIdentityMapping)object;
-				if (identityMapping.getType() != InconsistentIdentityMapping.ONE_WAY) return false;
+				if (InconsistentIdentityMapping.ONE_WAY != identityMapping.getType()) return false;
 			}
 		}
 		return true;

@@ -164,71 +164,71 @@ public class IdentityMappingEditorPage extends FormPage {
 	
 	private void createControls(Composite composite) {	
 		artifactType = getIdentityMapping().getArtifactType();
-		if (artifactType == null) artifactType = "";
+		if (null == artifactType) artifactType = "";
 		
 		sourceSystemId = getIdentityMapping().getSourceSystemId();
-		if (sourceSystemId == null) sourceSystemId = "";
+		if (null == sourceSystemId) sourceSystemId = "";
 		sourceRepositoryId = getIdentityMapping().getSourceRepositoryId();
-		if (sourceRepositoryId == null) sourceRepositoryId = "";
+		if (null == sourceRepositoryId) sourceRepositoryId = "";
 		sourceSystemKind = getIdentityMapping().getSourceSystemKind();
-		if (sourceSystemKind == null) sourceSystemKind = "";
+		if (null == sourceSystemKind) sourceSystemKind = "";
 		sourceRepositoryKind = getIdentityMapping().getSourceRepositoryKind();
-		if (sourceRepositoryKind == null) sourceRepositoryKind = "";
+		if (null == sourceRepositoryKind) sourceRepositoryKind = "";
 		sourceArtifactId = getIdentityMapping().getSourceArtifactId();
-		if (sourceArtifactId == null) sourceArtifactId = "";
+		if (null == sourceArtifactId) sourceArtifactId = "";
 		sourceArtifactVersion = getIdentityMapping().getSourceArtifactVersion();
-		if (sourceArtifactVersion == null) sourceArtifactVersion = "";
+		if (null == sourceArtifactVersion) sourceArtifactVersion = "";
 		
-		if (getIdentityMapping().getSourceLastModificationTime() == null) {
+		if (null == getIdentityMapping().getSourceLastModificationTime()) {
 			sourceLastModification = "";
 		} else {
 			sourceLastModification = getIdentityMapping().getSourceLastModificationTime().toString();
 		}
 		
 		targetSystemId = getIdentityMapping().getTargetSystemId();
-		if (targetSystemId == null) targetSystemId = "";
+		if (null == targetSystemId) targetSystemId = "";
 		targetRepositoryId = getIdentityMapping().getTargetRepositoryId();
-		if (targetRepositoryId == null) targetRepositoryId = "";
+		if (null == targetRepositoryId) targetRepositoryId = "";
 		targetSystemKind = getIdentityMapping().getTargetSystemKind();
-		if (targetSystemKind == null) targetSystemKind = "";
+		if (null == targetSystemKind) targetSystemKind = "";
 		targetRepositoryKind = getIdentityMapping().getTargetRepositoryKind();
-		if (targetRepositoryKind == null) targetRepositoryKind = "";
+		if (null == targetRepositoryKind) targetRepositoryKind = "";
 		targetArtifactId = getIdentityMapping().getTargetArtifactId();
-		if (targetArtifactId == null) targetArtifactId = "";
+		if (null == targetArtifactId) targetArtifactId = "";
 		targetArtifactVersion = getIdentityMapping().getTargetArtifactVersion();
-		if (targetArtifactVersion == null) targetArtifactVersion = "";
+		if (null == targetArtifactVersion) targetArtifactVersion = "";
 		
-		if (getIdentityMapping().getTargetLastModificationTime() == null) {
+		if (null == getIdentityMapping().getTargetLastModificationTime()) {
 			targetLastModification = "";
 		} else {
 			targetLastModification = getIdentityMapping().getTargetLastModificationTime().toString();
 		}
 		
 		childSourceRepositoryId = getIdentityMapping().getChildSourceRepositoryId();
-		if (childSourceRepositoryId == null) childSourceRepositoryId = "";
+		if (null == childSourceRepositoryId) childSourceRepositoryId = "";
 		childSourceRepositoryKind = getIdentityMapping().getChildSourceRepositoryKind();
-		if (childSourceRepositoryKind == null) childSourceRepositoryKind = "";
+		if (null == childSourceRepositoryKind) childSourceRepositoryKind = "";
 		childSourceArtifactId = getIdentityMapping().getChildSourceArtifactId();
-		if (childSourceArtifactId == null) childSourceArtifactId = "";
+		if (null == childSourceArtifactId) childSourceArtifactId = "";
 		childTargetRepositoryId = getIdentityMapping().getChildTargetRepositoryId();
-		if (childTargetRepositoryId == null) childTargetRepositoryId = "";
+		if (null == childTargetRepositoryId) childTargetRepositoryId = "";
 		childTargetRepositoryKind = getIdentityMapping().getChildTargetRepositoryKind();
-		if (childTargetRepositoryKind == null) childTargetRepositoryKind = "";
+		if (null == childTargetRepositoryKind) childTargetRepositoryKind = "";
 		childTargetArtifactId = getIdentityMapping().getChildTargetArtifactId();
-		if (childTargetArtifactId == null) childTargetArtifactId = "";
+		if (null == childTargetArtifactId) childTargetArtifactId = "";
 		
 		parentSourceRepositoryId = getIdentityMapping().getParentSourceRepositoryId();
-		if (parentSourceRepositoryId == null) parentSourceRepositoryId = "";
+		if (null == parentSourceRepositoryId) parentSourceRepositoryId = "";
 		parentSourceRepositoryKind = getIdentityMapping().getParentSourceRepositoryKind();
-		if (parentSourceRepositoryKind == null) parentSourceRepositoryKind = "";
+		if (null == parentSourceRepositoryKind) parentSourceRepositoryKind = "";
 		parentSourceArtifactId = getIdentityMapping().getParentSourceArtifactId();
-		if (parentSourceArtifactId == null) parentSourceArtifactId = "";
+		if (null == parentSourceArtifactId) parentSourceArtifactId = "";
 		parentTargetRepositoryId = getIdentityMapping().getParentTargetRepositoryId();
-		if (parentTargetRepositoryId == null) parentTargetRepositoryId = "";
+		if (null == parentTargetRepositoryId) parentTargetRepositoryId = "";
 		parentTargetRepositoryKind = getIdentityMapping().getParentTargetRepositoryKind();
-		if (parentTargetRepositoryKind == null) parentTargetRepositoryKind = "";
+		if (null == parentTargetRepositoryKind) parentTargetRepositoryKind = "";
 		parentTargetArtifactId = getIdentityMapping().getParentTargetArtifactId();
-		if (parentTargetArtifactId == null) parentTargetArtifactId = "";
+		if (null == parentTargetArtifactId) parentTargetArtifactId = "";
 		
 	    Composite headerGroup = toolkit.createComposite(composite);
 	    GridLayout headerLayout = new GridLayout();
@@ -264,7 +264,7 @@ public class IdentityMappingEditorPage extends FormPage {
         
         toolkit.createLabel(typeGroup, "Artifact type:");
         String type;
-        if (artifactType == null) type = "";
+        if (null == artifactType) type = "";
         else type = artifactType;
         artifactTypeText = toolkit.createText(typeGroup, type);
 		GridData gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
@@ -395,35 +395,35 @@ public class IdentityMappingEditorPage extends FormPage {
         
         toolkit.createLabel(sourceSectionClient, "System ID:");
         String systemId = getIdentityMapping().getSourceSystemId();
-        if (systemId == null) systemId = "";
+        if (null == systemId) systemId = "";
         sourceSystemIdText = toolkit.createText(sourceSectionClient, systemId, SWT.BORDER);
         GridData gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         sourceSystemIdText.setLayoutData(gd);        
         
         toolkit.createLabel(sourceSectionClient, "Repository ID:");
         String repositoryId = getIdentityMapping().getSourceRepositoryId();
-        if (repositoryId == null) repositoryId = "";
+        if (null == repositoryId) repositoryId = "";
         sourceRepositoryIdText = toolkit.createText(sourceSectionClient, repositoryId, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         sourceRepositoryIdText.setLayoutData(gd);
 
         toolkit.createLabel(sourceSectionClient, "System kind:");
         String systemKind = getIdentityMapping().getSourceSystemKind();
-        if (systemKind == null) systemKind = "";
+        if (null == systemKind) systemKind = "";
         sourceSystemKindText = toolkit.createText(sourceSectionClient, systemKind, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         sourceSystemKindText.setLayoutData(gd);
         
         toolkit.createLabel(sourceSectionClient, "Repository kind:");
         String repositoryKind = getIdentityMapping().getSourceRepositoryKind();
-        if (repositoryKind == null) repositoryKind = "";
+        if (null == repositoryKind) repositoryKind = "";
         sourceRepositoryKindText = toolkit.createText(sourceSectionClient, repositoryKind, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         sourceRepositoryKindText.setLayoutData(gd);
         
         toolkit.createLabel(sourceSectionClient, "Artifact ID:");
         String artifactId = getIdentityMapping().getSourceArtifactId();
-        if (artifactId == null) artifactId = "";
+        if (null == artifactId) artifactId = "";
         sourceArtifactIdText = toolkit.createText(sourceSectionClient, artifactId, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         sourceArtifactIdText.setLayoutData(gd);
@@ -435,7 +435,7 @@ public class IdentityMappingEditorPage extends FormPage {
         
         toolkit.createLabel(sourceSectionClient, "Artifact version:");
         String artifactVersion = getIdentityMapping().getSourceArtifactVersion();
-        if (artifactVersion == null) artifactVersion = "";
+        if (null == artifactVersion) artifactVersion = "";
         sourceArtifactVersionText = toolkit.createText(sourceSectionClient, artifactVersion, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         sourceArtifactVersionText.setLayoutData(gd);
@@ -464,35 +464,35 @@ public class IdentityMappingEditorPage extends FormPage {
         
         toolkit.createLabel(targetSectionClient, "System ID:");
         String systemId = getIdentityMapping().getTargetSystemId();
-        if (systemId == null) systemId = "";
+        if (null == systemId) systemId = "";
         targetSystemIdText = toolkit.createText(targetSectionClient, systemId, SWT.BORDER);
         GridData gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         targetSystemIdText.setLayoutData(gd);
         
         toolkit.createLabel(targetSectionClient, "Repository ID:");
         String repositoryId = getIdentityMapping().getTargetRepositoryId();
-        if (repositoryId == null) repositoryId = "";
+        if (null == repositoryId) repositoryId = "";
         targetRepositoryIdText = toolkit.createText(targetSectionClient, repositoryId, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         targetRepositoryIdText.setLayoutData(gd);
         
         toolkit.createLabel(targetSectionClient, "System kind:");
         String systemKind = getIdentityMapping().getTargetSystemKind();
-        if (systemKind == null) systemKind = "";
+        if (null == systemKind) systemKind = "";
         targetSystemKindText = toolkit.createText(targetSectionClient, systemKind, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         targetSystemKindText.setLayoutData(gd);
         
         toolkit.createLabel(targetSectionClient, "Repository kind:");
         String repositoryKind = getIdentityMapping().getTargetRepositoryKind();
-        if (repositoryKind == null) repositoryKind = "";
+        if (null == repositoryKind) repositoryKind = "";
         targetRepositoryKindText = toolkit.createText(targetSectionClient, repositoryKind, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         targetRepositoryKindText.setLayoutData(gd);
         
         toolkit.createLabel(targetSectionClient, "Artifact ID:");
         String artifactId = getIdentityMapping().getTargetArtifactId();
-        if (artifactId == null) artifactId = "";
+        if (null == artifactId) artifactId = "";
         targetArtifactIdText = toolkit.createText(targetSectionClient, artifactId, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         targetArtifactIdText.setLayoutData(gd);
@@ -504,7 +504,7 @@ public class IdentityMappingEditorPage extends FormPage {
         
         toolkit.createLabel(targetSectionClient, "Artifact version:");
         String artifactVersion = getIdentityMapping().getTargetArtifactVersion();
-        if (artifactVersion == null) artifactVersion = "";
+        if (null == artifactVersion) artifactVersion = "";
         targetArtifactVersionText = toolkit.createText(targetSectionClient, artifactVersion, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         targetArtifactVersionText.setLayoutData(gd);
@@ -533,42 +533,42 @@ public class IdentityMappingEditorPage extends FormPage {
         
         toolkit.createLabel(parentSectionClient, "Source repository ID:");
         String repositoryId = getIdentityMapping().getParentSourceRepositoryId();
-        if (repositoryId == null) repositoryId = "";
+        if (null == repositoryId) repositoryId = "";
         parentSourceRepositoryIdText = toolkit.createText(parentSectionClient, repositoryId, SWT.BORDER);
         GridData gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         parentSourceRepositoryIdText.setLayoutData(gd);
         
         toolkit.createLabel(parentSectionClient, "Source repository kind:");
         String repositoryKind = getIdentityMapping().getParentSourceRepositoryKind();
-        if (repositoryKind == null) repositoryKind = "";
+        if (null == repositoryKind) repositoryKind = "";
         parentSourceRepositoryKindText = toolkit.createText(parentSectionClient, repositoryKind, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         parentSourceRepositoryKindText.setLayoutData(gd);
         
         toolkit.createLabel(parentSectionClient, "Source artifact ID:");
         String artifactId = getIdentityMapping().getParentSourceArtifactId();
-        if (artifactId == null) artifactId = "";
+        if (null == artifactId) artifactId = "";
         parentSourceArtifactIdText = toolkit.createText(parentSectionClient, artifactId, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         parentSourceArtifactIdText.setLayoutData(gd);
         
         toolkit.createLabel(parentSectionClient, "Target repository ID:");
         repositoryId = getIdentityMapping().getParentTargetRepositoryId();
-        if (repositoryId == null) repositoryId = "";
+        if (null == repositoryId) repositoryId = "";
         parentTargetRepositoryIdText = toolkit.createText(parentSectionClient, repositoryId, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         parentTargetRepositoryIdText.setLayoutData(gd);
         
         toolkit.createLabel(parentSectionClient, "Target repository kind:");
         repositoryKind = getIdentityMapping().getParentTargetRepositoryKind();
-        if (repositoryKind == null) repositoryKind = "";
+        if (null == repositoryKind) repositoryKind = "";
         parentTargetRepositoryKindText = toolkit.createText(parentSectionClient, repositoryKind, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         parentTargetRepositoryKindText.setLayoutData(gd);
         
         toolkit.createLabel(parentSectionClient, "Target artifact ID:");
         artifactId = getIdentityMapping().getParentTargetArtifactId();
-        if (artifactId == null) artifactId = "";
+        if (null == artifactId) artifactId = "";
         parentTargetArtifactIdText = toolkit.createText(parentSectionClient, artifactId, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         parentTargetArtifactIdText.setLayoutData(gd);
@@ -597,42 +597,42 @@ public class IdentityMappingEditorPage extends FormPage {
         
         toolkit.createLabel(childSectionClient, "Source repository ID:");
         String repositoryId = getIdentityMapping().getChildSourceRepositoryId();
-        if (repositoryId == null) repositoryId = "";
+        if (null == repositoryId) repositoryId = "";
         childSourceRepositoryIdText = toolkit.createText(childSectionClient, repositoryId, SWT.BORDER);
         GridData gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         childSourceRepositoryIdText.setLayoutData(gd);
         
         toolkit.createLabel(childSectionClient, "Source repository kind:");
         String repositoryKind = getIdentityMapping().getChildSourceRepositoryKind();
-        if (repositoryKind == null) repositoryKind = "";
+        if (null == repositoryKind) repositoryKind = "";
         childSourceRepositoryKindText = toolkit.createText(childSectionClient, repositoryKind, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         childSourceRepositoryKindText.setLayoutData(gd);
         
         toolkit.createLabel(childSectionClient, "Source artifact ID:");
         String artifactId = getIdentityMapping().getChildSourceArtifactId();
-        if (artifactId == null) artifactId = "";
+        if (null == artifactId) artifactId = "";
         childSourceArtifactIdText = toolkit.createText(childSectionClient, artifactId, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         childSourceArtifactIdText.setLayoutData(gd);
         
         toolkit.createLabel(childSectionClient, "Target repository ID:");
         repositoryId = getIdentityMapping().getChildTargetRepositoryId();
-        if (repositoryId == null) repositoryId = "";
+        if (null == repositoryId) repositoryId = "";
         childTargetRepositoryIdText = toolkit.createText(childSectionClient, repositoryId, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         childTargetRepositoryIdText.setLayoutData(gd);
         
         toolkit.createLabel(childSectionClient, "Target repository kind:");
         repositoryKind = getIdentityMapping().getChildTargetRepositoryKind();
-        if (repositoryKind == null) repositoryKind = "";
+        if (null == repositoryKind) repositoryKind = "";
         childTargetRepositoryKindText = toolkit.createText(childSectionClient, repositoryKind, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         childTargetRepositoryKindText.setLayoutData(gd);
         
         toolkit.createLabel(childSectionClient, "Target artifact ID:");
         artifactId = getIdentityMapping().getChildTargetArtifactId();
-        if (artifactId == null) artifactId = "";
+        if (null == artifactId) artifactId = "";
         childTargetArtifactIdText = toolkit.createText(childSectionClient, artifactId, SWT.BORDER);
         gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
         childTargetArtifactIdText.setLayoutData(gd);
@@ -640,7 +640,7 @@ public class IdentityMappingEditorPage extends FormPage {
 	
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		if (sourceSystemIdText == null) return;
+		if (null == sourceSystemIdText) return;
 		saveError = false;
 		BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
 			public void run() {
@@ -800,25 +800,25 @@ public class IdentityMappingEditorPage extends FormPage {
 	
 	@Override
 	public boolean canLeaveThePage() {
-		if (sourceLastModificationText.getText().trim().length() > 0) {
+		if (0 < sourceLastModificationText.getText().trim().length()) {
 			Timestamp timestamp = null;
 			try {
 				timestamp = Timestamp.valueOf(sourceLastModificationText.getText().trim());
 			} catch (Exception e) {}
-			if (timestamp == null) return false;
+			if (null == timestamp) return false;
 		}
-		if (targetLastModificationText.getText().trim().length() > 0) {
+		if (0 < targetLastModificationText.getText().trim().length()) {
 			Timestamp timestamp = null;
 			try {
 				timestamp = Timestamp.valueOf(targetLastModificationText.getText().trim());
 			} catch (Exception e) {}
-			if (timestamp == null) return false;
+			if (null == timestamp) return false;
 		}
 		return true;
 	}
 	
 	public boolean isDirty() {
-		if (sourceRepositoryIdText == null) return false;
+		if (null == sourceRepositoryIdText) return false;
 		return !sourceRepositoryIdText.getText().trim().equals(sourceRepositoryId) ||
 		!sourceSystemIdText.getText().trim().equals(sourceSystemId) ||
 		!sourceSystemKindText.getText().trim().equals(sourceSystemKind) ||

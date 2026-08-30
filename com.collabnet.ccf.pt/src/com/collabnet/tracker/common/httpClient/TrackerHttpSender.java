@@ -68,7 +68,7 @@ public class TrackerHttpSender extends CommonsHTTPSender {
 		PTrackerWebServicesClient webServicesClient = TrackerClientManager.getInstance().getClient(serverUrl);
 		
 		Proxy proxy = Activator.getPlatformProxy(url.toString());
-		if (proxy != null) {
+		if (null != proxy) {
 			proxy.setProxy(client);
 		}
 		
@@ -84,7 +84,7 @@ public class TrackerHttpSender extends CommonsHTTPSender {
 
 		setupHttpClientParams(client, null);
 
-		if (user != null && password != null) {
+		if (null != user && null != password) {
 			AuthScope authScope = new AuthScope(getDomain(repositoryUrl),
 					getPort(repositoryUrl), AuthScope.ANY_REALM);
 			try {
@@ -118,7 +118,7 @@ public class TrackerHttpSender extends CommonsHTTPSender {
 		String result = repositoryUrl;
 		int colonSlashSlash = repositoryUrl.indexOf("://");
 
-		if (colonSlashSlash >= 0) {
+		if (0 <= colonSlashSlash) {
 			result = repositoryUrl.substring(colonSlashSlash + 3);
 		}
 
@@ -128,11 +128,11 @@ public class TrackerHttpSender extends CommonsHTTPSender {
 		int substringEnd;
 
 		// minimum positive, or string length
-		if (colonPort > 0 && requestPath > 0) {
+		if (0 < colonPort && 0 < requestPath) {
 			substringEnd = Math.min(colonPort, requestPath);
-		} else if (colonPort > 0) {
+		} else if (0 < colonPort) {
 			substringEnd = colonPort;
-		} else if (requestPath > 0) {
+		} else if (0 < requestPath) {
 			substringEnd = requestPath;
 		} else {
 			substringEnd = result.length();
@@ -148,7 +148,7 @@ public class TrackerHttpSender extends CommonsHTTPSender {
 
 	private static Credentials getCredentials(final String username, final String password, final InetAddress address) {
 		int i = username.indexOf("\\");
-		if (i > 0 && i < username.length() - 1 && address != null) {
+		if (0 < i && i < username.length() - 1 && null != address) {
 			return new NTCredentials(username.substring(i + 1), password, address.getHostName(), username.substring(0,
 					i));
 		} else {
@@ -164,17 +164,17 @@ public class TrackerHttpSender extends CommonsHTTPSender {
 		int colonSlashSlash = repositoryUrl.indexOf("://");
 		int firstSlash = repositoryUrl.indexOf("/", colonSlashSlash + 3);
 		int colonPort = repositoryUrl.indexOf(':', colonSlashSlash + 1);
-		if (firstSlash == -1) {
+		if (-1 == firstSlash) {
 			firstSlash = repositoryUrl.length();
 		}
-		if (colonPort < 0 || colonPort > firstSlash) {
+		if (0 > colonPort || colonPort > firstSlash) {
 			return isRepositoryHttps(repositoryUrl) ? HTTPS_PORT : HTTP_PORT;
 		}
 
 		int requestPath = repositoryUrl.indexOf('/', colonPort + 1);
 		int end = requestPath < 0 ? repositoryUrl.length() : requestPath;
 		String port = repositoryUrl.substring(colonPort + 1, end);
-		if (port.length() == 0) {
+		if (0 == port.length()) {
 			return isRepositoryHttps(repositoryUrl) ? HTTPS_PORT : HTTP_PORT;
 		}
 

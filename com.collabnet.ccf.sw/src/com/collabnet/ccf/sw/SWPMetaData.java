@@ -34,7 +34,7 @@ public class SWPMetaData {
 	 * @return SWP entity type
 	 */
 	public static SWPType retrieveSWPTypeFromRepositoryId(String repositoryId) {
-		if (repositoryId == null)
+		if (null == repositoryId)
 			return SWPType.UNKNOWN;
 		if (repositoryId.endsWith(PBI))
 			return SWPType.PBI;
@@ -76,7 +76,7 @@ public class SWPMetaData {
 	 */
 	public final static String retrieveProductFromRepositoryId(String repositoryId) {
 		int index = repositoryId.lastIndexOf(REPOSITORY_ID_SEPARATOR);
-		if (index == -1) {
+		if (-1 == index) {
 			return null;
 		} else {
 			return repositoryId.substring(0, index);
@@ -85,9 +85,9 @@ public class SWPMetaData {
 	
 	public final static Long retrieveProductIdFromRepositoryId(String repositoryId) {
 		Long productId = null;
-		if (repositoryId != null) {
+		if (null != repositoryId) {
 			int index1 = repositoryId.lastIndexOf("(");
-			if (index1 != -1) {
+			if (-1 != index1) {
 				int index2 = repositoryId.lastIndexOf(")");
 				if (index2 > index1 + 1) {
 					try {

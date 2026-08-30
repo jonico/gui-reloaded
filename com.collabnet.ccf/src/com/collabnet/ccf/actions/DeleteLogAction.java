@@ -29,7 +29,7 @@ public class DeleteLogAction extends ActionDelegate {
 			}
 		}
 		String message = null;
-		if (logList.size() == 1) {
+		if (1 == logList.size()) {
 			Log log = logList.get(0);
 			message = "Delete " + log + "?";
 		} else {
@@ -43,7 +43,7 @@ public class DeleteLogAction extends ActionDelegate {
 			log.getLogFile().delete();
 			if (!parents.contains(log.getLogs())) parents.add(log.getLogs());
 		}
-		if (CcfExplorerView.getView() != null) {
+		if (null != CcfExplorerView.getView()) {
 			for (Logs logs : parents) {
 				CcfExplorerView.getView().refresh(logs);
 			}

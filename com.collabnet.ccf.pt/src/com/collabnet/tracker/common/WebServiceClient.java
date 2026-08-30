@@ -56,7 +56,7 @@ public class WebServiceClient {
 		mUserName = user;
 		mPassword = password;
 		mURL = url;
-		if (password == null || password.length() == 0)
+		if (null == password || 0 == password.length())
 			mSecurityToken = "ws-sec-ext";
 		else
 			mSecurityToken = "ws-sec-min";
@@ -110,7 +110,7 @@ public class WebServiceClient {
 				+ "value=\"{Element}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd}UsernameToken\" />"
 				+ "</handler>" + "</requestFlow>" + "</globalConfiguration >" + "</deployment>";
 
-		if (type == MINIMUM_SECURITY) {
+		if (MINIMUM_SECURITY == type) {
 			return minConfigString;
 		} else {
 			return extendedConfigString;
@@ -134,11 +134,11 @@ public class WebServiceClient {
 			endPos--;
 		}
 		int colPos = host.indexOf(':');
-		if (colPos != -1) {
+		if (-1 != colPos) {
 			endPos = colPos;
 		}
 		mProjectName = host.substring(0, dotPos);
-		if (mDomainName == null) {
+		if (null == mDomainName) {
 			mDomainName = host.substring(dotPos + 1, endPos);
 		}
 	}
@@ -173,7 +173,7 @@ public class WebServiceClient {
 	 * @return one of MINIMUM_SECURITY, EXTENDED_SECURITY or COMPLETE_SECURITY
 	 */
 	private int getSecurityType() {
-		if (mSecurityToken == null) {
+		if (null == mSecurityToken) {
 			return MINIMUM_SECURITY;
 		} else if (mSecurityToken.equals("ws-sec-min")) {
 			return MINIMUM_SECURITY;

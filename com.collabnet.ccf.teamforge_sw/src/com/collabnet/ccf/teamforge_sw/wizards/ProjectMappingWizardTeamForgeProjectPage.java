@@ -76,7 +76,7 @@ public class ProjectMappingWizardTeamForgeProjectPage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 				if (newProjectButton.getSelection()) {
 					viewer.getTable().deselectAll();
-					if (newProjectText.getText().trim().length() == 0) {
+					if (0 == newProjectText.getText().trim().length()) {
 						newProjectText.setFocus();
 					}
 				}
@@ -128,16 +128,16 @@ public class ProjectMappingWizardTeamForgeProjectPage extends WizardPage {
 	
 	@Override
 	public void setVisible(boolean visible) {
-		if (visible && projects == null && !projectsRetrieved) {
+		if (visible && null == projects && !projectsRetrieved) {
 			projectsRetrieved = true;
 			getProjects();
 			viewer.refresh();
 		}
 		if (visible) {
-			if (selectedProduct == null || !selectedProduct.equals(((ProjectMappingWizard)getWizard()).getSelectedProduct().getName())) {
+			if (null == selectedProduct || !selectedProduct.equals(((ProjectMappingWizard)getWizard()).getSelectedProduct().getName())) {
 				selectedProduct = ((ProjectMappingWizard)getWizard()).getSelectedProduct().getName();
 				newProjectText.setText(selectedProduct);
-				if (projects != null) {
+				if (null != projects) {
 					for (int i = 0; i < projects.length; i++) {
 						if (projects[i].getTitle().equals(selectedProduct)) {
 							table.select(i);
@@ -163,7 +163,7 @@ public class ProjectMappingWizardTeamForgeProjectPage extends WizardPage {
 	}
 	
 	private boolean canFinish() {
-		if (projectTitles == null) {
+		if (null == projectTitles) {
 			return false;
 		}
 		setErrorMessage(null);
@@ -173,7 +173,7 @@ public class ProjectMappingWizardTeamForgeProjectPage extends WizardPage {
 		if (!newProjectButton.getSelection() && selection.isEmpty()) {
 			pageComplete = false;
 		}
-		else if (newProjectButton.getSelection() && newProjectText.getText().trim().length() == 0) {
+		else if (newProjectButton.getSelection() && 0 == newProjectText.getText().trim().length()) {
 			pageComplete = false;
 		} else {
 			pageComplete = true;
@@ -222,7 +222,7 @@ public class ProjectMappingWizardTeamForgeProjectPage extends WizardPage {
 			getProjectsError = e;
 		}
 		
-		if (getProjectsError != null) {
+		if (null != getProjectsError) {
 			setErrorMessage("An unexpected error occurred while getting TeamForge projects.  See error log for details.");
 		}
 
@@ -251,7 +251,7 @@ public class ProjectMappingWizardTeamForgeProjectPage extends WizardPage {
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		}
 		public Object[] getElements(Object obj) {
-			if (projects == null) {
+			if (null == projects) {
 				return new ProjectRow[0];
 			}
 			return projects;

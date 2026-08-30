@@ -63,7 +63,7 @@ public class NewProjectMappingWizardMainPage extends WizardPage {
 		system1ToSystem2Button = new Button(directionGroup, SWT.RADIO);
 
 		if (projectMappings.getLandscape().getType1().equals(projectMappings.getLandscape().getType2())) {
-			if (projectMappings.getLandscape().getRole() == Landscape.ROLE_ADMINISTRATOR) {
+			if (Landscape.ROLE_ADMINISTRATOR == projectMappings.getLandscape().getRole()) {
 				String url1 = projectMappings.getLandscape().getUrl(1);
 				String url2 = projectMappings.getLandscape().getUrl(2);
 				system2ToSystem1Button.setText(Landscape.getTypeDescription(projectMappings.getLandscape().getType2()) + " (" + url2 + ") => " + Landscape.getTypeDescription(projectMappings.getLandscape().getType1()) + " (" + url1 + ")");			
@@ -80,7 +80,7 @@ public class NewProjectMappingWizardMainPage extends WizardPage {
 		bothButton = new Button(directionGroup, SWT.RADIO);
 		bothButton.setText("Create mappings for both directions");
 		
-		if (direction == -1) {
+		if (-1 == direction) {
 			try {
 				direction = settings.getInt(PREVIOUS_DIRECTION);
 			} catch (Exception e) {

@@ -45,7 +45,7 @@ public class MapUsersWizard extends AbstractMappingWizard {
 		final List<UserDO> activateUserList = wizardPage.getActivateUserList();
 		final List<User> createUserList = wizardPage.getCreateUserList();
 		final List<User> addProjectMemberList = wizardPage.getAddProjectMemberList();
-		if (activateUserList.size() == 0 && createUserList.size() == 0 && addProjectMemberList.size() == 0) {
+		if (0 == activateUserList.size() && 0 == createUserList.size() && 0 == addProjectMemberList.size()) {
 			return true;
 		}
 		errors = false;
@@ -61,7 +61,7 @@ public class MapUsersWizard extends AbstractMappingWizard {
 					for (User swpUser : createUserList) {
 						monitor.subTask("Creating " + swpUser.getUserName());
 						String email = swpUser.getEmail();
-						if (email == null) {
+						if (null == email) {
 							email = swpUser.getUserName() + "@default.com";
 						}
 						String locale = "en";
@@ -105,7 +105,7 @@ public class MapUsersWizard extends AbstractMappingWizard {
 						}
 						monitor.worked(1);
 					}
-					if (newUsers != null && newUsers.size() > 0) {
+					if (null != newUsers && 0 < newUsers.size()) {
 						createRole(wizardPage.getProjectId(), newUsers, monitor);
 					}
 				} catch (Exception e) {
@@ -123,7 +123,7 @@ public class MapUsersWizard extends AbstractMappingWizard {
 			MessageDialog.openError(getShell(), "Map Users", e.getMessage());
 			return false;
 		}
-		if (errors || duplicateUsers.size() > 0) {
+		if (errors || 0 < duplicateUsers.size()) {
 			wizardPage.refresh(true);
 			if (errors) {
 				MessageDialog.openWarning(getShell(), "Map Users", "One or more error occurred mapping ScrumWorks users to TeamForge.  See error log for details.");
@@ -147,7 +147,7 @@ public class MapUsersWizard extends AbstractMappingWizard {
 				break;
 			}
 		}
-		if (roleId == null) {
+		if (null == roleId) {
 			RoleDO roleDO = getSoapClient().createRole(projectId, ProjectMappingWizard.PRODUCT_DEVELOPER_ROLE_TITLE, ProjectMappingWizard.PRODUCT_DEVELOPER_ROLE_DESCRIPTION);
 			roleId = roleDO.getId();
 			getSoapClient().addCluster(roleId, RbacClient.TRACKER_CREATE, "");

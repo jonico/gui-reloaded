@@ -163,12 +163,12 @@ public class ClientXMLOperationError {
 	}
 
 	private String getTextValue(Node node) {
-		if (node == null)
+		if (null == node)
 			return null;
 		StringBuffer b = new StringBuffer();
-		if (node.getNodeType() == Node.TEXT_NODE) {
+		if (Node.TEXT_NODE == node.getNodeType()) {
 			return ((Text) node).getData();
-		} else if (node.getNodeType() == Node.CDATA_SECTION_NODE) {
+		} else if (Node.CDATA_SECTION_NODE == node.getNodeType()) {
 			return ((CDATASection) node).getData();
 		} else {
 			Node child = node.getFirstChild();

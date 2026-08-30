@@ -45,7 +45,7 @@ public class SynchronizeThemesWizard extends AbstractMappingWizard {
 
 	@Override
 	public boolean performFinish() {
-		if (wizardPage.getAddedValues().size() == 0 && wizardPage.getDeletedValues().size() == 0) {
+		if (0 == wizardPage.getAddedValues().size() && 0 == wizardPage.getDeletedValues().size()) {
 			return true;
 		}
 		error = null;
@@ -104,13 +104,13 @@ public class SynchronizeThemesWizard extends AbstractMappingWizard {
 			MessageDialog.openError(getShell(), "Synchronize Themes", e.getMessage());
 			return false;
 		}
-		if (error != null) {
+		if (null != error) {
 			Activator.handleError(error);
 			MessageDialog.openError(getShell(), "Synchronize Themes", error.getMessage());
 			return false;
 		}
 		wizardPage.refresh(true);
-		if (couldNotBeDeletedList.size() > 0) {
+		if (0 < couldNotBeDeletedList.size()) {
 			MessageDialog.openWarning(getShell(), "Synchronize Themes", "One or more theme could not be removed from tracker because it is used by one or more artifact.");
 			return false;
 		}
@@ -120,7 +120,7 @@ public class SynchronizeThemesWizard extends AbstractMappingWizard {
 	private int getInsertIndex(List<TrackerFieldValueDO> updatedValuesList, TrackerFieldValueDO insertedValue) {
 		int index = 0;
 		for (TrackerFieldValueDO fieldValue : updatedValuesList) {
-			if (fieldValue.getValue().compareTo(insertedValue.getValue()) > 0) {
+			if (0 < fieldValue.getValue().compareTo(insertedValue.getValue())) {
 				break;
 			}
 			index++;
@@ -129,18 +129,18 @@ public class SynchronizeThemesWizard extends AbstractMappingWizard {
 	}
 	
 	public String getValue(Theme theme) throws MalformedURLException, ScrumWorksException {
-		if (programMap == null) {
+		if (null == programMap) {
 			programMap = new HashMap<Long, Program>();
 		}
 		Program program = null;
-		if (theme.getProgramId() != null) {
+		if (null != theme.getProgramId()) {
 			program = programMap.get(theme.getProgramId());
-			if (program == null) {
+			if (null == program) {
 				program = getScrumWorksEndpoint().getProgramById(theme.getProgramId());
 				programMap.put(theme.getProgramId(), program);
 			}
 		}
-		if (program == null) {
+		if (null == program) {
 			return theme.getName();
 		} else {
 			return theme.getName() + " (" + program.getName() + ")";

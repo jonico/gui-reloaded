@@ -40,7 +40,7 @@ public class HospitalAction extends ActionDelegate {
 				}
 				try {
 					HospitalView.setLandscape(landscape);
-					if (status == null) {
+					if (null == status) {
 						
 // TODO: Support for OR filtering.
 						

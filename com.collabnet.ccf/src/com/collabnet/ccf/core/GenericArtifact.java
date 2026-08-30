@@ -910,7 +910,7 @@ public class GenericArtifact {
 	public GenericArtifactField addNewField(String fieldName, String fieldType) {
 		GenericArtifactField genericArtifactField = new GenericArtifactField(
 				fieldName, fieldType);
-		if (allFieldList == null) {
+		if (null == allFieldList) {
 			allFieldList = new ArrayList<GenericArtifactField>();
 		}
 		allFieldList.add(genericArtifactField);
@@ -1032,7 +1032,7 @@ public class GenericArtifact {
 			String fieldType, String fieldName) {
 		HashMap<String, List<GenericArtifactField>> allGenericArtifactFieldsWithSameFieldTypeMap = fieldTypeFieldNameHashMap
 				.get(fieldType);
-		if (allGenericArtifactFieldsWithSameFieldTypeMap == null) {
+		if (null == allGenericArtifactFieldsWithSameFieldTypeMap) {
 			return null;
 		} else {
 			return allGenericArtifactFieldsWithSameFieldTypeMap.get(fieldName);
@@ -1069,7 +1069,7 @@ public class GenericArtifact {
 	 */
 	public void setErrorCode(String errorCode) {
 		this.errorCode = errorCode;
-		if (sourceDocument != null) {
+		if (null != sourceDocument) {
 			sourceDocument.getRootElement().addAttribute(
 					GenericArtifactHelper.ERROR_CODE, errorCode);
 		}

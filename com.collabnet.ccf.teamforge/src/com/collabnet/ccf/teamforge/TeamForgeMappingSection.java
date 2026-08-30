@@ -72,9 +72,9 @@ public class TeamForgeMappingSection extends MappingSection {
 		GridData gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
 		tfGroup.setLayoutData(gd);	
 		if (landscape.getType1().equals("TF") && landscape.getType2().equals("TF")) {
-			if (landscape.getRole() == Landscape.ROLE_ADMINISTRATOR) {
+			if (Landscape.ROLE_ADMINISTRATOR == landscape.getRole()) {
 				String url;
-				if (getSystemNumber() == 1) {
+				if (1 == getSystemNumber()) {
 					url = landscape.getProperties1().getProperty(TeamForgeCcfParticipant.PROPERTIES_SFEE_URL);
 				} else {
 					url = landscape.getProperties2().getProperty(TeamForgeCcfParticipant.PROPERTIES_SFEE_URL);
@@ -136,17 +136,17 @@ public class TeamForgeMappingSection extends MappingSection {
 				else type = TeamForgeSelectionDialog.BROWSER_TYPE_TRACKER;
 
 				TeamForgeSelectionDialog dialog = new TeamForgeSelectionDialog(Display.getDefault().getActiveShell(), landscape, type, getSystemNumber());
-				if (dialog.open() == TeamForgeSelectionDialog.OK) {
+				if (TeamForgeSelectionDialog.OK == dialog.open()) {
 					teamForgeText.setText(dialog.getSelectedId());
 				}
 			}			
 		});
-		if (landscape.getRole() == Landscape.ROLE_OPERATOR) {
+		if (Landscape.ROLE_OPERATOR == landscape.getRole()) {
 			teamForgeBrowseButton.setVisible(false);
 		}
 		ModifyListener modifyListener = new ModifyListener() {
 			public void modifyText(ModifyEvent me) {
-				if (getProjectPage() != null) {
+				if (null != getProjectPage()) {
 					getProjectPage().setPageComplete();
 				}
 			}			
@@ -156,7 +156,7 @@ public class TeamForgeMappingSection extends MappingSection {
 		SelectionListener typeListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
 				setPlanningFoldersSelected(planningFoldersButton.getSelection());
-				if (getProjectPage() != null) {
+				if (null != getProjectPage()) {
 					getProjectPage().setPageComplete();
 				}
 				teamForgeText.setFocus();
@@ -193,24 +193,24 @@ public class TeamForgeMappingSection extends MappingSection {
 	}
 
 	public boolean isPageComplete() {
-		if (teamForgeText == null) {
+		if (null == teamForgeText) {
 			return false;
 		}
 		if (planningFoldersButton.getSelection()) {
 			if (!teamForgeText.getText().trim().startsWith("proj")) return false;
-			if (teamForgeText.getText().trim().length() < 5) return false;
+			if (5 > teamForgeText.getText().trim().length()) return false;
 		} else {
 			if (!teamForgeText.getText().trim().startsWith("tracker")) return false;
-			if (teamForgeText.getText().trim().length() < 8) return false;
+			if (8 > teamForgeText.getText().trim().length()) return false;
 		}
 		return true;
 	}
 
 	public boolean validate(Landscape landscape) {
-		if (landscape.getRole() == Landscape.ROLE_ADMINISTRATOR) {
+		if (Landscape.ROLE_ADMINISTRATOR == landscape.getRole()) {
 			return true;
 		}
-		if (planningFoldersButton != null && planningFoldersButton.getSelection()) {
+		if (null != planningFoldersButton && planningFoldersButton.getSelection()) {
 			Properties properties = null;
 			switch (getSystemNumber()) {
 			case 1:
@@ -222,7 +222,7 @@ public class TeamForgeMappingSection extends MappingSection {
 			default:
 				break;
 			}
-			if (properties != null) {
+			if (null != properties) {
 				String serverUrl = properties.getProperty(Activator.PROPERTIES_SFEE_URL);
 				String userId = properties.getProperty(Activator.PROPERTIES_SFEE_USER);
 				String password = Activator.decodePassword(properties.getProperty(Activator.PROPERTIES_SFEE_PASSWORD));
@@ -237,7 +237,7 @@ public class TeamForgeMappingSection extends MappingSection {
 	}
 	
 	private void setPlanningFoldersSelected(boolean planningFoldersSelected) {
-		if (teamForgeLabel != null) {
+		if (null != teamForgeLabel) {
 			if (planningFoldersSelected) {
 				teamForgeLabel.setText("Project ID: ");
 			} else {
@@ -253,13 +253,13 @@ public class TeamForgeMappingSection extends MappingSection {
 	
 	private String getTrackerId(SynchronizationStatus projectMapping, int type) {
 		String trackerId;
-		if (type == IMappingSection.TYPE_SOURCE) {
+		if (IMappingSection.TYPE_SOURCE == type) {
 			trackerId = projectMapping.getSourceRepositoryId();
 		} else {
 			trackerId = projectMapping.getTargetRepositoryId();
 		}
 		int index = trackerId.indexOf("-");
-		if (index != -1) {
+		if (-1 != index) {
 			trackerId = trackerId.substring(0, index);
 		}
 		return trackerId;

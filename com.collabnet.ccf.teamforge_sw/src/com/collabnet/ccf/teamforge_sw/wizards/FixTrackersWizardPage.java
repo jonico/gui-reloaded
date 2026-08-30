@@ -392,7 +392,7 @@ public class FixTrackersWizardPage extends WizardPage {
 	}
 	
 	private boolean hasPbiProblems() {
-		if (pbiTracker == null) {
+		if (null == pbiTracker) {
 			return false;
 		}
 		return pbiGroupEnabled ||
@@ -413,7 +413,7 @@ public class FixTrackersWizardPage extends WizardPage {
 	}
 	
 	private boolean hasTaskProblems() {
-		if (taskTracker == null) {
+		if (null == taskTracker) {
 			return false;
 		}
 		return taskGroupEnabled ||
@@ -470,7 +470,7 @@ public class FixTrackersWizardPage extends WizardPage {
 		final TFSoapClient soapClient = wizard.getSoapClient();
 		pbiProblemsToFix = new ArrayList<TrackerProblem>();
 		taskProblemsToFix = new ArrayList<TrackerProblem>();
-		if (pbiTable != null) {
+		if (null != pbiTable) {
 			TableItem[] items = pbiTable.getItems();
 			for (TableItem item : items) {
 				if (item.getChecked()) {
@@ -479,7 +479,7 @@ public class FixTrackersWizardPage extends WizardPage {
 				}
 			}
 		}
-		if (taskTable != null) {
+		if (null != taskTable) {
 			TableItem[] items = taskTable.getItems();
 			for (TableItem item : items) {
 				if (item.getChecked()) {
@@ -663,7 +663,7 @@ public class FixTrackersWizardPage extends WizardPage {
 			Activator.handleError(e);
 			fixProblemsError = e;
 		}
-		if (fixProblemsError != null) {
+		if (null != fixProblemsError) {
 			setErrorMessage("An unexpected error occurred while trying to fix TeamForge trackers.  See error log for details.");
 		}
 		return fixProblemsError == null;
@@ -704,18 +704,18 @@ public class FixTrackersWizardPage extends WizardPage {
 							taskTrackerId = mapping.getSourceRepositoryId();
 							mapToAssignedToUser = mapping.getSourceRepositoryKind().equals(ScrumWorksMappingSection.TEMPLATE_TASKS);
 						}
-						if (pbiTrackerId != null && taskTrackerId != null) {
+						if (null != pbiTrackerId && null != taskTrackerId) {
 							break;
 						}
 					}
-					if (pbiTrackerId != null) {
+					if (null != pbiTrackerId) {
 						pbiTracker = wizard.getSoapClient().getTrackerInformation(pbiTrackerId);
 					}
-					if (taskTrackerId != null) {
+					if (null != taskTrackerId) {
 						taskTracker = wizard.getSoapClient().getTrackerInformation(taskTrackerId);
 					}
 					monitor.worked(1);
-					if (pbiTrackerId != null) {
+					if (null != pbiTrackerId) {
 						monitor.subTask("Checking PBI tracker fields");
 						TrackerFieldDO[] fields = wizard.getSoapClient().getFields(pbiTrackerId);
 						for (TrackerFieldDO field : fields) {
@@ -825,7 +825,7 @@ public class FixTrackersWizardPage extends WizardPage {
 						backlogEffortExists = true; // Story points used instead
 					}
 					monitor.worked(1);
-					if (taskTrackerId != null) {
+					if (null != taskTrackerId) {
 						monitor.subTask("Checking Task tracker fields");
 						TrackerFieldDO[] fields = wizard.getSoapClient().getFields(taskTrackerId);
 						for (TrackerFieldDO field : fields) {
@@ -919,7 +919,7 @@ public class FixTrackersWizardPage extends WizardPage {
 			checkTrackersError = e;
 		}
 
-		if (checkTrackersError != null) {
+		if (null != checkTrackersError) {
 			setErrorMessage("An unexpected error occurred while checking TeamForge trackers.  See error log for details.");
 		} else if (!hasPbiProblems() && !hasTaskProblems()) {
 			setMessage("No problems found with TeamForge trackers.");
@@ -960,16 +960,16 @@ public class FixTrackersWizardPage extends WizardPage {
 			swpTimezone = landscape.getTimezone2();
 		}
 		List<Sprint> sprints = getSprints(wizard.getProductId());
-		if (sprints != null) {
+		if (null != sprints) {
 			for (Sprint sprint : sprints) {
 				Team team = teamMap.get(sprint.getTeamId());
-				if (team == null) {
+				if (null == team) {
 					team = getTeam(sprint.getTeamId());
-					if (team != null) {
+					if (null != team) {
 						teamMap.put(sprint.getTeamId(), team);
 					}
 				}
-				if (team != null) {
+				if (null != team) {
 					teamSprintList.add(com.collabnet.ccf.teamforge_sw.Activator.getTeamSprintStringRepresentation(sprint, team, swpTimezone));
 				}
 			}
@@ -992,7 +992,7 @@ public class FixTrackersWizardPage extends WizardPage {
 		List<String> themeList = new ArrayList<String>();
 		FixTrackersWizard wizard = (FixTrackersWizard)getWizard();
 		List<Theme> themes = getThemes(wizard.getProductId());
-		if (themes != null) {
+		if (null != themes) {
 			for (Theme theme : themes) {
 				themeList.add(getValue(theme));
 			}
@@ -1004,18 +1004,18 @@ public class FixTrackersWizardPage extends WizardPage {
 	}
 	
 	private String getValue(Theme theme) throws MalformedURLException, ScrumWorksException {
-		if (programMap == null) {
+		if (null == programMap) {
 			programMap = new HashMap<Long, Program>();
 		}
 		Program program = null;
-		if (theme.getProgramId() != null) {
+		if (null != theme.getProgramId()) {
 			program = programMap.get(theme.getProgramId());
-			if (program == null) {
+			if (null == program) {
 				program = getScrumWorksEndpoint().getProgramById(theme.getProgramId());
 				programMap.put(theme.getProgramId(), program);
 			}
 		}
-		if (program == null) {
+		if (null == program) {
 			return theme.getName();
 		} else {
 			return theme.getName() + " (" + program.getName() + ")";
@@ -1027,7 +1027,7 @@ public class FixTrackersWizardPage extends WizardPage {
 	}
 	
 	private ScrumWorksAPIService getScrumWorksEndpoint() throws MalformedURLException {
-		if (scrumWorksEndpoint == null) {
+		if (null == scrumWorksEndpoint) {
 			FixTrackersWizard wizard = (FixTrackersWizard)getWizard();
 			scrumWorksEndpoint = com.collabnet.ccf.sw.Activator.getScrumWorksEndpoint(wizard.getProjectMapping().getLandscape());
 		}
@@ -1071,7 +1071,7 @@ public class FixTrackersWizardPage extends WizardPage {
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		}
 		public Object[] getElements(Object obj) {
-			if (trackerProblems == null) {
+			if (null == trackerProblems) {
 				return new TrackerProblem[0];
 			}
 			TrackerProblem[] problemArray = new TrackerProblem[trackerProblems.size()];

@@ -125,7 +125,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 		
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
-				if (okButton != null) {
+				if (null != okButton) {
 					okButton.setEnabled(canFinish());
 				}
 			}		
@@ -146,7 +146,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 		Object firstSelection = selection.getFirstElement();
 		if (firstSelection instanceof Project) {
 			Project project = (Project)firstSelection;
-			if (project.getInternalName() == null) {
+			if (null == project.getInternalName()) {
 				projectName = project.getName();
 			} else {
 				projectName = project.getInternalName();
@@ -169,7 +169,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
 			okButton.setEnabled(false);
 		}
@@ -180,7 +180,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 		IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
 		if (selection.isEmpty()) return false;
 		Object firstSelection = selection.getFirstElement();
-		if (type == BROWSER_TYPE_PROJECT) return (firstSelection instanceof Project);
+		if (BROWSER_TYPE_PROJECT == type) return (firstSelection instanceof Project);
 		else return (!(firstSelection instanceof Project));
 	}
 
@@ -197,7 +197,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 			projects = new Project[projectRows.length];
 			for (int i = 0; i < projectRows.length; i++) {
 				String internalName;
-				if (projectRows[i].getPath() == null || !projectRows[i].getPath().startsWith("projects.")) {
+				if (null == projectRows[i].getPath() || !projectRows[i].getPath().startsWith("projects.")) {
 					internalName = projectRows[i].getTitle();
 				} else {
 					internalName = projectRows[i].getPath().substring(9);
@@ -208,7 +208,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 			Activator.handleError(e);
 			ExceptionDetailsErrorDialog.openError(getShell(), title, e.getMessage(), new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getLocalizedMessage(), e));
 		}
-		if (projects == null) return new Project[0];
+		if (null == projects) return new Project[0];
 		else return projects;
 	}
 	
@@ -224,7 +224,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 						projects[i++] = new Project(null, null, projectName, getProjectUrl(projectName));
 					}
 				} catch (Exception e) {
-					if (e.getMessage() != null && e.getMessage().indexOf("could not find a target service") != -1) {
+					if (null != e.getMessage() && -1 != e.getMessage().indexOf("could not find a target service")) {
 						projects = getTeamForgeProjects();
 					} else {
 						Activator.handleError(e);
@@ -233,7 +233,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 				}
 			}
 		});
-		if (projects == null) return new Project[0];
+		if (null == projects) return new Project[0];
 		else return projects;
 	}
 
@@ -247,7 +247,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 					int i = 0;
 					for (String artifactTypeName : artifactTypeList) {
 						String internalName;
-						if (project.getInternalName() == null) {
+						if (null == project.getInternalName()) {
 							internalName = project.getName();
 						} else {
 							internalName = project.getInternalName();
@@ -257,11 +257,11 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 				} catch (Exception e) {
 					// For now we are just catching the error when a non-PT project is expanded.
 					// Eventually, these projects will not be included in the pick list.
-					if (e.getMessage() != null && e.getMessage().contains("while initializing the call context")) {
+					if (null != e.getMessage() && e.getMessage().contains("while initializing the call context")) {
 						return;
 					}
-					if (e instanceof WSException && e.getMessage() != null && e.getMessage().contains("View artifact")) {
-						if (((WSException)e).getCauseExceptionType() != null && ((WSException)e).getCauseExceptionType().contains("AccessControlException")) {
+					if (e instanceof WSException && null != e.getMessage() && e.getMessage().contains("View artifact")) {
+						if (null != ((WSException)e).getCauseExceptionType() && ((WSException)e).getCauseExceptionType().contains("AccessControlException")) {
 							MessageDialog.openError(getShell(), title, "You do not have permission to view artifact types for project " + project.getName() + ".");
 							return;
 						}
@@ -271,13 +271,13 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 				}
 			}
 		});
-		if (artifactTypes == null) return new ArtifactType[0];
+		if (null == artifactTypes) return new ArtifactType[0];
 		else return artifactTypes;		
 	}
 	
 	private String getProjectUrl(String projectName) {
 		String baseurl = properties.getProperty(Activator.PROPERTIES_CEE_URL);
-		if (baseurl != null) {
+		if (null != baseurl) {
 			if (baseurl.toLowerCase().startsWith(HTTP)) {
 				if (!baseurl.toLowerCase().startsWith(HTTP + projectName + ".")) { //$NON-NLS-1$
 					return baseurl.replaceAll(HTTP, HTTP + projectName + "."); //$NON-NLS-1$
@@ -293,7 +293,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 	}
 	
 	private PTClient getClient() {
-		if (ptClient == null) {
+		if (null == ptClient) {
 			String serverUrl = getPickerUrl(properties.getProperty(Activator.PROPERTIES_CEE_URL));
 			String userId = properties.getProperty(Activator.PROPERTIES_CEE_USER);
 			String password = Activator.decodePassword(properties.getProperty(Activator.PROPERTIES_CEE_PASSWORD));
@@ -303,7 +303,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 	}
 	
 	private TeamForgeClient getTeamForgeClient() throws RemoteException {
-		if (tfClient == null) {
+		if (null == tfClient) {
 			String serverUrl = getPickerUrl(properties.getProperty(Activator.PROPERTIES_CEE_URL));
 			String userId = properties.getProperty(Activator.PROPERTIES_CEE_USER);
 			String password = Activator.decodePassword(properties.getProperty(Activator.PROPERTIES_CEE_PASSWORD));
@@ -319,7 +319,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 	}
 	
 	private static String getPickerUrl(String serverUrl) {
-		if (serverUrl != null) {
+		if (null != serverUrl) {
 			if (serverUrl.toLowerCase().startsWith(HTTP)) {
 				if (!serverUrl.toLowerCase().startsWith(HTTP + WWW)) {
 					return serverUrl.replaceAll(HTTP, HTTP + WWW);
@@ -435,7 +435,7 @@ public class ProjectTrackerSelectionDialog extends CcfDialog {
 		@Override
 		protected HostConfiguration getHostConfiguration(HttpClient client, MessageContext context, URL url) {
 			Proxy proxy = Activator.getPlatformProxy(url.toString());
-			if (proxy != null) {
+			if (null != proxy) {
 				proxy.setProxy(client);
 			}
 

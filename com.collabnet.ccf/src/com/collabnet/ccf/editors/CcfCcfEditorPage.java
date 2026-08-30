@@ -116,29 +116,29 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 	
 	private void createControls(Composite composite) {
 		description = getLandscape().getDescription();
-		if (description == null) description = "";
+		if (null == description) description = "";
 		group = getLandscape().getGroup();
-		if (group == null) group = "";
+		if (null == group) group = "";
 		url = getLandscape().getDatabaseUrl();
-		if (url == null) url = "";
+		if (null == url) url = "";
 		driver = getLandscape().getDatabaseDriver();
-		if (driver == null) driver = "";
+		if (null == driver) driver = "";
 		user = getLandscape().getDatabaseUser();
-		if (user == null) user = "";
+		if (null == user) user = "";
 		password = getLandscape().getDatabasePassword();
-		if (password == null) password = "";
+		if (null == password) password = "";
 		template = getLandscape().getLogMessageTemplate1();
-		if (template == null) template = "";
+		if (null == template) template = "";
 		jmxPort1 = getLandscape().getJmxPort1();
-		if (jmxPort1 == null) jmxPort1 = "";
+		if (null == jmxPort1) jmxPort1 = "";
 		jmxPort2 = getLandscape().getJmxPort2();
-		if (jmxPort2 == null) jmxPort2 = "";
+		if (null == jmxPort2) jmxPort2 = "";
 		ccfHost1 = getLandscape().getCcfHost1();
 		ccfHost2 = getLandscape().getCcfHost2();
 		logs1 = getLandscape().getLogsPath1();
-		if (logs1 == null) logs1 = "";
+		if (null == logs1) logs1 = "";
 		logs2 = getLandscape().getLogsPath2();
-		if (logs2 == null) logs1 = "";
+		if (null == logs2) logs1 = "";
 		
 		Label headerImageLabel = new Label(composite, SWT.NONE);
 		headerImageLabel.setImage(Activator.getImage(getLandscape()));
@@ -180,7 +180,7 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 		gd.horizontalSpan = 2;
 		descriptionText.setLayoutData(gd);
 		
-		if (getLandscape().getRole() == Landscape.ROLE_OPERATOR) {
+		if (Landscape.ROLE_OPERATOR == getLandscape().getRole()) {
 			Label groupLabel = new Label(propertiesGroup, SWT.NONE);
 			groupLabel.setText("Group:");
 			groupText = toolkit.createText(propertiesGroup, group);
@@ -190,7 +190,7 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 				public void verifyText(VerifyEvent e) {
 			    	String text = e.text;
 			    	for (int i = 0; i < text.length(); i++) {
-			    		if (text.substring(i, i+1).trim().length() > 0 && !text.substring(i, i+1).matches("\\p{Alnum}+")) {
+			    		if (0 < text.substring(i, i+1).trim().length() && !text.substring(i, i+1).matches("\\p{Alnum}+")) {
 			    			e.doit = false;
 			    			break;
 			    		}
@@ -203,7 +203,7 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 				public void widgetSelected(SelectionEvent se) {
 					Database database = getLandscape().getDatabase();	
 					GroupSelectionDialog dialog = new GroupSelectionDialog(Display.getDefault().getActiveShell(), database);
-					if (dialog.open() == GroupSelectionDialog.OK) {
+					if (GroupSelectionDialog.OK == dialog.open()) {
 						groupText.setText(dialog.getSelectedGroup());
 					}
 				}			
@@ -295,10 +295,10 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 		gd.widthHint = 100;
 		jmxPort1Text.setLayoutData(gd);
 		
-		if (getLandscape().getRole() == Landscape.ROLE_OPERATOR) {		
+		if (Landscape.ROLE_OPERATOR == getLandscape().getRole()) {		
 			toolkit.createLabel(hostSectionClient, getLandscape().getType2() + " => " + getLandscape().getType1() + " logs folder:");
 			String logsPath = getLandscape().getLogsPath1();
-			if (logsPath == null) logsPath = "";			
+			if (null == logsPath) logsPath = "";			
 		    Composite logsGroup1 = toolkit.createComposite(hostSectionClient);
 		    GridLayout logsLayout1 = new GridLayout();
 		    logsLayout1.numColumns = 2;
@@ -316,7 +316,7 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 					DirectoryDialog dialog = new DirectoryDialog(Display.getDefault().getActiveShell(), SWT.PRIMARY_MODAL | SWT.OPEN);
 					dialog.setText(getLandscape().getType2() + " => " + getLandscape().getType1() + " Logs Folder");
 					String folder = dialog.open();
-					if (folder != null) {
+					if (null != folder) {
 						IPath path = new Path(folder);
 						logs1Text.setText(path.toOSString());
 					}
@@ -335,10 +335,10 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 		gd.widthHint = 100;
 		jmxPort2Text.setLayoutData(gd);
 		
-		if (getLandscape().getRole() == Landscape.ROLE_OPERATOR) {
+		if (Landscape.ROLE_OPERATOR == getLandscape().getRole()) {
 			toolkit.createLabel(hostSectionClient, getLandscape().getType1() + " => " + getLandscape().getType2() + " logs folder:");
 			String logsPath = getLandscape().getLogsPath2();
-			if (logsPath == null) logsPath = "";			
+			if (null == logsPath) logsPath = "";			
 		    Composite logsGroup2 = toolkit.createComposite(hostSectionClient);
 		    GridLayout logsLayout2 = new GridLayout();
 		    logsLayout2.numColumns = 2;
@@ -356,7 +356,7 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 					DirectoryDialog dialog = new DirectoryDialog(Display.getDefault().getActiveShell(), SWT.PRIMARY_MODAL | SWT.OPEN);
 					dialog.setText(getLandscape().getType1() + " => " + getLandscape().getType2() + " Logs Folder");
 					String folder = dialog.open();
-					if (folder != null) {
+					if (null != folder) {
 						IPath path = new Path(folder);
 						logs2Text.setText(path.toOSString());
 					}
@@ -364,7 +364,7 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 			});		
 		}
 		
-		if (getLandscape().getRole() == Landscape.ROLE_ADMINISTRATOR) {			
+		if (Landscape.ROLE_ADMINISTRATOR == getLandscape().getRole()) {			
 			templateSection = toolkit.createSection(composite, Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED);
 	        td = new TableWrapData(TableWrapData.FILL_GRAB);
 	        td.colspan = 4;
@@ -415,18 +415,18 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 		}
 		
         toolkit.paintBordersFor(databaseSectionClient);
-        if (hostSectionClient != null) toolkit.paintBordersFor(hostSectionClient);
-        if (templateSectionClient != null) toolkit.paintBordersFor(templateSectionClient);
+        if (null != hostSectionClient) toolkit.paintBordersFor(hostSectionClient);
+        if (null != templateSectionClient) toolkit.paintBordersFor(templateSectionClient);
         
         String expansionState = getDialogSettings().get(DATABASE_SECTION_STATE);
         databaseSection.setExpanded(expansionState == null  || expansionState.equals(STATE_EXPANDED));
         
-        if (hostSection != null) {
+        if (null != hostSection) {
         	expansionState = getDialogSettings().get(JMX_SECTION_STATE);
         	hostSection.setExpanded(expansionState == null  || expansionState.equals(STATE_EXPANDED));
         }
         
-        if (templateSection != null) {
+        if (null != templateSection) {
         	expansionState = getDialogSettings().get(TEMPLATE_SECTION_STATE);
         	templateSection.setExpanded(expansionState == null  || expansionState.equals(STATE_EXPANDED));
         }
@@ -443,20 +443,20 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 		};
 		
 		descriptionText.addModifyListener(modifyListener);
-		if (groupText != null) {
+		if (null != groupText) {
 			groupText.addModifyListener(modifyListener);
 		}
 		urlText.addModifyListener(modifyListener);
 		driverText.addModifyListener(modifyListener);
 		userText.addModifyListener(modifyListener);
 		passwordText.addModifyListener(modifyListener);
-		if (jmxPort1Text != null) jmxPort1Text.addModifyListener(modifyListener);
-		if (host1Text != null) host1Text.addModifyListener(modifyListener);
-		if (logs1Text != null) logs1Text.addModifyListener(modifyListener);
-		if (jmxPort2Text != null) jmxPort2Text.addModifyListener(modifyListener);
-		if (host2Text != null) host2Text.addModifyListener(modifyListener);
-		if (logs2Text != null) logs2Text.addModifyListener(modifyListener);
-		if (templateText != null) templateText.addModifyListener(modifyListener);
+		if (null != jmxPort1Text) jmxPort1Text.addModifyListener(modifyListener);
+		if (null != host1Text) host1Text.addModifyListener(modifyListener);
+		if (null != logs1Text) logs1Text.addModifyListener(modifyListener);
+		if (null != jmxPort2Text) jmxPort2Text.addModifyListener(modifyListener);
+		if (null != host2Text) host2Text.addModifyListener(modifyListener);
+		if (null != logs2Text) logs2Text.addModifyListener(modifyListener);
+		if (null != templateText) templateText.addModifyListener(modifyListener);
 		
 		FocusListener focusListener = new FocusAdapter() {
 			public void focusGained(FocusEvent e) {
@@ -468,43 +468,43 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 		};
 		
 		descriptionText.addFocusListener(focusListener);
-		if (groupText != null) {
+		if (null != groupText) {
 			groupText.addFocusListener(focusListener);
 		}
 		urlText.addFocusListener(focusListener);
 		driverText.addFocusListener(focusListener);
 		userText.addFocusListener(focusListener);
 		passwordText.addFocusListener(focusListener);
-		if (jmxPort1Text != null) jmxPort1Text.addFocusListener(focusListener);
-		if (host1Text != null) host1Text.addFocusListener(focusListener);
-		if (logs1Text != null) logs1Text.addFocusListener(focusListener);
-		if (jmxPort2Text != null) jmxPort2Text.addFocusListener(focusListener);
-		if (host2Text != null) host2Text.addFocusListener(focusListener);
-		if (logs2Text != null) logs2Text.addFocusListener(focusListener);
+		if (null != jmxPort1Text) jmxPort1Text.addFocusListener(focusListener);
+		if (null != host1Text) host1Text.addFocusListener(focusListener);
+		if (null != logs1Text) logs1Text.addFocusListener(focusListener);
+		if (null != jmxPort2Text) jmxPort2Text.addFocusListener(focusListener);
+		if (null != host2Text) host2Text.addFocusListener(focusListener);
+		if (null != logs2Text) logs2Text.addFocusListener(focusListener);
 		// if (templateText != null) templateText.addFocusListener(focusListener);
 	}
 	
 	@Override
 	public boolean canLeaveThePage() {
-		if (descriptionText.getText().trim().length() == 0 ||
-		urlText.getText().trim().length() == 0 ||
-		driverText.getText().trim().length() == 0) return false;
-		if (jmxPort1Text != null) {
-			if (jmxPort1Text.getText().trim().length() > 0) {
+		if (0 == descriptionText.getText().trim().length() ||
+		0 == urlText.getText().trim().length() ||
+		0 == driverText.getText().trim().length()) return false;
+		if (null != jmxPort1Text) {
+			if (0 < jmxPort1Text.getText().trim().length()) {
 				int port = 0;
 				try {
 					port = Integer.parseInt(jmxPort1Text.getText().trim());
 				} catch (Exception e) {}
-				if (port <= 0) return false;			
+				if (0 >= port) return false;			
 			}
 		}
-		if (jmxPort2Text != null) {
-			if (jmxPort2Text.getText().trim().length() > 0) {
+		if (null != jmxPort2Text) {
+			if (0 < jmxPort2Text.getText().trim().length()) {
 				int port = 0;
 				try {
 					port = Integer.parseInt(jmxPort2Text.getText().trim());
 				} catch (Exception e) {}
-				if (port <= 0) return false;			
+				if (0 >= port) return false;			
 			}		
 		}
 		return true;
@@ -512,9 +512,9 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 
 	private void insertHospitalColumn() {
 		HospitalColumnSelectionDialog dialog = new HospitalColumnSelectionDialog(Display.getDefault().getActiveShell());
-		if (dialog.open() == HospitalColumnSelectionDialog.OK) {
+		if (HospitalColumnSelectionDialog.OK == dialog.open()) {
 			String column = dialog.getColumn();
-			if (column != null) {
+			if (null != column) {
 				templateText.insert(column);
 			}
 		}
@@ -522,7 +522,7 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 	}
 
 	public boolean isDirty() {
-		if (urlText == null) return false;
+		if (null == urlText) return false;
 		return !descriptionText.getText().trim().equals(description) ||
 		(groupText != null && !groupText.getText().trim().equals(group)) ||
 		!urlText.getText().trim().equals(url) ||
@@ -544,15 +544,15 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		if (descriptionText == null) return;
+		if (null == descriptionText) return;
 		if (ccfPropertiesUpdated()) {
 			saveCcfProperties();			
 		}
 		boolean descriptionChanged = !descriptionText.getText().trim().equals(getLandscape().getDescription());
-		if (descriptionChanged || getLandscape().getRole() == Landscape.ROLE_OPERATOR) {
-			if (groupText != null) {
+		if (descriptionChanged || Landscape.ROLE_OPERATOR == getLandscape().getRole()) {
+			if (null != groupText) {
 				getLandscape().setGroup(groupText.getText().trim());
-				if (groupText.getText().trim().length() > 0 && !groupText.getText().trim().equals(group)) {
+				if (0 < groupText.getText().trim().length() && !groupText.getText().trim().equals(group)) {
 					CcfDataProvider dataProvider = new CcfDataProvider();
 					try {
 						if (!dataProvider.groupExists(groupText.getText().trim(), getLandscape().getDatabase())) {
@@ -570,39 +570,39 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 			getLandscape().setDatabasePassword(passwordText.getText().trim());
 			getLandscape().setCcfHost1(host1Text.getText().trim());
 			getLandscape().setJmxPort1(jmxPort1Text.getText().trim());
-			if (logs1Text != null) getLandscape().setLogsPath1(logs1Text.getText().trim());
+			if (null != logs1Text) getLandscape().setLogsPath1(logs1Text.getText().trim());
 			getLandscape().setCcfHost2(host2Text.getText().trim());
 			getLandscape().setJmxPort2(jmxPort2Text.getText().trim());
-			if (logs2Text != null) getLandscape().setLogsPath2(logs2Text.getText().trim());
+			if (null != logs2Text) getLandscape().setLogsPath2(logs2Text.getText().trim());
 			if (Activator.getDefault().storeLandscape(getLandscape())) {
 				// Delete old node.
 				if (descriptionChanged) Activator.getDefault().deleteLandscape(getLandscape());
 			}
 			Landscape landscape = Activator.getDefault().getLandscape(getLandscape().getDescription());
-			if (landscape != null) setLandscape(landscape);
+			if (null != landscape) setLandscape(landscape);
 		}
 		description = descriptionText.getText().trim();
-		if (groupText != null) {
+		if (null != groupText) {
 			group = groupText.getText().trim();
 		}
 		url = urlText.getText().trim();
 		driver = driverText.getText().trim();
 		user = userText.getText().trim();
 		password = passwordText.getText().trim();
-		if (jmxPort1Text != null) jmxPort1 = jmxPort1Text.getText().trim();
-		if (host1Text != null) ccfHost1 = host1Text.getText().trim();
-		if (logs1Text != null) logs1 = logs1Text.getText().trim();
-		if (jmxPort2Text != null) jmxPort2 = jmxPort2Text.getText().trim();
-		if (host2Text != null) ccfHost2 = host2Text.getText().trim();
-		if (logs2Text != null) logs2 = logs2Text.getText().trim();
-		if (templateText != null) template = templateText.getText().trim();
+		if (null != jmxPort1Text) jmxPort1 = jmxPort1Text.getText().trim();
+		if (null != host1Text) ccfHost1 = host1Text.getText().trim();
+		if (null != logs1Text) logs1 = logs1Text.getText().trim();
+		if (null != jmxPort2Text) jmxPort2 = jmxPort2Text.getText().trim();
+		if (null != host2Text) ccfHost2 = host2Text.getText().trim();
+		if (null != logs2Text) logs2 = logs2Text.getText().trim();
+		if (null != templateText) template = templateText.getText().trim();
 	}
 	
 	private void saveCcfProperties() {
 		try {
 			Properties properties = new Properties();
 			File folder = new File(getLandscape().getConfigurationFolder());
-			if (folder != null && folder.length() > 0) {
+			if (null != folder && 0 < folder.length()) {
 				File propertiesFile = new File(folder, "ccf.properties");
 				FileInputStream inputStream = new FileInputStream(propertiesFile);
 				properties.load(inputStream);
@@ -612,12 +612,12 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 			File propertiesFile1 = null;
 			File propertiesFile2 = null;
 			
-			if (getLandscape().getConfigurationFolder1() != null) {
+			if (null != getLandscape().getConfigurationFolder1()) {
 				folder = new File(getLandscape().getConfigurationFolder1());
 				propertiesFile1 = new File(folder, "ccf.properties");
 			}
 			
-			if (getLandscape().getConfigurationFolder2() != null) {
+			if (null != getLandscape().getConfigurationFolder2()) {
 				folder = new File(getLandscape().getConfigurationFolder2());
 				propertiesFile2 = new File(folder, "ccf.properties");
 			}
@@ -628,16 +628,16 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 			String previousPassword = properties.getProperty(Activator.PROPERTIES_CCF_PASSWORD);
 			boolean passwordPreviouslyEncoded = previousPassword != null && previousPassword.startsWith(Activator.OBFUSCATED_PASSWORD_PREFIX);
 			properties.setProperty(Activator.PROPERTIES_CCF_PASSWORD, Activator.encodePassword(getPassword(), passwordPreviouslyEncoded));
-			if (getLandscape().getRole() == Landscape.ROLE_ADMINISTRATOR) {
+			if (Landscape.ROLE_ADMINISTRATOR == getLandscape().getRole()) {
 				properties.setProperty(Activator.PROPERTIES_CCF_LOG_MESSAGE_TEMPLATE, getLogMessageTemplate());
-				if (propertiesFile1 != null) {
+				if (null != propertiesFile1) {
 					properties.setProperty(Activator.PROPERTIES_CCF_JMX_PORT, getJmxPort1());
 					properties.setProperty(Activator.PROPERTIES_CCF_HOST_NAME, getHostName1());
 					FileOutputStream outputStream = new FileOutputStream(propertiesFile1);
 					properties.store(outputStream, null);
 					outputStream.close();
 				}
-				if (propertiesFile2 != null) {
+				if (null != propertiesFile2) {
 					properties.setProperty(Activator.PROPERTIES_CCF_JMX_PORT, getJmxPort2());
 					properties.setProperty(Activator.PROPERTIES_CCF_HOST_NAME, getHostName2());
 					FileOutputStream outputStream = new FileOutputStream(propertiesFile2);
@@ -655,7 +655,7 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 	}
 	
 	public String getGroup() {
-		if (groupText == null) {
+		if (null == groupText) {
 			return "";
 		} else {
 			return groupText.getText().trim();
@@ -703,7 +703,7 @@ public class CcfCcfEditorPage extends CcfEditorPage {
 	}
 	
 	public boolean testConnection(boolean saving) {
-		if (saving && urlText == null) {
+		if (saving && null == urlText) {
 			return true;
 		}
 		if (saving && getLandscape().getDatabaseUrl().equals(urlText.getText().trim()) &&

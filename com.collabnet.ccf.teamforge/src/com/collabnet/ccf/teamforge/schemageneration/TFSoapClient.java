@@ -49,7 +49,7 @@ public class TFSoapClient {
 	
 	public static TFSoapClient getSoapClient(String serverUrl, String userId, String password) {
 		TFSoapClient client = clients.get(serverUrl + userId + password);
-		if (client == null) client = new TFSoapClient(serverUrl, userId, password);
+		if (null == client) client = new TFSoapClient(serverUrl, userId, password);
 		return client;
 	}
 	
@@ -123,7 +123,7 @@ public class TFSoapClient {
 	
 	public void setFieldEnablement(String trackerId, String fieldName, boolean disabled) throws RemoteException {
 		TrackerFieldDO[] fields = getFields(trackerId);
-		if (fields != null) {
+		if (null != fields) {
 			for (TrackerFieldDO field : fields) {
 				if (field.getName().equals(fieldName)) {
 					if (field.getDisabled() != disabled) {

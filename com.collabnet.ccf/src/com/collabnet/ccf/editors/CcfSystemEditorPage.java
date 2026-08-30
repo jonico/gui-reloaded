@@ -89,13 +89,13 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 
 	@Override
 	public boolean canLeaveThePage() {
-		if (urlText.getText().trim().length() == 0) return false;
-		if (attachmentSizeText.getText().trim().length() > 0) {
+		if (0 == urlText.getText().trim().length()) return false;
+		if (0 < attachmentSizeText.getText().trim().length()) {
 			int maxSize = 0;
 			try {
 				maxSize = Integer.parseInt(attachmentSizeText.getText().trim());
 			} catch (Exception e) {}
-			if (maxSize <= 0) return false;
+			if (0 >= maxSize) return false;
 		}
 		return true;
 	}
@@ -149,7 +149,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 			break;
 		}
 		
-		if (ccfParticipant != null) {
+		if (null != ccfParticipant) {
 			connectionTester = ccfParticipant.getConnectionTester();
 		}
 		
@@ -201,7 +201,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 		for (String zone : timeZoneIds) {
 			timeZonesCombo.add(zone);
 		}	
-		if (timezone != null) {
+		if (null != timezone) {
 			timeZonesCombo.select(timeZonesCombo.indexOf(timezone));
 		}
 		
@@ -244,7 +244,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
         userText = toolkit.createText(credentialsSectionClient, user);
 		gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
 		userText.setLayoutData(gd);
-		if (type == PT) {
+		if (PT == type) {
 	        toolkit.createLabel(credentialsSectionClient, "Display name:");
 	        displayNameText = toolkit.createText(credentialsSectionClient, displayName);
 			gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
@@ -256,7 +256,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 		passwordText.setLayoutData(gd);
 		passwordText.setEchoChar('*');
 		
-		if (connectionTester != null) {
+		if (null != connectionTester) {
 			Button testButton = toolkit.createButton(credentialsSectionClient, "Test Connection", SWT.PUSH);
 			gd = new GridData();
 			gd.horizontalSpan = 2;
@@ -271,7 +271,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
         
 		Section resyncSection = null;
 		Composite resyncSectionClient = null;
-		if (type == SW) {
+		if (SW == type) {
 			resyncSection = toolkit.createSection(composite, Section.TITLE_BAR | Section.TWISTIE | Section.EXPANDED);
 	        td = new TableWrapData(TableWrapData.FILL_GRAB);
 	        td.colspan = 4;
@@ -295,7 +295,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 	        resyncUserText = toolkit.createText(resyncSectionClient, resyncUser);
 			gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
 			resyncUserText.setLayoutData(gd);
-			if (type == PT) {
+			if (PT == type) {
 		        toolkit.createLabel(resyncSectionClient, "Display name:");
 		        resyncDisplayNameText = toolkit.createText(resyncSectionClient, resyncDisplayName);
 				gd = new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL);
@@ -307,7 +307,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 			resyncPasswordText.setLayoutData(gd);
 			resyncPasswordText.setEchoChar('*'); 
 			
-			if (connectionTester != null) {
+			if (null != connectionTester) {
 				Button testButton = toolkit.createButton(resyncSectionClient, "Test Connection", SWT.PUSH);
 				gd = new GridData();
 				gd.horizontalSpan = 2;
@@ -323,7 +323,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 		
         toolkit.paintBordersFor(systemSectionClient);
         toolkit.paintBordersFor(credentialsSectionClient);
-        if (resyncSectionClient != null) {
+        if (null != resyncSectionClient) {
         	toolkit.paintBordersFor(resyncSectionClient);
         }
         
@@ -331,7 +331,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
         systemSection.setExpanded(expansionState == null  || expansionState.equals(STATE_EXPANDED));
         expansionState = getDialogSettings().get(CREDENTIALS_SECTION_STATE);
         credentialsSection.setExpanded(expansionState == null  || expansionState.equals(STATE_EXPANDED));
-        if (resyncSection != null) {
+        if (null != resyncSection) {
 	        expansionState = getDialogSettings().get(RESYNC_SECTION_STATE);
 	        resyncSection.setExpanded(expansionState == null  || expansionState.equals(STATE_EXPANDED));
         }
@@ -347,12 +347,12 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 		urlText.addModifyListener(modifyListener);
 		attachmentSizeText.addModifyListener(modifyListener);
 		userText.addModifyListener(modifyListener);
-		if (displayNameText != null) displayNameText.addModifyListener(modifyListener);
+		if (null != displayNameText) displayNameText.addModifyListener(modifyListener);
 		passwordText.addModifyListener(modifyListener);
 		
-		if (resyncSection != null) {
+		if (null != resyncSection) {
 			resyncUserText.addModifyListener(modifyListener);
-			if (resyncDisplayNameText != null) resyncDisplayNameText.addModifyListener(modifyListener);
+			if (null != resyncDisplayNameText) resyncDisplayNameText.addModifyListener(modifyListener);
 			resyncPasswordText.addModifyListener(modifyListener);
 		}
 		
@@ -376,11 +376,11 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 		urlText.addFocusListener(focusListener);
 		attachmentSizeText.addFocusListener(focusListener);
 		userText.addFocusListener(focusListener);
-		if (displayNameText != null) displayNameText.addFocusListener(focusListener);
+		if (null != displayNameText) displayNameText.addFocusListener(focusListener);
 		passwordText.addFocusListener(focusListener);
-		if (resyncSection != null) {
+		if (null != resyncSection) {
 			resyncUserText.addFocusListener(focusListener);
-			if (resyncDisplayNameText != null) resyncDisplayNameText.addFocusListener(focusListener);
+			if (null != resyncDisplayNameText) resyncDisplayNameText.addFocusListener(focusListener);
 			resyncPasswordText.addFocusListener(focusListener);
 		}
 		
@@ -389,7 +389,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 	
 	private void testConnection(String url, String user, String password) {
 		Exception connectionError = connectionTester.testConnection(url, user, password);
-		if (connectionError == null) {
+		if (null == connectionError) {
 			MessageDialog.openInformation(Display.getDefault().getActiveShell(), "Test Connection", "Connection successful!");
 		} else {
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "Test Connection", "Connection failed:\n\n" + connectionError.getLocalizedMessage());
@@ -408,7 +408,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 	
 	@Override
 	public void doSave(IProgressMonitor monitor) {
-		if (urlText == null) return;
+		if (null == urlText) return;
 		try {
 			properties.setProperty(Activator.PROPERTIES_SYSTEM_TIMEZONE, timeZonesCombo.getText());
 			
@@ -419,11 +419,11 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 			switch (type) {
 			case QC:
 				setQcProperties();
-				if (getLandscape().getConfigurationFolder1() != null) {
+				if (null != getLandscape().getConfigurationFolder1()) {
 					folder = new File(getLandscape().getConfigurationFolder1());
 					propertiesFile1 = new File(folder, "qc.properties");
 				}			
-				if (getLandscape().getConfigurationFolder2() != null) {
+				if (null != getLandscape().getConfigurationFolder2()) {
 					folder = new File(getLandscape().getConfigurationFolder2());
 					propertiesFile2 = new File(folder, "qc.properties");
 				}
@@ -431,11 +431,11 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 				break;
 			case TF:
 				setTeamForgeProperties();
-				if (getLandscape().getConfigurationFolder1() != null) {
+				if (null != getLandscape().getConfigurationFolder1()) {
 					folder = new File(getLandscape().getConfigurationFolder1());
 					propertiesFile1 = new File(folder, "sfee.properties");
 				}			
-				if (getLandscape().getConfigurationFolder2() != null) {
+				if (null != getLandscape().getConfigurationFolder2()) {
 					folder = new File(getLandscape().getConfigurationFolder2());
 					propertiesFile2 = new File(folder, "sfee.properties");
 				}	
@@ -443,11 +443,11 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 				break;
 			case PT:
 				setCeeProperties();
-				if (getLandscape().getConfigurationFolder1() != null) {
+				if (null != getLandscape().getConfigurationFolder1()) {
 					folder = new File(getLandscape().getConfigurationFolder1());
 					propertiesFile1 = new File(folder, "cee.properties");
 				}			
-				if (getLandscape().getConfigurationFolder2() != null) {
+				if (null != getLandscape().getConfigurationFolder2()) {
 					folder = new File(getLandscape().getConfigurationFolder2());
 					propertiesFile2 = new File(folder, "cee.properties");
 				}
@@ -455,11 +455,11 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 				break;
 			case SW:
 				setSwProperties();
-				if (getLandscape().getConfigurationFolder1() != null) {
+				if (null != getLandscape().getConfigurationFolder1()) {
 					folder = new File(getLandscape().getConfigurationFolder1());
 					propertiesFile1 = new File(folder, "swp.properties");
 				}			
-				if (getLandscape().getConfigurationFolder2() != null) {
+				if (null != getLandscape().getConfigurationFolder2()) {
 					folder = new File(getLandscape().getConfigurationFolder2());
 					propertiesFile2 = new File(folder, "swp.properties");
 				}
@@ -468,12 +468,12 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 			default:
 				break;
 			}
-			if (propertiesFile1 != null) {
+			if (null != propertiesFile1) {
 				FileOutputStream outputStream = new FileOutputStream(propertiesFile1);
 				properties.store(outputStream, null);
 				outputStream.close();
 			}
-			if (propertiesFile2 != null) {
+			if (null != propertiesFile2) {
 				FileOutputStream outputStream = new FileOutputStream(propertiesFile2);
 				properties.store(outputStream, null);
 				outputStream.close();
@@ -516,7 +516,7 @@ public class CcfSystemEditorPage extends CcfEditorPage {
 	}
 	
 	public boolean isDirty() {
-		if (urlText == null) return false;
+		if (null == urlText) return false;
 		return !urlText.getText().trim().equals(url) ||
 		!attachmentSizeText.getText().trim().equals(attachmentSize) ||
 		!timeZonesCombo.getText().equals(timezone) ||

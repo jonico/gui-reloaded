@@ -116,7 +116,7 @@ public class ProjectMappingWizardSwpProductPage extends WizardPage {
 	@Override
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-		if (visible && products == null && !productsRetrieved) {
+		if (visible && null == products && !productsRetrieved) {
 			productsRetrieved = true;
 			getProducts();
 			viewer.refresh();
@@ -148,7 +148,7 @@ public class ProjectMappingWizardSwpProductPage extends WizardPage {
 	}
 	
 	public boolean isProductAlreadyMapped(Product product) {
-		if (existingMappings != null) {
+		if (null != existingMappings) {
 			String productNameAndId = product.getName() + "(" + product.getId() + ")";
 			for (SynchronizationStatus status : existingMappings) {
 				if (status.getSourceRepositoryId().startsWith(productNameAndId + "-") || status.getTargetRepositoryId().startsWith(productNameAndId + "-")) {
@@ -189,7 +189,7 @@ public class ProjectMappingWizardSwpProductPage extends WizardPage {
 			getProductsError = e;
 		}
 		
-		if (getProductsError != null) {
+		if (null != getProductsError) {
 			setErrorMessage("An unexpected error occurred while getting SWP products.  See error log for details.");
 		}
 		
@@ -230,7 +230,7 @@ public class ProjectMappingWizardSwpProductPage extends WizardPage {
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		}
 		public Object[] getElements(Object obj) {
-			if (products == null) {
+			if (null == products) {
 				return new Product[0];
 			}
 			Product[] productArray = new Product[products.size()];

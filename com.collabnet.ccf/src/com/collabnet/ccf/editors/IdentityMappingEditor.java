@@ -51,7 +51,7 @@ public class IdentityMappingEditor extends FormEditor implements ISaveablePart2 
 	        int detailsIndex = addPage(detailsPage);
 	        setPageText(detailsIndex, identityMapping.getEditableValue().toString());
 	        pages.add(detailsPage);
-	        if (reverseIdentityMapping != null) {
+	        if (null != reverseIdentityMapping) {
 	           	reversePage = new IdentityMappingEditorPage(this, "reverse", getEditorInput().getName(), reverseIdentityMapping);
 		        int reverseIndex = addPage(reversePage);
 		        setPageText(reverseIndex, reverseIdentityMapping.getEditableValue().toString());
@@ -68,7 +68,7 @@ public class IdentityMappingEditor extends FormEditor implements ISaveablePart2 
 		if (detailsPage.isSaveError()) {
 			monitor.setCanceled(true);
 		} else {
-			if (reversePage != null) {
+			if (null != reversePage) {
 				if (reversePage.isDirty()) reversePage.doSave(monitor);
 				if (reversePage.isSaveError()) {
 					monitor.setCanceled(true);
@@ -76,186 +76,186 @@ public class IdentityMappingEditor extends FormEditor implements ISaveablePart2 
 			}
 		}
 		setDirty();
-		if (IdentityMappingView.getView() != null) {
+		if (null != IdentityMappingView.getView()) {
 			IdentityMappingView.getView().refresh();
 		}
 		
-		if (reverseIdentityMapping != null) {
+		if (null != reverseIdentityMapping) {
 			List<Update> reverseUpdateList = new ArrayList<Update>();
 			List<Update> updateList = new ArrayList<Update>();
 			if (detailsPage.isSourceSystemIdChanged()) {
-				if (reversePage == null || !reversePage.isTargetSystemIdChanged()) {		
+				if (null == reversePage || !reversePage.isTargetSystemIdChanged()) {		
 					Update targetSystemIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_SYSTEM_ID, identityMapping.getSourceSystemId());
 					reverseUpdateList.add(targetSystemIdUpdate);
 				}	
 			}
 			if (detailsPage.isSourceRepositoryIdChanged()) {
-				if (reversePage == null || !reversePage.isTargetRepositoryIdChanged()) {		
+				if (null == reversePage || !reversePage.isTargetRepositoryIdChanged()) {		
 					Update targetRepositoryIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_REPOSITORY_ID, identityMapping.getSourceRepositoryId());
 					reverseUpdateList.add(targetRepositoryIdUpdate);
 				}	
 			}
 			if (detailsPage.isSourceSystemKindChanged()) {
-				if (reversePage == null || !reversePage.isTargetSystemKindChanged()) {		
+				if (null == reversePage || !reversePage.isTargetSystemKindChanged()) {		
 					Update targetSystemKindUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_SYSTEM_KIND, identityMapping.getSourceSystemKind());
 					reverseUpdateList.add(targetSystemKindUpdate);
 				}	
 			}	
 			if (detailsPage.isSourceRepositoryKindChanged()) {
-				if (reversePage == null || !reversePage.isTargetRepositoryKindChanged()) {		
+				if (null == reversePage || !reversePage.isTargetRepositoryKindChanged()) {		
 					Update targetRepositoryKindUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_REPOSITORY_KIND, identityMapping.getSourceRepositoryKind());
 					reverseUpdateList.add(targetRepositoryKindUpdate);
 				}	
 			}
 			if (detailsPage.isSourceArtifactIdChanged()) {
-				if (reversePage == null || !reversePage.isTargetArtifactIdChanged()) {		
+				if (null == reversePage || !reversePage.isTargetArtifactIdChanged()) {		
 					Update targetArtifactIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_ARTIFACT_ID, identityMapping.getSourceArtifactId());
 					reverseUpdateList.add(targetArtifactIdUpdate);
 				}	
 			}
 			if (detailsPage.isSourceLastModificationChanged()) {
-				if (reversePage == null || !reversePage.isTargetLastModificationChanged()) {		
+				if (null == reversePage || !reversePage.isTargetLastModificationChanged()) {		
 					Update targetLastModificationUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_LAST_MODIFICATION_TIME, identityMapping.getSourceLastModificationTime().toString());
 					reverseUpdateList.add(targetLastModificationUpdate);
 				}	
 			}	
 			if (detailsPage.isSourceArtifactVersionChanged()) {
-				if (reversePage == null || !reversePage.isTargetArtifactVersionChanged()) {		
+				if (null == reversePage || !reversePage.isTargetArtifactVersionChanged()) {		
 					Update targetArtifactVersionUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_ARTIFACT_VERSION, identityMapping.getSourceArtifactVersion());
 					reverseUpdateList.add(targetArtifactVersionUpdate);
 				}	
 			}			
 			if (detailsPage.isTargetSystemIdChanged()) {
-				if (reversePage == null || !reversePage.isSourceSystemIdChanged()) {		
+				if (null == reversePage || !reversePage.isSourceSystemIdChanged()) {		
 					Update sourceSystemIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_SYSTEM_ID, identityMapping.getTargetSystemId());
 					reverseUpdateList.add(sourceSystemIdUpdate);
 				}	
 			}
 			if (detailsPage.isTargetRepositoryIdChanged()) {
-				if (reversePage == null || !reversePage.isSourceRepositoryIdChanged()) {		
+				if (null == reversePage || !reversePage.isSourceRepositoryIdChanged()) {		
 					Update sourceRepositoryIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_REPOSITORY_ID, identityMapping.getTargetRepositoryId());
 					reverseUpdateList.add(sourceRepositoryIdUpdate);
 				}	
 			}
 			if (detailsPage.isTargetSystemKindChanged()) {
-				if (reversePage == null || !reversePage.isSourceSystemKindChanged()) {		
+				if (null == reversePage || !reversePage.isSourceSystemKindChanged()) {		
 					Update sourceSystemKindUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_SYSTEM_KIND, identityMapping.getTargetSystemKind());
 					reverseUpdateList.add(sourceSystemKindUpdate);
 				}	
 			}	
 			if (detailsPage.isTargetRepositoryKindChanged()) {
-				if (reversePage == null || !reversePage.isSourceRepositoryKindChanged()) {		
+				if (null == reversePage || !reversePage.isSourceRepositoryKindChanged()) {		
 					Update sourceRepositoryKindUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_REPOSITORY_KIND, identityMapping.getTargetRepositoryKind());
 					reverseUpdateList.add(sourceRepositoryKindUpdate);
 				}	
 			}
 			if (detailsPage.isTargetArtifactIdChanged()) {
-				if (reversePage == null || !reversePage.isSourceArtifactIdChanged()) {		
+				if (null == reversePage || !reversePage.isSourceArtifactIdChanged()) {		
 					Update sourceArtifactIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_ARTIFACT_ID, identityMapping.getTargetArtifactId());
 					reverseUpdateList.add(sourceArtifactIdUpdate);
 				}	
 			}
 			if (detailsPage.isTargetLastModificationChanged()) {
-				if (reversePage == null || !reversePage.isSourceLastModificationChanged()) {		
+				if (null == reversePage || !reversePage.isSourceLastModificationChanged()) {		
 					Update sourceLastModificationUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_LAST_MODIFICATION_TIME, identityMapping.getTargetLastModificationTime().toString());
 					reverseUpdateList.add(sourceLastModificationUpdate);
 				}	
 			}	
 			if (detailsPage.isTargetArtifactVersionChanged()) {
-				if (reversePage == null || !reversePage.isSourceArtifactVersionChanged()) {		
+				if (null == reversePage || !reversePage.isSourceArtifactVersionChanged()) {		
 					Update sourceArtifactVersionUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_ARTIFACT_VERSION, identityMapping.getTargetArtifactVersion());
 					reverseUpdateList.add(sourceArtifactVersionUpdate);
 				}	
 			}
 			
-			if (reversePage != null) {
+			if (null != reversePage) {
 				if (reversePage.isSourceSystemIdChanged()) {
-					if (detailsPage == null || !detailsPage.isTargetSystemIdChanged()) {		
+					if (null == detailsPage || !detailsPage.isTargetSystemIdChanged()) {		
 						Update targetSystemIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_SYSTEM_ID, reverseIdentityMapping.getSourceSystemId());
 						updateList.add(targetSystemIdUpdate);
 					}	
 				}
 				if (reversePage.isSourceRepositoryIdChanged()) {
-					if (detailsPage == null || !detailsPage.isTargetRepositoryIdChanged()) {		
+					if (null == detailsPage || !detailsPage.isTargetRepositoryIdChanged()) {		
 						Update targetRepositoryIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_REPOSITORY_ID, reverseIdentityMapping.getSourceRepositoryId());
 						updateList.add(targetRepositoryIdUpdate);
 					}	
 				}
 				if (reversePage.isSourceSystemKindChanged()) {
-					if (detailsPage == null || !detailsPage.isTargetSystemKindChanged()) {		
+					if (null == detailsPage || !detailsPage.isTargetSystemKindChanged()) {		
 						Update targetSystemKindUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_SYSTEM_KIND, reverseIdentityMapping.getSourceSystemKind());
 						updateList.add(targetSystemKindUpdate);
 					}	
 				}	
 				if (reversePage.isSourceRepositoryKindChanged()) {
-					if (detailsPage == null || !detailsPage.isTargetRepositoryKindChanged()) {		
+					if (null == detailsPage || !detailsPage.isTargetRepositoryKindChanged()) {		
 						Update targetRepositoryKindUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_REPOSITORY_KIND, reverseIdentityMapping.getSourceRepositoryKind());
 						updateList.add(targetRepositoryKindUpdate);
 					}	
 				}
 				if (reversePage.isSourceArtifactIdChanged()) {
-					if (detailsPage == null || !detailsPage.isTargetArtifactIdChanged()) {		
+					if (null == detailsPage || !detailsPage.isTargetArtifactIdChanged()) {		
 						Update targetArtifactIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_ARTIFACT_ID, reverseIdentityMapping.getSourceArtifactId());
 						updateList.add(targetArtifactIdUpdate);
 					}	
 				}
 				if (reversePage.isSourceLastModificationChanged()) {
-					if (detailsPage == null || !detailsPage.isTargetLastModificationChanged()) {		
+					if (null == detailsPage || !detailsPage.isTargetLastModificationChanged()) {		
 						Update targetLastModificationUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_LAST_MODIFICATION_TIME, reverseIdentityMapping.getSourceLastModificationTime().toString());
 						updateList.add(targetLastModificationUpdate);
 					}	
 				}	
 				if (reversePage.isSourceArtifactVersionChanged()) {
-					if (detailsPage == null || !detailsPage.isTargetArtifactVersionChanged()) {		
+					if (null == detailsPage || !detailsPage.isTargetArtifactVersionChanged()) {		
 						Update targetArtifactVersionUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_TARGET_ARTIFACT_VERSION, reverseIdentityMapping.getSourceArtifactVersion());
 						updateList.add(targetArtifactVersionUpdate);
 					}	
 				}			
 				if (reversePage.isTargetSystemIdChanged()) {
-					if (detailsPage == null || !detailsPage.isSourceSystemIdChanged()) {		
+					if (null == detailsPage || !detailsPage.isSourceSystemIdChanged()) {		
 						Update sourceSystemIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_SYSTEM_ID, reverseIdentityMapping.getTargetSystemId());
 						updateList.add(sourceSystemIdUpdate);
 					}	
 				}
 				if (reversePage.isTargetRepositoryIdChanged()) {
-					if (detailsPage == null || !detailsPage.isSourceRepositoryIdChanged()) {		
+					if (null == detailsPage || !detailsPage.isSourceRepositoryIdChanged()) {		
 						Update sourceRepositoryIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_REPOSITORY_ID, reverseIdentityMapping.getTargetRepositoryId());
 						updateList.add(sourceRepositoryIdUpdate);
 					}	
 				}
 				if (reversePage.isTargetSystemKindChanged()) {
-					if (detailsPage == null || !detailsPage.isSourceSystemKindChanged()) {		
+					if (null == detailsPage || !detailsPage.isSourceSystemKindChanged()) {		
 						Update sourceSystemKindUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_SYSTEM_KIND, reverseIdentityMapping.getTargetSystemKind());
 						updateList.add(sourceSystemKindUpdate);
 					}	
 				}	
 				if (reversePage.isTargetRepositoryKindChanged()) {
-					if (detailsPage == null || !detailsPage.isSourceRepositoryKindChanged()) {		
+					if (null == detailsPage || !detailsPage.isSourceRepositoryKindChanged()) {		
 						Update sourceRepositoryKindUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_REPOSITORY_KIND, reverseIdentityMapping.getTargetRepositoryKind());
 						updateList.add(sourceRepositoryKindUpdate);
 					}	
 				}
 				if (reversePage.isTargetArtifactIdChanged()) {
-					if (detailsPage == null || !detailsPage.isSourceArtifactIdChanged()) {		
+					if (null == detailsPage || !detailsPage.isSourceArtifactIdChanged()) {		
 						Update sourceArtifactIdUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_ARTIFACT_ID, reverseIdentityMapping.getTargetArtifactId());
 						updateList.add(sourceArtifactIdUpdate);
 					}	
 				}
 				if (reversePage.isTargetLastModificationChanged()) {
-					if (detailsPage == null || !detailsPage.isSourceLastModificationChanged()) {		
+					if (null == detailsPage || !detailsPage.isSourceLastModificationChanged()) {		
 						Update sourceLastModificationUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_LAST_MODIFICATION_TIME, reverseIdentityMapping.getTargetLastModificationTime().toString());
 						updateList.add(sourceLastModificationUpdate);
 					}	
 				}	
 				if (reversePage.isTargetArtifactVersionChanged()) {
-					if (detailsPage == null || !detailsPage.isSourceArtifactVersionChanged()) {		
+					if (null == detailsPage || !detailsPage.isSourceArtifactVersionChanged()) {		
 						Update sourceArtifactVersionUpdate = new Update(CcfDataProvider.IDENTITY_MAPPING_SOURCE_ARTIFACT_VERSION, reverseIdentityMapping.getTargetArtifactVersion());
 						updateList.add(sourceArtifactVersionUpdate);
 					}	
 				}
 			}
 			
-			if (reverseUpdateList.size() > 0 || updateList.size() > 0) {
+			if (0 < reverseUpdateList.size() || 0 < updateList.size()) {
 				UpdateReverseIdentityMappingsDialog dialog = new UpdateReverseIdentityMappingsDialog(Display.getDefault().getActiveShell(), identityMapping, reverseIdentityMapping, updateList, reverseUpdateList);
 				dialog.open();
 			}
@@ -303,7 +303,7 @@ public class IdentityMappingEditor extends FormEditor implements ISaveablePart2 
 //			}
 //			
 		}
-		if (IdentityMappingView.getView() != null) {
+		if (null != IdentityMappingView.getView()) {
 			IdentityMappingView.getView().refresh();
 		}
 	}

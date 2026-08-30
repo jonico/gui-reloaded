@@ -388,10 +388,10 @@ public class IdentityMapping implements IPropertySource {
 		if (P_ID_SOURCE_ARTIFACT_ID.equals(id)) return sourceArtifactId;
 		if (P_ID_TARGET_ARTIFACT_ID.equals(id)) return targetArtifactId;
 		if (P_ID_SOURCE_LAST_MODIFIED.equals(id)) {
-			if (sourceLastModificationTime != null) return sourceLastModificationTime.toString();
+			if (null != sourceLastModificationTime) return sourceLastModificationTime.toString();
 		}
 		if (P_ID_TARGET_LAST_MODIFIED.equals(id)) {
-			if (targetLastModificationTime != null) return targetLastModificationTime.toString();
+			if (null != targetLastModificationTime) return targetLastModificationTime.toString();
 		}
 		if (P_ID_SOURCE_ARTIFACT_VERSION.equals(id)) return sourceArtifactVersion;
 		if (P_ID_TARGET_ARTIFACT_VERSION.equals(id)) return targetArtifactVersion;

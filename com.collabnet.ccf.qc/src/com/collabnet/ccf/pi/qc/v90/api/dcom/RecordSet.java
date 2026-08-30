@@ -47,7 +47,7 @@ public class RecordSet extends ActiveXComponent implements IRecordSet
 
     public String getFieldValueAsString(String field) {
         Variant res = getFieldValueAsVariant(field);
-        if(res != null) {
+        if(null != res) {
 	        if(res.getvt() != Variant.VariantString)
 	            System.err.println("Field is not a String type "+field+" "+res.getvt());
 	        if(res.isNull()){
@@ -60,7 +60,7 @@ public class RecordSet extends ActiveXComponent implements IRecordSet
 
     public Date getFieldValueAsDate(String field) {
         Variant res = getFieldValueAsVariant(field);
-        if(res != null) {
+        if(null != res) {
 	        if(res.getvt() != Variant.VariantDate)
 	            System.err.println("Field is not a Date type "+field+" "+res.getvt());
 	        if(res.isNull()){
@@ -75,7 +75,7 @@ public class RecordSet extends ActiveXComponent implements IRecordSet
 
     public Integer getFieldValueAsInt(String field) {
         Variant res = getFieldValueAsVariant(field);
-        if(res != null) {
+        if(null != res) {
 	        if(res.getvt() != Variant.VariantInt
 	        		&& res.getvt() != Variant.VariantLongInt
 	        		&& res.getvt() != Variant.VariantShort)
@@ -102,7 +102,7 @@ public class RecordSet extends ActiveXComponent implements IRecordSet
 
     public String getColNameAsString(int index) {
         Variant res = Dispatch.call(this, "ColName", index);
-        if(res.getvt() != 8 && res.getvt() != 0)
+        if(8 != res.getvt() && 0 != res.getvt())
             System.err.println("Col Name is not a String type index:"+index+" "+res.getvt());
         return res.getString();
     }

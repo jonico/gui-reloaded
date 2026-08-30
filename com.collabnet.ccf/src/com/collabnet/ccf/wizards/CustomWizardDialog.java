@@ -67,7 +67,7 @@ public class CustomWizardDialog extends WizardDialog {
 	}
 	
 	private String getDialogKey() {
-		if (dialogId == null) {
+		if (null == dialogId) {
 			return getWizard().getClass().getName();
 		} else {
 			return getWizard().getClass().getName() + "." + dialogId;

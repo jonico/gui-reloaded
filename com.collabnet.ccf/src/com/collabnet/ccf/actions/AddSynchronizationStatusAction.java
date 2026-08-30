@@ -37,14 +37,14 @@ public class AddSynchronizationStatusAction extends ActionDelegate {
 					wizard = new NewProjectMappingWizard(projectMappings);
 				}
 				String dialogId = null;
-				if (projectMappings != null) {
+				if (null != projectMappings) {
 					Landscape landscape = projectMappings.getLandscape();
-					if (landscape != null) {
+					if (null != landscape) {
 						dialogId = landscape.getType1() + "_" + landscape.getType2();
 					}
 				}
 				WizardDialog dialog = new CustomWizardDialog(Display.getDefault().getActiveShell(), wizard, dialogId);
-				if (dialog.open() == WizardDialog.OK && CcfExplorerView.getView() != null) {
+				if (WizardDialog.OK == dialog.open() && null != CcfExplorerView.getView()) {
 					Activator.notifyChanged(projectMappings);
 				}
 			}
@@ -55,7 +55,7 @@ public class AddSynchronizationStatusAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isAddProjectMapping());
 		}
 	}	

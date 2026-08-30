@@ -36,7 +36,7 @@ public class SynchronizeTeamsSprintsWizard extends AbstractMappingWizard {
 
 	@Override
 	public boolean performFinish() {
-		if (wizardPage.getAddedValues().size() == 0 && wizardPage.getDeletedValues().size() == 0) {
+		if (0 == wizardPage.getAddedValues().size() && 0 == wizardPage.getDeletedValues().size()) {
 			return true;
 		}
 		error = null;
@@ -87,13 +87,13 @@ public class SynchronizeTeamsSprintsWizard extends AbstractMappingWizard {
 			MessageDialog.openError(getShell(), "Synchronize Teams/Sprints", e.getMessage());
 			return false;
 		}
-		if (error != null) {
+		if (null != error) {
 			Activator.handleError(error);
 			MessageDialog.openError(getShell(), "Synchronize Teams/Sprints", error.getMessage());
 			return false;
 		}
 		wizardPage.refresh(true);
-		if (couldNotBeDeletedList.size() > 0) {
+		if (0 < couldNotBeDeletedList.size()) {
 			MessageDialog.openWarning(getShell(), "Synchronize Teams/Sprints", "One or more team/sprint could not be removed from tracker because it is used by one or more artifact.");
 			return false;
 		}
@@ -103,7 +103,7 @@ public class SynchronizeTeamsSprintsWizard extends AbstractMappingWizard {
 	private int getInsertIndex(List<TrackerFieldValueDO> updatedValuesList, TrackerFieldValueDO insertedValue) {
 		int index = 0;
 		for (TrackerFieldValueDO fieldValue : updatedValuesList) {
-			if (fieldValue.getValue().compareTo(insertedValue.getValue()) > 0) {
+			if (0 < fieldValue.getValue().compareTo(insertedValue.getValue())) {
 				break;
 			}
 			index++;

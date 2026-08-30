@@ -239,7 +239,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (rs != null)
+	            if (null != rs)
 	                rs.close();
 	        }
 	        catch (Exception e)
@@ -248,7 +248,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -257,7 +257,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -266,9 +266,9 @@ public class CcfDataProvider {
 	        }			
 		}
 		
-		if (patients != null && Activator.getDefault().getPreferenceStore().getBoolean(Activator.PREFERENCES_HOSPITAL_FLAG_OUTDATED)) {
+		if (null != patients && Activator.getDefault().getPreferenceStore().getBoolean(Activator.PREFERENCES_HOSPITAL_FLAG_OUTDATED)) {
 			for (Patient patient : patients) {
-				if (patient.getSourceArtifactVersion() != null && !patient.getSourceArtifactVersion().equals("unknown")) {
+				if (null != patient.getSourceArtifactVersion() && !patient.getSourceArtifactVersion().equals("unknown")) {
 					IdentityMapping identityMapping = new IdentityMapping();
 					identityMapping.setSourceRepositoryId(patient.getSourceRepositoryId());
 					identityMapping.setTargetRepositoryId(patient.getTargetRepositoryId());
@@ -276,7 +276,7 @@ public class CcfDataProvider {
 					identityMapping.setArtifactType(patient.getArtifactType());
 					identityMapping.setLandscape(landscape);
 					identityMapping = getIdentityMapping(identityMapping);
-					if (identityMapping != null && identityMapping.getSourceArtifactVersion() != null && !identityMapping.getSourceArtifactVersion().equals("unknown")) {
+					if (null != identityMapping && null != identityMapping.getSourceArtifactVersion() && !identityMapping.getSourceArtifactVersion().equals("unknown")) {
 						try {
 							if (Long.parseLong(patient.getSourceArtifactVersion()) < Long.parseLong(identityMapping.getSourceArtifactVersion())) {
 								patient.setOutdated(true);
@@ -294,11 +294,11 @@ public class CcfDataProvider {
 	}
 	
 	private boolean applyGroupFiltering(Filter[][] filters) {
-		if (filters != null && filters.length > 0) {
+		if (null != filters && 0 < filters.length) {
 			Filter[] filterGroup = filters[0];
 			boolean sourceFilterFound = false;
 			boolean targetFilterFound = false;
-			if (filterGroup != null && filterGroup.length > 0) {
+			if (null != filterGroup && 0 < filterGroup.length) {
 				for (Filter filter : filterGroup) {
 					if (filter.getColumnName().equals(HOSPITAL_SOURCE_REPOSITORY_ID)) {
 						sourceFilterFound = true;
@@ -328,7 +328,7 @@ public class CcfDataProvider {
 		Filter[] filters = { sourceRepositoryIdFilter, targetRepositoryIdFilter, sourceArtifactIdFilter, artifactTypeFilter };
 		
 		IdentityMapping[] identityMappings = getIdentityMappings(identityMapping.getLandscape(), filters);
-		if (identityMappings != null && identityMappings.length == 1) {
+		if (null != identityMappings && 1 == identityMappings.length) {
 			return identityMappings[0];
 		}
 		
@@ -343,7 +343,7 @@ public class CcfDataProvider {
 		Filter[] filters = { sourceRepositoryIdFilter, targetRepositoryIdFilter, sourceArtifactIdFilter, artifactTypeFilter };
 		
 		IdentityMapping[] identityMappings = getIdentityMappings(identityMapping.getLandscape(), filters);
-		if (identityMappings != null && identityMappings.length == 1) {
+		if (null != identityMappings && 1 == identityMappings.length) {
 			return identityMappings[0];
 		}
 
@@ -393,7 +393,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -402,7 +402,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -432,7 +432,7 @@ public class CcfDataProvider {
 			default:
 				break;
 			}
-			if (query == null) return null;
+			if (null == query) return null;
 			connection = getConnection(consistencyCheck.getLandscape());
 			stmt = connection.prepareStatement(query);
 			stmt.setString(1, consistencyCheck.getSourceRepository());
@@ -449,7 +449,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (rs != null)
+	            if (null != rs)
 	                rs.close();
 	        }
 	        catch (Exception e)
@@ -458,7 +458,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -467,7 +467,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -496,7 +496,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (rs != null)
+	            if (null != rs)
 	                rs.close();
 	        }
 	        catch (Exception e)
@@ -505,7 +505,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -514,7 +514,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -553,12 +553,12 @@ public class CcfDataProvider {
 			synchronizationStatus.getConflictResolutionPriority() + "','" +
 			synchronizationStatus.getSourceSystemTimezone() + "','" +
 			synchronizationStatus.getTargetSystemTimezone() + "',");
-			if (synchronizationStatus.getGroup() == null) {
+			if (null == synchronizationStatus.getGroup()) {
 				insertStatement.append("NULL,");
 			} else {
 				insertStatement.append("'" + synchronizationStatus.getGroup() + "',");
 			}
-			if (synchronizationStatus.getTargetSystemEncoding() == null) {
+			if (null == synchronizationStatus.getTargetSystemEncoding()) {
 				insertStatement.append("NULL)");
 			} else {
 				insertStatement.append("'" + synchronizationStatus.getTargetSystemEncoding() + "')");
@@ -572,7 +572,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -581,7 +581,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -597,7 +597,7 @@ public class CcfDataProvider {
 		group1Filters.add(filter1);
 		Filter filter2 = new Filter(SYNCHRONIZATION_STATUS_TARGET_SYSTEM_KIND, landscape.getType2(), true, Filter.FILTER_TYPE_LIKE);
 		group1Filters.add(filter2);
-		if (landscape.getGroup() != null && landscape.getGroup().trim().length() > 0) {
+		if (null != landscape.getGroup() && 0 < landscape.getGroup().trim().length()) {
 			Filter groupFilter1 = new Filter(SYNCHRONIZATION_STATUS_SOURCE_SYSTEM_ENCODING, landscape.getGroup(), true, Filter.FILTER_TYPE_EQUAL);
 			group1Filters.add(groupFilter1);
 		}
@@ -609,7 +609,7 @@ public class CcfDataProvider {
 		group2Filters.add(filter3);
 		Filter filter4 = new Filter(SYNCHRONIZATION_STATUS_TARGET_SYSTEM_KIND, landscape.getType1(), true, Filter.FILTER_TYPE_LIKE);
 		group2Filters.add(filter4);
-		if (landscape.getGroup() != null && landscape.getGroup().trim().length() > 0) {
+		if (null != landscape.getGroup() && 0 < landscape.getGroup().trim().length()) {
 			Filter groupFilter2 = new Filter(SYNCHRONIZATION_STATUS_SOURCE_SYSTEM_ENCODING, landscape.getGroup(), true, Filter.FILTER_TYPE_EQUAL);
 			group2Filters.add(groupFilter2);
 		}
@@ -617,7 +617,7 @@ public class CcfDataProvider {
 		group2Filters.toArray(orGroup2);
 		Filter[][] filters = { orGroup1, orGroup2 };
 		SynchronizationStatus[] statuses;
-		if (landscape.getType1() == null) {
+		if (null == landscape.getType1()) {
 			statuses = getSynchronizationStatuses(landscape, projectMappings, null);
 		}
 		else {
@@ -637,7 +637,7 @@ public class CcfDataProvider {
 			stmt = connection.createStatement();		
 			String query = SQL_CHECK_SYNCHRONIZATION_STATUS_GROUP;
 			rs = stmt.executeQuery(query);	
-			if (rs != null && rs.next()) {
+			if (null != rs && rs.next()) {
 				tableExists = true;
 			}
 			if (!tableExists) {
@@ -651,7 +651,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (rs != null)
+	            if (null != rs)
 	                rs.close();
 	        }
 	        catch (Exception e)
@@ -660,7 +660,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -669,7 +669,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -694,7 +694,7 @@ public class CcfDataProvider {
 			stmt = connection.prepareStatement(query);
 			stmt.setString(1, groupName);	
 			ResultSet rs = stmt.executeQuery();	
-			if (rs != null && rs.next()) {
+			if (null != rs && rs.next()) {
 				groupExists = true;
 			}
 		}
@@ -705,7 +705,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -714,7 +714,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -747,7 +747,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -756,7 +756,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -782,7 +782,7 @@ public class CcfDataProvider {
 			connection = getConnection(driver, url, user, password);
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery(SQL_SYNCHRONIZATION_STATUS_GROUP);			
-			if (rs != null) {
+			if (null != rs) {
 				while (rs.next()) {
 					groups.add(rs.getString("GROUP_NAME"));
 				}
@@ -795,7 +795,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (rs != null)
+	            if (null != rs)
 	                rs.close();
 	        }
 	        catch (Exception e)
@@ -804,7 +804,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -813,7 +813,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -838,7 +838,7 @@ public class CcfDataProvider {
 			stmt.setString(1, targetSystemKind);
 			stmt.setString(2, sourceSystemKind);
 			rs = stmt.executeQuery();			
-			if (rs != null && rs.next()) {
+			if (null != rs && rs.next()) {
 				count = rs.getInt("HOSPITAL_ENTRIES");
 			}
 		}
@@ -849,7 +849,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (rs != null)
+	            if (null != rs)
 	                rs.close();
 	        }
 	        catch (Exception e)
@@ -858,7 +858,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -867,7 +867,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -909,7 +909,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (rs != null)
+	            if (null != rs)
 	                rs.close();
 	        }
 	        catch (Exception e)
@@ -918,7 +918,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -927,7 +927,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -946,7 +946,7 @@ public class CcfDataProvider {
 		Filter[] filters = { sourceSystemFilter, sourceRepositoryFilter, targetSystemFilter, targetRepositoryFilter };		
 		Filter[][] filterGroups = { filters };
 		SynchronizationStatus[] statuses = getSynchronizationStatuses(status.getLandscape(), status.getProjectMappings(), filterGroups);
-		if (statuses != null && statuses.length > 0) {
+		if (null != statuses && 0 < statuses.length) {
 			return statuses[0];
 		}
 		return null;
@@ -970,7 +970,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (rs != null)
+	            if (null != rs)
 	                rs.close();
 	        }
 	        catch (Exception e)
@@ -979,7 +979,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -988,7 +988,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -1027,7 +1027,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -1036,7 +1036,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -1096,7 +1096,7 @@ public class CcfDataProvider {
 	
 	public void resumeSynchronization(SynchronizationStatus status) throws Exception {
 		int index = status.getSourceSystemKind().indexOf("_paused");
-		if (index != -1) {
+		if (-1 != index) {
 			Filter sourceSystemFilter = new Filter(CcfDataProvider.SYNCHRONIZATION_STATUS_SOURCE_SYSTEM_ID, status.getSourceSystemId(), true);
 			Filter sourceRepositoryFilter = new Filter(CcfDataProvider.SYNCHRONIZATION_STATUS_SOURCE_REPOSITORY_ID, status.getSourceRepositoryId(), true);
 			Filter targetSystemFilter = new Filter(CcfDataProvider.SYNCHRONIZATION_STATUS_TARGET_SYSTEM_ID, status.getTargetSystemId(), true);
@@ -1127,7 +1127,7 @@ public class CcfDataProvider {
 				Filter[] filters = { sourceSystemFilter, sourceRepositoryFilter, targetSystemFilter, targetRepositoryFilter };
 				Update dateUpdate = new Update(CcfDataProvider.SYNCHRONIZATION_STATUS_LAST_SOURCE_ARTIFACT_MODIFICATION_DATE, timestamp.toString());
 				String version = updateVersion;
-					if (version == null) {
+					if (null == version) {
 					try {
 						version = Activator.getCcfParticipantForType(status.getSourceSystemKind()).getResetProjectMappingVersion(timestamp);
 					} catch (Exception e1) {
@@ -1207,7 +1207,7 @@ public class CcfDataProvider {
 		finally {
 	        try
 	        {
-	            if (stmt != null)
+	            if (null != stmt)
 	                stmt.close();
 	        }
 	        catch (Exception e)
@@ -1216,7 +1216,7 @@ public class CcfDataProvider {
 	        }
 	        try
 	        {
-	            if (connection  != null)
+	            if (null  != connection)
 	                connection.close();
 	        }
 	        catch (SQLException e)
@@ -1281,7 +1281,7 @@ public class CcfDataProvider {
 			patient.setArtifactType(rs.getString(HOSPITAL_ARTIFACT_TYPE));
 			patient.setGenericArtifact(rs.getString(HOSPITAL_GENERIC_ARTIFACT));
 			patient.setLandscape(landscape);
-			if (projectMappingList == null || projectMappingList.contains(SynchronizationStatus.getProjectMapping(patient))) {
+			if (null == projectMappingList || projectMappingList.contains(SynchronizationStatus.getProjectMapping(patient))) {
 				patients.add(patient);
 			}
 		}
@@ -1305,7 +1305,7 @@ public class CcfDataProvider {
 		List<SynchronizationStatus> synchonizationStatuses = new ArrayList<SynchronizationStatus>();
 		while (rs.next()) {
 			SynchronizationStatus status = null;
-			if (landscape != null && landscape.getRole() == Landscape.ROLE_OPERATOR) {
+			if (null != landscape && Landscape.ROLE_OPERATOR == landscape.getRole()) {
 				status = new OperatorSynchronizationStatus();
 			} else {
 				if (enableEditFieldMapping) {
@@ -1333,9 +1333,9 @@ public class CcfDataProvider {
 			status.setProjectMappings(projectMappings);
 			status.setLandscape(landscape);
 			
-			if (hospitalCounts != null) {
+			if (null != hospitalCounts) {
 				int index = hospitalCounts.indexOf(status);
-				if (index != -1) status.setHospitalEntries(hospitalCounts.get(index).getHospitalEntries());
+				if (-1 != index) status.setHospitalEntries(hospitalCounts.get(index).getHospitalEntries());
 			}
 			
 			synchonizationStatuses.add(status);
@@ -1355,7 +1355,7 @@ public class CcfDataProvider {
 		List<IdentityMapping> identityMappings = new ArrayList<IdentityMapping>();
 		while (rs.next()) {
 			IdentityMapping identityMapping;
-			if (consistencyCheck == null) {
+			if (null == consistencyCheck) {
 				identityMapping = new IdentityMapping();
 			} else {
 				identityMapping = new InconsistentIdentityMapping(consistencyCheck);
@@ -1388,7 +1388,7 @@ public class CcfDataProvider {
 			identityMapping.setParentTargetRepositoryId(rs.getString(IDENTITY_MAPPING_DEP_PARENT_TARGET_REPOSITORY_ID));
 			identityMapping.setParentTargetRepositoryKind(rs.getString(IDENTITY_MAPPING_DEP_PARENT_TARGET_REPOSITORY_KIND));			
 			identityMapping.setLandscape(landscape);
-			if (projectMappingList == null || projectMappingList.contains(SynchronizationStatus.getProjectMapping(identityMapping))) {
+			if (null == projectMappingList || projectMappingList.contains(SynchronizationStatus.getProjectMapping(identityMapping))) {
 				identityMappings.add(identityMapping);
 			}
 		}
@@ -1409,8 +1409,8 @@ public class CcfDataProvider {
 				to.write(buffer, 0, bytes_read);
 		}
 		finally {
-			if (from != null) try { from.close(); } catch (IOException e) {}
-			if (to != null) try { to.close(); } catch (IOException e) {}
+			if (null != from) try { from.close(); } catch (IOException e) {}
+			if (null != to) try { to.close(); } catch (IOException e) {}
 		}
 	}
 

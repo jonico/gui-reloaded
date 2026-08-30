@@ -80,14 +80,14 @@ public class EditFieldMappingsWizardMainPage extends WizardPage {
 		mapForceEditButton = new Button(buttonGroup, SWT.RADIO);
 		mapForceEditButton.setText("Map fields graphically");
 		GridData data = new GridData();
-		if (mapForceFile != null && mapForceFile.exists()) {
+		if (null != mapForceFile && mapForceFile.exists()) {
 			data.horizontalSpan = 2;
 		} else {
 			data.horizontalSpan = 1;
 		}
 		mapForceEditButton.setLayoutData(data);
 		
-		if (mapForceFile == null || !mapForceFile.exists()) {
+		if (null == mapForceFile || !mapForceFile.exists()) {
 			Composite mapForceGroup = new Composite(buttonGroup, SWT.NONE);
 			GridLayout mapForceLayout = new GridLayout();
 			mapForceLayout.numColumns = 3;
@@ -153,12 +153,12 @@ public class EditFieldMappingsWizardMainPage extends WizardPage {
 		mapForcePathText = new Text(pathGroup, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
 		mapForcePathText.setLayoutData(data);
-		if (mapForceFile != null && mapForceFile.exists()) {
+		if (null != mapForceFile && mapForceFile.exists()) {
 			mapForcePathText.setText(mapForceFile.getAbsolutePath());
 		}
 		mapForcePathText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent me) {
-				if (mapForcePathText.getText().trim().length() == 0) mapForceFile = null;
+				if (0 == mapForcePathText.getText().trim().length()) mapForceFile = null;
 				else mapForceFile = new File(mapForcePathText.getText().trim());
 				setMapForcePath();
 				setPageComplete(canFinish());
@@ -174,7 +174,7 @@ public class EditFieldMappingsWizardMainPage extends WizardPage {
 				String[] filterExtensions = { "*.exe" };
 				d.setFilterExtensions(filterExtensions);
 				String file = d.open();
-				if(file!=null) {
+				if(null!=file) {
 					mapForceFile = new File(file);
 					IPath path = new Path(file);
 					mapForcePathText.setText(path.toOSString());
@@ -263,9 +263,9 @@ public class EditFieldMappingsWizardMainPage extends WizardPage {
 		editButton.addSelectionListener(selectionListener);
 		switchOnlyButton.addSelectionListener(selectionListener);
 		restoreDefaultMappingButton.addSelectionListener(selectionListener);
-		if (copySampleButton != null) copySampleButton.addSelectionListener(selectionListener);
-		if (switchToGraphicalButton != null) switchToGraphicalButton.addSelectionListener(selectionListener);
-		if (switchToNonGraphicalButton != null) switchToNonGraphicalButton.addSelectionListener(selectionListener);
+		if (null != copySampleButton) copySampleButton.addSelectionListener(selectionListener);
+		if (null != switchToGraphicalButton) switchToGraphicalButton.addSelectionListener(selectionListener);
+		if (null != switchToNonGraphicalButton) switchToNonGraphicalButton.addSelectionListener(selectionListener);
 		
 		setMessage("Specify your edit choices");
 		
@@ -277,19 +277,19 @@ public class EditFieldMappingsWizardMainPage extends WizardPage {
 	
 	private void setEnablement() {
 		generateButton.setEnabled(mapForceEditButton.getSelection() && graphicalXslFile.exists() && (restoreDefaultMappingButton == null || !restoreDefaultMappingButton.getSelection()));
-		if (copySampleButton != null) {
+		if (null != copySampleButton) {
 			copySampleButton.setEnabled(editButton.getSelection());
 		}
 		mapForcePathLabel.setEnabled(mapForceEditButton.getSelection());
 		mapForcePathText.setEnabled(mapForceEditButton.getSelection());
 		mapForceBrowseButton.setEnabled(mapForceEditButton.getSelection());
-		if (switchToGraphicalButton != null) {
+		if (null != switchToGraphicalButton) {
 			switchToGraphicalButton.setEnabled(mapForceEditButton.getSelection());
 		}
-		if (switchToNonGraphicalButton != null) {
+		if (null != switchToNonGraphicalButton) {
 			switchToNonGraphicalButton.setEnabled(editButton.getSelection());
 		}
-		if (restoreDefaultMappingButton != null) {
+		if (null != restoreDefaultMappingButton) {
 			restoreDefaultMappingButton.setEnabled(mapForceEditButton.getSelection() || editButton.getSelection());
 			if (restoreDefaultMappingButton.getSelection() && mapForceEditButton.getSelection()) {
 				generateButton.setSelection(true);
@@ -335,7 +335,7 @@ public class EditFieldMappingsWizardMainPage extends WizardPage {
 			if (!graphicalXslFile.exists() && !generateButton.getSelection()) {
 				return false;
 			}
-			if (mapForceFile == null || !mapForceFile.exists()) {
+			if (null == mapForceFile || !mapForceFile.exists()) {
 				setErrorMessage("Altova MapForce not found");
 				return false;
 			}
@@ -349,14 +349,14 @@ public class EditFieldMappingsWizardMainPage extends WizardPage {
 	
 	private File getMapForceFile() {
 		String mapForcePath = Activator.getDefault().getPreferenceStore().getString(Activator.PREFERENCES_MAPFORCE_PATH);
-		if (mapForcePath != null && mapForcePath.trim().length() > 0) {
+		if (null != mapForcePath && 0 < mapForcePath.trim().length()) {
 			mapForceFile = new File(mapForcePath);
 		}
 		return mapForceFile;
 	}
 	
 	private void setMapForcePath() {
-		if (mapForceFile != null && mapForceFile.exists()) {
+		if (null != mapForceFile && mapForceFile.exists()) {
 			Activator.getDefault().getPreferenceStore().setValue(Activator.PREFERENCES_MAPFORCE_PATH, mapForcePathText.getText().trim());
 		}
 	}

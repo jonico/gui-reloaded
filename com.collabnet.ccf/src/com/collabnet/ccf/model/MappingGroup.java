@@ -25,13 +25,13 @@ public class MappingGroup {
 	}
 	
 	public SynchronizationStatus getFirstMapping() {
-		if (childMappings != null && childMappings.length > 0) {
+		if (null != childMappings && 0 < childMappings.length) {
 			return childMappings[0];
 		}
-		if (childGroups != null) {
+		if (null != childGroups) {
 			for (MappingGroup childGroup : childGroups) {
 				SynchronizationStatus childGroupMapping = childGroup.getFirstMapping();
-				if (childGroupMapping != null) {
+				if (null != childGroupMapping) {
 					return childGroupMapping;
 				}
 			}
@@ -85,12 +85,12 @@ public class MappingGroup {
 
 	public String toString() {
 		String returnString = null;
-		if (text != null) {
+		if (null != text) {
 			returnString = text;
 		} else {
 			return super.toString();
 		}
-		if (getHospitalEntries() > 0) {
+		if (0 < getHospitalEntries()) {
 			returnString = returnString + " (" + hospitalEntries + ")";
 		}
 		return returnString;
@@ -103,13 +103,13 @@ public class MappingGroup {
 	
 	public int getHospitalEntries(MappingGroup mappingGroup) {
 		SynchronizationStatus[] childMappings = mappingGroup.getChildMappings();
-		if (childMappings != null) {
+		if (null != childMappings) {
 			for (SynchronizationStatus status : childMappings) {
 				hospitalEntries += status.getHospitalEntries();
 			}
 		}
 		MappingGroup[] childGroups = mappingGroup.getChildGroups();
-		if (childGroups != null) {
+		if (null != childGroups) {
 			for (MappingGroup childGroup : childGroups) {
 				getHospitalEntries(childGroup);
 			}
@@ -118,7 +118,7 @@ public class MappingGroup {
 	}
 	
 	public Object[] getChildren() {
-		if (childGroups == null) {
+		if (null == childGroups) {
 			return childMappings;
 		} else {
 			return childGroups;

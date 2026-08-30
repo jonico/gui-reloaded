@@ -171,7 +171,7 @@ public class TFArtifactMetaData {
 		if(fieldName.equals(SFEEFields.commentText.getFieldName())){
 			field = SFEEFields.commentText;
 		}
-		if(field != null){
+		if(null != field){
 			return field.getValueType();
 		}
 		return null;
@@ -179,7 +179,7 @@ public class TFArtifactMetaData {
 
 	public static FieldValueTypeValue getFieldValueTypeForFieldType(String fieldType) {
 		FieldValueTypeValue fieldValueType = fieldValueTypeGAFieldTypeMap.get(fieldType);
-		if(fieldValueType != null){
+		if(null != fieldValueType){
 			return fieldValueType;
 		}
 		else {
@@ -190,7 +190,7 @@ public class TFArtifactMetaData {
 
 	public static String getSFEEFieldValueTypeForGAFieldType(FieldValueTypeValue fieldType) {
 		String fieldValueType = fieldGAValueTypeFieldTypeMap.get(fieldType);
-		if(fieldValueType != null){
+		if(null != fieldValueType){
 			return fieldValueType;
 		}
 		else {

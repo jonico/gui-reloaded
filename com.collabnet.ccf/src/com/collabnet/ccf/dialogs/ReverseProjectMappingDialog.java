@@ -61,18 +61,18 @@ public class ReverseProjectMappingDialog extends CcfDialog implements IPageCompl
 		composite.setLayout(layout);
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		if (ccfParticipant1 != null) {
+		if (null != ccfParticipant1) {
 			mappingSection1 = ccfParticipant1.getMappingSection(1);
-			if (mappingSection1 != null) {
+			if (null != mappingSection1) {
 				mappingSection1.getComposite(composite, reverseStatus.getLandscape());
 				mappingSection1.initializeComposite(reverseStatus, IMappingSection.TYPE_TARGET);
 				mappingSection1.setProjectPage(this);
 			}
 		}
 		
-		if (ccfParticipant2 != null) {
+		if (null != ccfParticipant2) {
 			mappingSection2 = ccfParticipant2.getMappingSection(2);
-			if (mappingSection2 != null) {
+			if (null != mappingSection2) {
 				mappingSection2.getComposite(composite, reverseStatus.getLandscape());
 				mappingSection2.initializeComposite(reverseStatus, IMappingSection.TYPE_SOURCE);
 				mappingSection2.setProjectPage(this);
@@ -118,7 +118,7 @@ public class ReverseProjectMappingDialog extends CcfDialog implements IPageCompl
 		status.setSourceSystemKind(reverseStatus.getTargetSystemKind());
 		String sourceSystemKind = reverseStatus.getSourceSystemKind();
 		int index = sourceSystemKind.indexOf("_paused");
-		if (index != -1) {
+		if (-1 != index) {
 			sourceSystemKind = sourceSystemKind.substring(0, index);
 		}
 		status.setTargetSystemKind(sourceSystemKind);
@@ -169,7 +169,7 @@ public class ReverseProjectMappingDialog extends CcfDialog implements IPageCompl
 				try {
 					xslFile.createNewFile();
 					File sampleFile = status.getSampleXslFile();
-					if (sampleFile != null && sampleFile.exists()) {
+					if (null != sampleFile && sampleFile.exists()) {
 						CcfDataProvider.copyFile(sampleFile, xslFile);
 					}
 				} catch (IOException e) {
@@ -183,18 +183,18 @@ public class ReverseProjectMappingDialog extends CcfDialog implements IPageCompl
 
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
-			if (reverseStatus == null) okButton.setEnabled(false);
+			if (null == reverseStatus) okButton.setEnabled(false);
 		}
         return button;
     }
 	
 	private boolean canFinish() {
-		if (mappingSection1 != null && !mappingSection1.isPageComplete()) {
+		if (null != mappingSection1 && !mappingSection1.isPageComplete()) {
 			return false;
 		}
-		if (mappingSection2 != null && !mappingSection2.isPageComplete()) {
+		if (null != mappingSection2 && !mappingSection2.isPageComplete()) {
 			return false;
 		}
 		return true;

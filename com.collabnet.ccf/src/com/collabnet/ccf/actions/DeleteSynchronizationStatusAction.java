@@ -69,7 +69,7 @@ public class DeleteSynchronizationStatusAction extends ActionDelegate {
 	
 	private void deleteProjectMapping(MappingGroup mappingGroup) throws Exception {
 		SynchronizationStatus[] childMappings = mappingGroup.getChildMappings();
-		if (childMappings != null) {
+		if (null != childMappings) {
 			for (SynchronizationStatus status : childMappings) {
 				deleteProjectMapping(status);
 				mappingsDeleted = true;
@@ -79,7 +79,7 @@ public class DeleteSynchronizationStatusAction extends ActionDelegate {
 			}
 		}
 		SynchronizationStatus[] hiddenChildMappings = mappingGroup.getHiddenChildMappings();
-		if (hiddenChildMappings != null) {
+		if (null != hiddenChildMappings) {
 			for (SynchronizationStatus status : hiddenChildMappings) {
 				deleteProjectMapping(status);
 				mappingsDeleted = true;
@@ -89,7 +89,7 @@ public class DeleteSynchronizationStatusAction extends ActionDelegate {
 			}
 		}
 		MappingGroup[] childGroups = mappingGroup.getChildGroups();
-		if (childGroups != null) {
+		if (null != childGroups) {
 			for (MappingGroup childGroup : childGroups) {
 				deleteProjectMapping(childGroup);
 			}
@@ -109,7 +109,7 @@ public class DeleteSynchronizationStatusAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isDeleteProjectMapping());
 		}
 	}	

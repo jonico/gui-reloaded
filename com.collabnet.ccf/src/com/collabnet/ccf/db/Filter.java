@@ -87,10 +87,10 @@ public class Filter {
 			break;
 		}
 		if (stringValue) expression.append("'"); //$NON-NLS-1$
-		if (filterType == FILTER_TYPE_LIKE && !(value.startsWith("%"))) //$NON-NLS-1$
+		if (FILTER_TYPE_LIKE == filterType && !(value.startsWith("%"))) //$NON-NLS-1$
 			expression.append("%"); //$NON-NLS-1$
 		expression.append(value);
-		if (filterType == FILTER_TYPE_LIKE && !(value.endsWith("%"))) //$NON-NLS-1$
+		if (FILTER_TYPE_LIKE == filterType && !(value.endsWith("%"))) //$NON-NLS-1$
 			expression.append("%");		 //$NON-NLS-1$
 		if (stringValue) expression.append("'"); //$NON-NLS-1$
 		return expression.toString();
@@ -98,10 +98,10 @@ public class Filter {
 	
 	public static String getQuery(String sql, Filter[] filters) {
 		StringBuffer query = new StringBuffer(sql);
-		if (filters != null && filters.length > 0 && filters[0] != null) {
+		if (null != filters && 0 < filters.length && null != filters[0]) {
 			query.append(" WHERE "); //$NON-NLS-1$
 			for (int i = 0; i < filters.length; i++) {
-				if (i > 0) query.append(" AND "); //$NON-NLS-1$
+				if (0 < i) query.append(" AND "); //$NON-NLS-1$
 				query.append(filters[i].toString());
 			}
 		}
@@ -109,16 +109,16 @@ public class Filter {
 	}
 	
 	public static String getQuery(String sql, Filter[][] filters) {
-		if (filters == null || filters.length == 0) return sql;
-		if (filters.length == 1) return getQuery(sql, filters[0]);
+		if (null == filters || 0 == filters.length) return sql;
+		if (1 == filters.length) return getQuery(sql, filters[0]);
 		StringBuffer query = new StringBuffer(sql);
 		query.append(" WHERE "); //$NON-NLS-1$
 		for (int i = 0; i < filters.length; i++) {
-			if (i > 0) query.append(" OR "); //$NON-NLS-1$
+			if (0 < i) query.append(" OR "); //$NON-NLS-1$
 			query.append("("); //$NON-NLS-1$
 			Filter[] orGroup = filters[i];
 			for (int j = 0; j < orGroup.length; j++) {
-				if (j > 0) query.append(" AND "); //$NON-NLS-1$
+				if (0 < j) query.append(" AND "); //$NON-NLS-1$
 				query.append(orGroup[j].toString());
 			}
 			query.append(")"); //$NON-NLS-1$

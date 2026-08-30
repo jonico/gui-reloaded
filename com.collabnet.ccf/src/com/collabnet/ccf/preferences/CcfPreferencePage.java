@@ -188,7 +188,7 @@ public class CcfPreferencePage extends PreferencePage implements IWorkbenchPrefe
 			resetDelay = Integer.parseInt(resetDelayText.getText().trim());
 		} catch (Exception e) {}
 		store.setValue(Activator.PREFERENCES_RESET_DELAY, resetDelay);
-		if (needsRefresh && HospitalView.getView() != null && HospitalView.getView().isHospitalLoaded()) {
+		if (needsRefresh && null != HospitalView.getView() && HospitalView.getView().isHospitalLoaded()) {
 			HospitalView.getView().refresh();
 		}
 		store.setValue(Activator.PREFERENCES_SHOW_HOSPITAL_COUNT, hospitalCountButton.getSelection());
@@ -201,7 +201,7 @@ public class CcfPreferencePage extends PreferencePage implements IWorkbenchPrefe
 		else {
 			store.setValue(Activator.PREFERENCES_ENCRYPT_PASSWORDS, Activator.ENCRYPT_PASSWORDS_IF_PREVIOUSLY_ENCRYPTED);
 		}
-		if (showHospitalChanged && CcfExplorerView.getView() != null) {
+		if (showHospitalChanged && null != CcfExplorerView.getView()) {
 			CcfExplorerView.getView().refreshProjectMappings();
 		}
 		return super.performOk();

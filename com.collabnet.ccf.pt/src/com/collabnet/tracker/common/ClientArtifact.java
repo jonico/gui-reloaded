@@ -96,7 +96,7 @@ public class ClientArtifact {
 		addToNamespaceMap(namespace, tagName);
 		String fullyQualifiedName = TrackerUtil.getKey(namespace, tagName);
 		List<String> values = textAttributes.get(fullyQualifiedName);
-		if (values == null) {
+		if (null == values) {
 			values = new ArrayList<String>();
 			textAttributes.put(fullyQualifiedName, values);
 		}
@@ -141,7 +141,7 @@ public class ClientArtifact {
 	 */
 	public String getAttributeValue(String namespace, String tagname) {
 		List<String> values = textAttributes.get(TrackerUtil.getKey(namespace, tagname));
-		if (values == null) {
+		if (null == values) {
 			return null;
 		}
 		return (String) values.get(0);
@@ -160,7 +160,7 @@ public class ClientArtifact {
 	 */
 	public String[] getAttributeValues(String namespace, String tagName) {
 		List<String> values = textAttributes.get(TrackerUtil.getKey(namespace, tagName));
-		if (values == null) {
+		if (null == values) {
 			return null;
 		}
 		String[] result = new String[values.size()];

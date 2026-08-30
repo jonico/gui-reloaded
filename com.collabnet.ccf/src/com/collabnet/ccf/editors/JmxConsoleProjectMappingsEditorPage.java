@@ -139,7 +139,7 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
 		DisposeListener disposeListener = new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				TableColumn col = (TableColumn)e.getSource();
-				if (col.getWidth() > 0) settings.put("consoleProjectMappingTable." + col.getText(), col.getWidth()); //$NON-NLS-1$
+				if (0 < col.getWidth()) settings.put("consoleProjectMappingTable." + col.getText(), col.getWidth()); //$NON-NLS-1$
 			}			
 		};
 		
@@ -175,7 +175,7 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
 	private void setColumnWidth(Table table, TableLayout layout,
 			DisposeListener disposeListener, TableColumn col, int defaultWidth) {
 		String columnWidth = settings.get("consoleProjectMappingTable." + col.getText()); //$NON-NLS-1$
-		if (columnWidth == null || columnWidth.equals("0")) layout.addColumnData(new ColumnWeightData(defaultWidth, defaultWidth, true)); //$NON-NLS-1$
+		if (null == columnWidth || columnWidth.equals("0")) layout.addColumnData(new ColumnWeightData(defaultWidth, defaultWidth, true)); //$NON-NLS-1$
 		else layout.addColumnData(new ColumnPixelData(Integer.parseInt(columnWidth), true));
 		col.addDisposeListener(disposeListener);
 	}
@@ -191,7 +191,7 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
 	
 	public void setSortColumn(final TableViewer tableViewer, int column) {
 		ProjectMappingsSorter oldSorter = (ProjectMappingsSorter)tableViewer.getSorter();
-		if (oldSorter != null && column == oldSorter.getColumnNumber()) {
+		if (null != oldSorter && column == oldSorter.getColumnNumber()) {
 			oldSorter.setReversed(!oldSorter.isReversed());
 			if (oldSorter.isReversed()) tableViewer.getTable().setSortDirection(SWT.DOWN);
 			else tableViewer.getTable().setSortDirection(SWT.UP);	
@@ -234,7 +234,7 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
 							queueCount = monitor2.getNumberOfWaitingArtifacts(projectMapping.getSourceSystemId(), projectMapping.getSourceRepositoryId(), projectMapping.getTargetSystemId(), projectMapping.getTargetRepositoryId());
 						}						
 						
-						if (queueCount != null) {
+						if (null != queueCount) {
 							int count = 0;
 							try {
 								count = Integer.parseInt(queueCount);
@@ -252,7 +252,7 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
 	class ProjectMappingsLabelProvider implements ITableLabelProvider {
 
 		public Image getColumnImage(Object element, int columnIndex) {
-			if (columnIndex == 0) {
+			if (0 == columnIndex) {
 				SynchronizationStatus status = (SynchronizationStatus)element;
 				if (status.isPaused())
 					return Activator.getImage(Activator.IMAGE_SYNC_STATUS_ENTRY_PAUSED);
@@ -281,7 +281,7 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
 			default:
 				break;
 			}
-			if (value == null) value = "";
+			if (null == value) value = "";
 			return value;
 		}
 
@@ -319,13 +319,13 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
             SynchronizationStatus s1 = (SynchronizationStatus)o1;
             SynchronizationStatus s2 = (SynchronizationStatus)o2;
 			int result = 0;
-			if (s1 == null || s2 == null) {
+			if (null == s1 || null == s2) {
 				result = super.compare(viewer, o1, o2);
 			} else {
 				int[] columnSortOrder = SORT_ORDERS_BY_COLUMN[columnNumber];;
 				for (int i = 0; i < columnSortOrder.length; ++i) {
 					result = compareColumnValue(columnSortOrder[i], s1, s2);
-					if (result != 0)
+					if (0 != result)
 						break;
 				}
 			}
@@ -339,15 +339,15 @@ public class JmxConsoleProjectMappingsEditorPage extends JmxConsoleEditorPage {
 			String value2 = null;
 			switch (columnNumber) {
 				case 0:
-                    if (s1.getSourceRepositoryId() == null) value1 = ""; //$NON-NLS-1$
+                    if (null == s1.getSourceRepositoryId()) value1 = ""; //$NON-NLS-1$
                     else value1 = s1.getSourceRepositoryId();
-                    if (s2.getSourceRepositoryId() == null) value2 = ""; //$NON-NLS-1$
+                    if (null == s2.getSourceRepositoryId()) value2 = ""; //$NON-NLS-1$
                     else value2 = s2.getSourceRepositoryId();
                     break;
 				case 1:
-                    if (s1.getTargetRepositoryId() == null) value1 = ""; //$NON-NLS-1$
+                    if (null == s1.getTargetRepositoryId()) value1 = ""; //$NON-NLS-1$
                     else value1 = s1.getTargetRepositoryId();
-                    if (s2.getTargetRepositoryId() == null) value2 = ""; //$NON-NLS-1$
+                    if (null == s2.getTargetRepositoryId()) value2 = ""; //$NON-NLS-1$
                     else value2 = s2.getTargetRepositoryId();
                     break;
 				case 2:

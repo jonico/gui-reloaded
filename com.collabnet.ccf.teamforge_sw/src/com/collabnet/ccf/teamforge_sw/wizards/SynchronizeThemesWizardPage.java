@@ -48,7 +48,7 @@ public class SynchronizeThemesWizardPage extends WizardPage {
 				
 		getThemes();
 		
-		if (addedValues.size() > 0) {
+		if (0 < addedValues.size()) {
 			addGroup = new Group(outerContainer,SWT.NONE);
 			addGroup.setLayout(new GridLayout());
 			addGroup.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.FILL_BOTH));
@@ -57,7 +57,7 @@ public class SynchronizeThemesWizardPage extends WizardPage {
 			addedValuesList.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.FILL_BOTH));
 		}
 		
-		if (deletedValues.size() > 0) {
+		if (0 < deletedValues.size()) {
 			deleteGroup = new Group(outerContainer,SWT.NONE);
 			deleteGroup.setLayout(new GridLayout());
 			deleteGroup.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.FILL_BOTH));
@@ -66,7 +66,7 @@ public class SynchronizeThemesWizardPage extends WizardPage {
 			deletedValuesList.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.FILL_BOTH));
 		}
 		
-		if (addedValues.size() > 0 || deletedValues.size() > 0) {
+		if (0 < addedValues.size() || 0 < deletedValues.size()) {
 			refresh(false);
 		}
 
@@ -78,7 +78,7 @@ public class SynchronizeThemesWizardPage extends WizardPage {
 		if (getThemes) {
 			getThemes();
 		}
-		if (addGroup != null) {
+		if (null != addGroup) {
 			addedValuesList.removeAll();
 			for (Theme theme : addedValues) {
 				try {
@@ -86,7 +86,7 @@ public class SynchronizeThemesWizardPage extends WizardPage {
 				} catch (Exception e) {}
 			}
 		}
-		if (deleteGroup != null) {
+		if (null != deleteGroup) {
 			deletedValuesList.removeAll();
 			for (TrackerFieldValueDO fieldValue : deletedValues) {
 				deletedValuesList.add(fieldValue.getValue());
@@ -111,7 +111,7 @@ public class SynchronizeThemesWizardPage extends WizardPage {
 				try {
 					Product product = null;
 					product =  wizard.getScrumWorksEndpoint().getProductById(getProductId());
-					if (product == null) {
+					if (null == product) {
 						product =  wizard.getScrumWorksEndpoint().getProductByName(getProduct());
 					}
 					monitor.worked(1);
@@ -135,14 +135,14 @@ public class SynchronizeThemesWizardPage extends WizardPage {
 							themesField = field;
 						}
 					}
-					if (themesField == null) {
+					if (null == themesField) {
 						setErrorMessage("Themes field not defined for tracker " + getTracker() + ".");
 						return;
 					}
 					trackerThemes = themesField.getFieldValues();
 					
 					List<String> newValuesList = new ArrayList<String>();	
-					if (productThemes != null) {
+					if (null != productThemes) {
 						for (Theme productTheme : productThemes) {
 							newValuesList.add(wizard.getValue(productTheme));
 						}
@@ -153,9 +153,9 @@ public class SynchronizeThemesWizardPage extends WizardPage {
 							deletedValues.add(oldValue);
 						}
 					}
-					if (productThemes != null) {
+					if (null != productThemes) {
 						for (Theme productTheme : productThemes) {
-							if (oldValuesMap.get(wizard.getValue(productTheme)) == null) {
+							if (null == oldValuesMap.get(wizard.getValue(productTheme))) {
 								addedValues.add(productTheme);
 							}
 						}
@@ -177,16 +177,16 @@ public class SynchronizeThemesWizardPage extends WizardPage {
 			unknownError = e;
 		}
 		
-		if (getProductThemesError != null) {
+		if (null != getProductThemesError) {
 			setErrorMessage("An unexpected error occurred while getting SWP product themes.  See error log for details.");
 		}
-		else if (getTrackerThemesError != null) {
+		else if (null != getTrackerThemesError) {
 			setErrorMessage("An unexpected error occurred while getting TeamForge tracker themes.  See error log for details.");
 		}
-		else if (unknownError != null) {
+		else if (null != unknownError) {
 			setErrorMessage("An unexpected error occurred while getting themes.  See error log for details.");
 		}		
-		else if (addedValues.size() == 0 && deletedValues.size() == 0) {
+		else if (0 == addedValues.size() && 0 == deletedValues.size()) {
 			setMessage("No differences found between TeamForge tracker themes and SWP product themes.");
 		} else {
 			setMessage("Synchronize TeamForge tracker themes with SWP product themes.");

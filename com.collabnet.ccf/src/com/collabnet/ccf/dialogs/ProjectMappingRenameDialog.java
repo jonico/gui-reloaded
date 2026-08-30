@@ -45,10 +45,10 @@ public class ProjectMappingRenameDialog extends CcfDialog {
 
 	@Override
 	protected void okPressed() {
-		if (renameFilesButton != null) {
+		if (null != renameFilesButton) {
 			renameFiles = renameFilesButton.getSelection();
 		}
-		if (updateDatabaseButton != null) {
+		if (null != updateDatabaseButton) {
 			updateDatabase = updateDatabaseButton.getSelection();
 		}
 		super.okPressed();

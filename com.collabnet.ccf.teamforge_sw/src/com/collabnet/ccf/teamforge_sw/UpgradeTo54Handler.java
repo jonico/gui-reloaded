@@ -30,7 +30,7 @@ public class UpgradeTo54Handler extends AbstractHandler {
 					}
 					UpgradeTo54Wizard wizard = new UpgradeTo54Wizard(landscape);
 					WizardDialog dialog = new CustomWizardDialog(Display.getDefault().getActiveShell(), wizard);
-					if (dialog.open() != WizardDialog.OK) {
+					if (WizardDialog.OK != dialog.open()) {
 						break;
 					}
 				}
