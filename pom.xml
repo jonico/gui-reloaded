@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Maven build for the CCF 1.x Eclipse plugin set, replacing Eclipse PDE.
+
+  One module with seven source roots, one per bundle. The bundles depend on each other
+  through Require-Bundle (com.collabnet.ccf.teamforge_sw needs types from
+  com.collabnet.ccf.teamforge, and six of the seven need com.collabnet.ccf), so compiling
+  them together resolves those references without needing a p2 target platform.
+
+  Tycho was not used deliberately: it needs a reachable p2 repository for a 2009-era target
+  platform, and the Eclipse bundles are all on Maven Central as ordinary jars. See
+  legacy/README.md.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.collabnet.ccf</groupId>
+  <artifactId>ccf-gui</artifactId>
+  <version>1.5.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>CCF Eclipse Plugin</name>
+
+  <properties>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!--
+      The Eclipse artifacts on Maven Central declare a dependency on
+      org.eclipse.swt.${osgi.platform} and expect the consumer to define this. Without it
+      Maven rejects the POM outright: the artifactId is not a valid id pattern.
+    -->
+    <osgi.platform>cocoa.macosx.aarch64</osgi.platform>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.swt.cocoa.macosx.aarch64</artifactId>
+      <version>3.116.100</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.jface</artifactId>
+      <version>3.22.0</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.ui</artifactId>
+      <version>3.118.0</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.ui.forms</artifactId>
+      <version>3.7.0</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.ui.views</artifactId>
+      <version>3.8.101</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.ui.ide</artifactId>
+      <version>3.12.2</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.ui.editors</artifactId>
+      <version>3.10.1</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.core.runtime</artifactId>
+      <version>3.20.100</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.core.commands</artifactId>
+      <version>3.8.0</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.core.resources</artifactId>
+      <version>3.11.1</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.equinox.common</artifactId>
+      <version>3.8.0</version>
+          <exclusions>
+        <!--
+          The Eclipse publications on Central are not really consumable as plain Maven
+          dependencies: they declare org.eclipse.swt.${osgi.platform} (an uninterpolated
+          placeholder Maven rejects as an invalid artifactId) and use version ranges such as
+          [4.5.1,6.0.0) for JNA and javax.annotation that cannot be enumerated. Cutting the
+          transitives and naming what is needed keeps the compile classpath deterministic.
+        -->
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2</version>
+    </dependency>
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>1.1-beta-9</version>
+    </dependency>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.ui.workbench</artifactId>
+      <version>3.108.2</version>
+      <exclusions>
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.equinox.preferences</artifactId>
+      <version>3.6.1</version>
+      <exclusions>
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.core.net</artifactId>
+      <version>1.3.0</version>
+      <exclusions>
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.core.expressions</artifactId>
+      <version>3.5.100</version>
+      <exclusions>
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.core.jobs</artifactId>
+      <version>3.8.0</version>
+      <exclusions>
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.equinox.registry</artifactId>
+      <version>3.6.100</version>
+      <exclusions>
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.text</artifactId>
+      <version>3.6.0</version>
+      <exclusions>
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.jface.text</artifactId>
+      <version>3.11.2</version>
+      <exclusions>
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.osgi</artifactId>
+      <version>3.11.2</version>
+      <exclusions>
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.platform</groupId>
+      <artifactId>org.eclipse.core.filesystem</artifactId>
+      <version>1.6.1</version>
+      <exclusions>
+        <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <!-- the sync engine; built from the core-reloaded repository -->
+    <dependency>
+      <groupId>com.collabnet.ccf</groupId>
+      <artifactId>ccf-core</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>ccf.vendored</groupId>
+      <artifactId>jacob</artifactId>
+      <version>0</version>
+    </dependency>
+    <dependency>
+      <groupId>ccf.vendored</groupId>
+      <artifactId>scrumworks-soap</artifactId>
+      <version>0</version>
+    </dependency>
+    <dependency>
+      <groupId>ccf.vendored</groupId>
+      <artifactId>tfapi</artifactId>
+      <version>0</version>
+    </dependency>
+    <dependency>
+      <groupId>ccf.vendored</groupId>
+      <artifactId>cee-5.0</artifactId>
+      <version>0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <sourceDirectory>com.collabnet.ccf/src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <id>add-bundle-source-roots</id>
+            <phase>generate-sources</phase>
+            <goals><goal>add-source</goal></goals>
+            <configuration>
+              <sources>
+                <source>com.collabnet.ccf.pt/src</source>
+                <source>com.collabnet.ccf.qc/src</source>
+                <source>com.collabnet.ccf.sw/src</source>
+                <source>com.collabnet.ccf.teamforge/src</source>
+                <source>com.collabnet.ccf.teamforge_sw/src</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <excludes>
+            <!--
+              PTClient imports com.collabnet.helm.ws.* (8 types) which exists in no artifact
+              anywhere and never appears in this repository's history - it came from a bundle
+              on a CCF update site that is gone. ProjectTrackerSelectionDialog is its only
+              referrer and has to go with it, because javac compiles excluded files anyway if
+              something on the sourcepath references them.
+
+              The com.collabnet.ccf.migration bundle (9 files) is dropped as a source root
+              for the same reason: it needs com.collabnet.ccf.api / .api.model (16 types),
+              equally unavailable. Nothing outside that bundle references it.
+
+              11 of 267 files. Stubbing the 24 missing types was rejected: their signatures
+              would be guesswork, and inventing an API is worse than declaring it absent.
+            -->
+            <exclude>com/collabnet/ccf/pt/schemageneration/PTClient.java</exclude>
+            <exclude>com/collabnet/ccf/pt/dialogs/ProjectTrackerSelectionDialog.java</exclude>
+            <exclude>com/collabnet/ccf/pt/ProjectTrackerMappingSection.java</exclude>
+            <exclude>com/collabnet/ccf/pt/ProjectTrackerCcfParticipant.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
