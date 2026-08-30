@@ -29,7 +29,7 @@ public class DeleteIdentityMappingAction extends ActionDelegate {
 	public void run(IAction action) {
 		final List<IdentityMappingConsistencyCheck> consistencyChecks = new ArrayList<IdentityMappingConsistencyCheck>();
 		DeleteIdentityMappingDialog dialog = new DeleteIdentityMappingDialog(Display.getDefault().getActiveShell());
-		if (dialog.open() == DeleteIdentityMappingDialog.CANCEL) return;
+		if (DeleteIdentityMappingDialog.CANCEL == dialog.open()) return;
 		final boolean deleteReverse = dialog.isDeleteReverse();
 		identityMappingsDeleted = false;
 		final CcfDataProvider dataProvider = new CcfDataProvider();
@@ -60,7 +60,7 @@ public class DeleteIdentityMappingAction extends ActionDelegate {
 									consistencyChecks.add(((InconsistentIdentityMapping)identityMapping).getConsistencyCheck());
 								}
 							}
-							if (reverseFilters != null) {
+							if (null != reverseFilters) {
 								dataProvider.deleteIdentityMappings(identityMapping.getLandscape(), reverseFilters);
 							}
 							identityMappingsDeleted = true;
@@ -72,10 +72,10 @@ public class DeleteIdentityMappingAction extends ActionDelegate {
 				}
 			}			
 		});
-		if (identityMappingsDeleted && IdentityMappingView.getView() != null) {
+		if (identityMappingsDeleted && null != IdentityMappingView.getView()) {
 			IdentityMappingView.getView().refresh();
 		}
-		if (IdentityMappingConsistencyCheckView.getView() != null) {
+		if (null != IdentityMappingConsistencyCheckView.getView()) {
 			for (IdentityMappingConsistencyCheck consistencyCheck : consistencyChecks) {
 				IdentityMappingConsistencyCheckView.getView().refresh(consistencyCheck);
 			}
@@ -86,7 +86,7 @@ public class DeleteIdentityMappingAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isDeleteIdentityMapping());
 		}
 	}	

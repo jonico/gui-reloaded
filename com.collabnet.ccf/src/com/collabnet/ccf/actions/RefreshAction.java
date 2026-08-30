@@ -9,7 +9,7 @@ public class RefreshAction extends ActionDelegate {
 
 	@Override
 	public void run(IAction action) {
-		if (CcfExplorerView.getView() != null) {
+		if (null != CcfExplorerView.getView()) {
 			CcfExplorerView.getView().refreshViewerNode();
 		}
 	}

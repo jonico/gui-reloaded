@@ -48,7 +48,7 @@ public class ScrumWorksCcfParticipant extends CcfParticipant {
 
 	public String getUrl(Landscape landscape, int systemNumber) {
 		Properties properties;
-		if (systemNumber == 1) {
+		if (1 == systemNumber) {
 			properties = landscape.getProperties1();
 		} else {
 			properties = landscape.getProperties2();
@@ -136,7 +136,7 @@ public class ScrumWorksCcfParticipant extends CcfParticipant {
 		List<String> products = new ArrayList<String>();
 		for (SynchronizationStatus projectMapping : projectMappings) {
 			String product = getProduct(projectMapping);
-			if (product != null && !products.contains(product)) {
+			if (null != product && !products.contains(product)) {
 				products.add(product);
 			}
 		}
@@ -196,10 +196,10 @@ public class ScrumWorksCcfParticipant extends CcfParticipant {
 	}
 
 	private void setChildMappings(String product, MappingGroup pbiGroup, MappingGroup taskGroup, MappingGroup productGroup, MappingGroup releaseGroup, MappingGroup metaDataGroup, SynchronizationStatus[] projectMappings, SynchronizationStatus[] hiddenProjectMappings) {
-		if (hiddenProjectMappings != null) {
+		if (null != hiddenProjectMappings) {
 			for (SynchronizationStatus projectMapping : hiddenProjectMappings) {
 				String mappingProduct = getProduct(projectMapping);
-				if (mappingProduct != null && mappingProduct.equals(product)) {
+				if (null != mappingProduct && mappingProduct.equals(product)) {
 					if (projectMapping.getTargetRepositoryId().endsWith("-Product")) {
 						SynchronizationStatus[] hiddenProductMappings = { projectMapping };
 						productGroup.setHiddenChildMappings(hiddenProductMappings);
@@ -218,7 +218,7 @@ public class ScrumWorksCcfParticipant extends CcfParticipant {
 		List<SynchronizationStatus> metaDataMappings = new ArrayList<SynchronizationStatus>();
 		for (SynchronizationStatus projectMapping : projectMappings) {
 			String mappingProduct = getProduct(projectMapping);
-			if (mappingProduct != null && mappingProduct.equals(product)) {
+			if (null != mappingProduct && mappingProduct.equals(product)) {
 				if (projectMapping.getSourceRepositoryId().endsWith("-PBI") || projectMapping.getTargetRepositoryId().endsWith("-PBI")) {
 					pbiMappings.add(projectMapping);
 				}
@@ -269,7 +269,7 @@ public class ScrumWorksCcfParticipant extends CcfParticipant {
 		        projectMapping.getTargetRepositoryId().endsWith("-Release")) {
 				repositoryId = projectMapping.getTargetRepositoryId();
 		}
-		if (repositoryId != null) {
+		if (null != repositoryId) {
 			String product = repositoryId.substring(0, repositoryId.lastIndexOf("-"));
 			return product;
 		}
@@ -278,13 +278,13 @@ public class ScrumWorksCcfParticipant extends CcfParticipant {
 	
 	private String getProductName(String product) {
 		String productName = null;
-		if (product != null) {
+		if (null != product) {
 			int index = product.lastIndexOf("(");
-			if (index != -1) {
+			if (-1 != index) {
 				productName = product.substring(0, index);
 			}
 		}
-		if (productName == null) {
+		if (null == productName) {
 			productName = product;
 		}
 		return productName;

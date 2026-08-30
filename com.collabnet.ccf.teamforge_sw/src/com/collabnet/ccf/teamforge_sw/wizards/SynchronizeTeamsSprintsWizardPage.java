@@ -52,7 +52,7 @@ public class SynchronizeTeamsSprintsWizardPage extends WizardPage {
 				
 		getTeamsSprints();
 		
-		if (addedValues.size() > 0) {
+		if (0 < addedValues.size()) {
 			addGroup = new Group(outerContainer,SWT.NONE);
 			addGroup.setLayout(new GridLayout());
 			addGroup.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.FILL_BOTH));
@@ -61,7 +61,7 @@ public class SynchronizeTeamsSprintsWizardPage extends WizardPage {
 			addedValuesList.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.FILL_BOTH));
 		}
 		
-		if (deletedValues.size() > 0) {
+		if (0 < deletedValues.size()) {
 			deleteGroup = new Group(outerContainer,SWT.NONE);
 			deleteGroup.setLayout(new GridLayout());
 			deleteGroup.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.FILL_BOTH));
@@ -70,7 +70,7 @@ public class SynchronizeTeamsSprintsWizardPage extends WizardPage {
 			deletedValuesList.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.FILL_BOTH));
 		}
 		
-		if (addedValues.size() > 0 || deletedValues.size() > 0) {
+		if (0 < addedValues.size() || 0 < deletedValues.size()) {
 			refresh(false);
 		}
 
@@ -81,7 +81,7 @@ public class SynchronizeTeamsSprintsWizardPage extends WizardPage {
 		if (getTeamsSprints) {
 			getTeamsSprints();
 		}
-		if (addGroup != null) {
+		if (null != addGroup) {
 			addedValuesList.removeAll();
 			for (String teamSprint : addedValues) {
 				try {
@@ -89,7 +89,7 @@ public class SynchronizeTeamsSprintsWizardPage extends WizardPage {
 				} catch (Exception e) {}
 			}
 		}
-		if (deleteGroup != null) {
+		if (null != deleteGroup) {
 			deletedValuesList.removeAll();
 			for (TrackerFieldValueDO fieldValue : deletedValues) {
 				deletedValuesList.add(fieldValue.getValue());
@@ -114,7 +114,7 @@ public class SynchronizeTeamsSprintsWizardPage extends WizardPage {
 				try {
 					Product product = null;
 					product =  wizard.getScrumWorksEndpoint().getProductById(getProductId());
-					if (product == null) {
+					if (null == product) {
 						product =  wizard.getScrumWorksEndpoint().getProductByName(getProduct());
 					}
 					monitor.worked(1);
@@ -135,14 +135,14 @@ public class SynchronizeTeamsSprintsWizardPage extends WizardPage {
 							teamsSprintsField = field;
 						}
 					}
-					if (teamsSprintsField == null) {
+					if (null == teamsSprintsField) {
 						setErrorMessage("Team/Sprint field not defined for tracker " + getTracker() + ".");
 						return;
 					}
 					trackerTeamsSprints = teamsSprintsField.getFieldValues();
 					
 					List<String> newValuesList = new ArrayList<String>();	
-					if (productTeamsSprints != null) {
+					if (null != productTeamsSprints) {
 						for (String productTeamSprint : productTeamsSprints) {
 							newValuesList.add(productTeamSprint);
 						}
@@ -153,9 +153,9 @@ public class SynchronizeTeamsSprintsWizardPage extends WizardPage {
 							deletedValues.add(oldValue);
 						}
 					}
-					if (productTeamsSprints != null) {
+					if (null != productTeamsSprints) {
 						for (String productTeamSprint : productTeamsSprints) {
-							if (oldValuesMap.get(productTeamSprint) == null) {
+							if (null == oldValuesMap.get(productTeamSprint)) {
 								addedValues.add(productTeamSprint);
 							}
 						}
@@ -177,16 +177,16 @@ public class SynchronizeTeamsSprintsWizardPage extends WizardPage {
 			unknownError = e;
 		}
 		
-		if (getProductTeamsSprintsError != null) {
+		if (null != getProductTeamsSprintsError) {
 			setErrorMessage("An unexpected error occurred while getting SWP product teams/sprints.  See error log for details.");
 		}
-		else if (getTrackerTeamsSprintsError != null) {
+		else if (null != getTrackerTeamsSprintsError) {
 			setErrorMessage("An unexpected error occurred while getting TeamForge tracker teams/sprints.  See error log for details.");
 		}
-		else if (unknownError != null) {
+		else if (null != unknownError) {
 			setErrorMessage("An unexpected error occurred while getting teams/sprints.  See error log for details.");
 		}
-		else if (addedValues.size() == 0 && deletedValues.size() == 0) {
+		else if (0 == addedValues.size() && 0 == deletedValues.size()) {
 			setMessage("No differences found between TeamForge tracker teams/sprints and SWP product teams/sprints.");
 		} else {
 			setMessage("Synchronize TeamForge tracker teams/sprints with SWP product teams/sprints.");
@@ -206,16 +206,16 @@ public class SynchronizeTeamsSprintsWizardPage extends WizardPage {
 		Map<Long, Team> teamMap = new HashMap<Long, Team>();
 		List<String> teamSprintList = new ArrayList<String>();
 		List<Sprint> sprints = getSprints(product);
-		if (sprints != null) {
+		if (null != sprints) {
 			for (Sprint sprint : sprints) {
 				Team team = teamMap.get(sprint.getTeamId());
-				if (team == null) {
+				if (null == team) {
 					team = getTeam(sprint.getTeamId());
-					if (team != null) {
+					if (null != team) {
 						teamMap.put(sprint.getTeamId(), team);
 					}
 				}
-				if (team != null) {
+				if (null != team) {
 					teamSprintList.add(com.collabnet.ccf.teamforge_sw.Activator.getTeamSprintStringRepresentation(sprint, team, swpTimezone));
 				}
 			}

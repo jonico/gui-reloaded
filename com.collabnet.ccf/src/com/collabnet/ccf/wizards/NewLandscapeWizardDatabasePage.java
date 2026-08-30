@@ -106,28 +106,28 @@ public class NewLandscapeWizardDatabasePage extends WizardPage {
 	}
 	
 	public String getUrl() {
-		if (urlText == null) {
+		if (null == urlText) {
 			return Activator.DATABASE_DEFAULT_URL;
 		}
 		return urlText.getText().trim();
 	}
 	
 	public String getDriver() {
-		if (driverText == null) {
+		if (null == driverText) {
 			return Activator.DATABASE_DEFAULT_DRIVER;
 		}
 		return driverText.getText().trim();
 	}
 	
 	public String getUser() {
-		if (userText == null) {
+		if (null == userText) {
 			return Activator.DATABASE_DEFAULT_USER;
 		}
 		return userText.getText().trim();
 	}
 	
 	public String getPassword() {
-		if (passwordText == null) {
+		if (null == passwordText) {
 			return Activator.DATABASE_DEFAULT_PASSWORD;
 		}
 		return passwordText.getText().trim();

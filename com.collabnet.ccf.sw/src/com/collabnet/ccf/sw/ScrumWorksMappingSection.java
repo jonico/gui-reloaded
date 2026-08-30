@@ -86,13 +86,13 @@ public class ScrumWorksMappingSection extends MappingSection {
 		try {
 			previousType = settings.get(PREVIOUS_TYPE);
 		} catch (Exception e) {}
-		if (previousType == null) {
+		if (null == previousType) {
 			previousType = SWPMetaData.TASK.toString();
 		}
 		typeCombo.setText(previousType);		
 		typeCombo.addSelectionListener(new SelectionAdapter() {			
 			public void widgetSelected(SelectionEvent e) {
-				if (getProjectPage() != null) {
+				if (null != getProjectPage()) {
 					getProjectPage().setPageComplete();
 					settings.put(PREVIOUS_TYPE, typeCombo.getText());
 					mapToAssignedToUserButton.setVisible(typeCombo.getText().equals(SWPMetaData.TASK.toString()));
@@ -109,7 +109,7 @@ public class ScrumWorksMappingSection extends MappingSection {
 		mapToAssignedToUserButton.setLayoutData(data);
 		mapToAssignedToUserButton.addSelectionListener(new SelectionAdapter() {		
 			public void widgetSelected(SelectionEvent e) {
-				if (getProjectPage() != null) {
+				if (null != getProjectPage()) {
 					getProjectPage().setPageComplete();
 				}
 			}
@@ -117,7 +117,7 @@ public class ScrumWorksMappingSection extends MappingSection {
 		
 		ModifyListener modifyListener = new ModifyListener() {
 			public void modifyText(ModifyEvent me) {
-				if (getProjectPage() != null) {
+				if (null != getProjectPage()) {
 					getProjectPage().setPageComplete();
 				}
 			}			
@@ -134,11 +134,11 @@ public class ScrumWorksMappingSection extends MappingSection {
 	public void initializeComposite(MappingGroup mappingGroup) {
 		if (mappingGroup.getCcfParticipant() instanceof ScrumWorksCcfParticipant) {
 			String product = getProduct(mappingGroup);
-			if (product != null) {
+			if (null != product) {
 				productText.setText(product);
 			}
 			String type = getType(mappingGroup);
-			if (type != null) {
+			if (null != type) {
 				typeCombo.setText(type);
 				typeCombo.setEnabled(false);
 			}
@@ -176,7 +176,7 @@ public class ScrumWorksMappingSection extends MappingSection {
 	public void initializeComposite(SynchronizationStatus projectMapping, int type) {
 		String product;
 		SWPType swpType;
-		if (type == IMappingSection.TYPE_SOURCE) {
+		if (IMappingSection.TYPE_SOURCE == type) {
 			product = SWPMetaData.retrieveProductFromRepositoryId(projectMapping.getSourceRepositoryId());
 			swpType = SWPMetaData.retrieveSWPTypeFromRepositoryId(projectMapping.getSourceRepositoryId());
 		} else {
@@ -189,20 +189,20 @@ public class ScrumWorksMappingSection extends MappingSection {
 		typeCombo.add(SWPMetaData.TASK.toString());
 		typeCombo.add(SWPMetaData.PBI.toString());	
 		typeCombo.add(SWPMetaData.RELEASE.toString());
-		if (type == TYPE_SOURCE) {
+		if (TYPE_SOURCE == type) {
 			typeCombo.add("MetaData");
 		}
-		if (swpType == SWPType.TASK) {
+		if (SWPType.TASK == swpType) {
 			typeCombo.setText(SWPMetaData.TASK.toString());
 			mapToAssignedToUserButton.setSelection(projectMapping.getSourceRepositoryKind().equals(TEMPLATE_TASKS));			
 		}
-		else if (swpType == SWPType.RELEASE) {
+		else if (SWPType.RELEASE == swpType) {
 			typeCombo.setText(SWPMetaData.RELEASE.toString());
 		}
-		else if (swpType == SWPType.PRODUCT) {
+		else if (SWPType.PRODUCT == swpType) {
 			typeCombo.setText(SWPMetaData.PRODUCT.toString());
 		}
-		else if (swpType == SWPType.PBI) {
+		else if (SWPType.PBI == swpType) {
 			typeCombo.setText(SWPMetaData.PBI.toString());
 		} else {
 			typeCombo.setText("MetaData");
@@ -211,7 +211,7 @@ public class ScrumWorksMappingSection extends MappingSection {
 	}
 
 	public boolean isPageComplete() {
-		if (productText == null || productText.getText().trim().length() == 0) {
+		if (null == productText || 0 == productText.getText().trim().length()) {
 			return false;
 		}
 		return SWPMetaData.retrieveProductIdFromRepositoryId(productText.getText().trim()) != null;
@@ -272,10 +272,10 @@ public class ScrumWorksMappingSection extends MappingSection {
 	
 	private void selectProduct(Landscape landscape) {
 		products = getProducts(landscape);
-		if (products != null) {
+		if (null != products) {
 			ScrumWorksSelectionDialog dialog = new ScrumWorksSelectionDialog(Display.getDefault().getActiveShell(), ScrumWorksSelectionDialog.BROWSER_TYPE_PRODUCT);
 			dialog.setProducts(products);
-			if (dialog.open() == ScrumWorksSelectionDialog.OK) {
+			if (ScrumWorksSelectionDialog.OK == dialog.open()) {
 				productText.setText(dialog.getSelection());
 			}
 		}
@@ -296,7 +296,7 @@ public class ScrumWorksMappingSection extends MappingSection {
 				}
 			}			
 		});	
-		if (soapException != null) {
+		if (null != soapException) {
 			ExceptionDetailsErrorDialog.openError(Display.getDefault().getActiveShell(), "Select Product", soapException.getMessage(), new Status(IStatus.ERROR, com.collabnet.ccf.sw.Activator.PLUGIN_ID, soapException.getLocalizedMessage(), soapException));
 		}
 		return products;

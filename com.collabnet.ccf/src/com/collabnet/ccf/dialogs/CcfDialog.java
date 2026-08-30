@@ -39,7 +39,7 @@ public class CcfDialog extends TrayDialog {
 	}
 	
 	protected Point getInitialLocation(Point initialSize) {
-		if (id != null) {
+		if (null != id) {
 		    try {
 		        int x = settings.getInt(id + ".location.x"); //$NON-NLS-1$
 		        int y = settings.getInt(id + ".location.y"); //$NON-NLS-1$
@@ -50,7 +50,7 @@ public class CcfDialog extends TrayDialog {
     }
     
     protected Point getInitialSize() {
-    	if (id != null) {
+    	if (null != id) {
 		    try {
 		        int x = settings.getInt(id + ".size.x"); //$NON-NLS-1$
 		        int y = settings.getInt(id + ".size.y"); //$NON-NLS-1$
@@ -61,7 +61,7 @@ public class CcfDialog extends TrayDialog {
     }	
 
 	protected void saveLocation() {
-    	if (id != null) {
+    	if (null != id) {
 	        int x = getShell().getLocation().x;
 	        int y = getShell().getLocation().y;
 	        settings.put(id + ".location.x", x); //$NON-NLS-1$

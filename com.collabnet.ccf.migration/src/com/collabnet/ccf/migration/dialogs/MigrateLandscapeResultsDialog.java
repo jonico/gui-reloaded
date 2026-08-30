@@ -88,9 +88,9 @@ public class MigrateLandscapeResultsDialog extends CcfDialog {
 		tableViewer.addOpenListener(new IOpenListener() {			
 			public void open(OpenEvent event) {
 				IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
-				if (selection != null && selection.getFirstElement() instanceof MigrationResult) {
+				if (null != selection && selection.getFirstElement() instanceof MigrationResult) {
 					MigrationResult migrationResult = (MigrationResult)selection.getFirstElement();
-					if (migrationResult.getResultType() == MigrationResult.ERROR) {
+					if (MigrationResult.ERROR == migrationResult.getResultType()) {
 						if (migrationResult.getException().getMessage().contains("<html>")) {
 							MigrateLandscapeErrorDialog dialog = new MigrateLandscapeErrorDialog(getShell(), migrationResult.getException());
 							dialog.open();
@@ -103,7 +103,7 @@ public class MigrateLandscapeResultsDialog extends CcfDialog {
 		});
 		
 		for (MigrationResult migrationResult : migrationResults) {
-			if (migrationResult.getResultType() == MigrationResult.ERROR) {
+			if (MigrationResult.ERROR == migrationResult.getResultType()) {
 				new Label(composite, SWT.NONE);
 				Label errorLabel = new Label(composite, SWT.NONE);
 				errorLabel.setText("Double click error message for details.");
@@ -123,7 +123,7 @@ public class MigrateLandscapeResultsDialog extends CcfDialog {
 		public void dispose() {}
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {}
 		public Object[] getElements(Object inputElement) {
-			if (migrationResults == null) {
+			if (null == migrationResults) {
 				return new MigrationResult[0];
 			}
 			return migrationResults;
@@ -132,8 +132,8 @@ public class MigrateLandscapeResultsDialog extends CcfDialog {
 	
 	class MigrationResultsLabelProvider extends LabelProvider implements ITableLabelProvider {
 		public Image getColumnImage(Object element, int columnIndex) {
-			if (columnIndex == 0) {
-				if (((MigrationResult)element).getResultType() == MigrationResult.ERROR) {
+			if (0 == columnIndex) {
+				if (MigrationResult.ERROR == ((MigrationResult)element).getResultType()) {
 					return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_DEC_FIELD_ERROR);
 				}
 			}

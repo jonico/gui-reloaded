@@ -50,7 +50,7 @@ public class PTClient {
 	
 	public static PTClient getClient(String serverUrl, String userId, String password) {
 		PTClient client = clients.get(serverUrl + userId + password);
-		if (client == null) {
+		if (null == client) {
 			client = new PTClient(serverUrl, userId, password);
 		}
 		return client;
@@ -67,7 +67,7 @@ public class PTClient {
 		}
 		
 		int totalPagesCount = userProjects.getPaginationResult().getTotalNumberOfPages();
-		if (totalPagesCount > 1) {
+		if (1 < totalPagesCount) {
 			for (int i = 2; i <= totalPagesCount; i++) {
 				userProjects = domainService.getProjectsForUser(
 						userId,	new PaginationType(100,i));
@@ -79,7 +79,7 @@ public class PTClient {
 		List<String> projectNames = new ArrayList<String>();
 		for (SimpleProjectType project : projects) {
 			boolean includeProject = false;
-			if (projectType == null) includeProject = true;
+			if (null == projectType) includeProject = true;
 			else {
 				try {
 					Project projectService = getProjectService(getProjectUrl(project));
@@ -113,8 +113,8 @@ public class PTClient {
 	}
 	
 	public Domain getService() throws ServiceException, MalformedURLException {
-		if (domainService == null) {
-			if (mClient == null) {
+		if (null == domainService) {
+			if (null == mClient) {
 				mClient = new WebServiceClient();
 				mClient.init(userId, password, serverUrl);
 			}
@@ -133,7 +133,7 @@ public class PTClient {
         ProjectServiceLocator service = new ProjectServiceLocator(config);
         URL portAddress = wsClient.constructServiceURL("/helm/Project"); //$NON-NLS-1$
         
-        if (TrackerClientManager.getInstance().getClient(projectUrl) == null) {
+        if (null == TrackerClientManager.getInstance().getClient(projectUrl)) {
     		try {
     			TrackerClientManager.getInstance().createClient(projectUrl, userId, password, null, null);
     		} catch (MalformedURLException e) {}        	
@@ -149,7 +149,7 @@ public class PTClient {
         MetadataServiceLocator service = new MetadataServiceLocator(config);
         URL portAddress = wsClient.constructServiceURL("/tracker/Metadata"); //$NON-NLS-1$
         
-        if (TrackerClientManager.getInstance().getClient(projectUrl) == null) {
+        if (null == TrackerClientManager.getInstance().getClient(projectUrl)) {
     		try {
     			TrackerClientManager.getInstance().createClient(projectUrl, userId, password, null, null);
     		} catch (MalformedURLException e) {}        	

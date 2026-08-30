@@ -219,7 +219,7 @@ public abstract class ColumnChooserPreferencePage extends PreferencePage impleme
 		String[] selectedItems = selectedColumnsList.getItems();
 		StringBuffer selectedColumns = new StringBuffer();
 		for (int i = 0; i < selectedItems.length; i++) {
-			if (i > 0) selectedColumns.append(",");
+			if (0 < i) selectedColumns.append(",");
 			selectedColumns.append(selectedItems[i]);
 		}
 		setValue(selectedColumns.toString());
@@ -238,7 +238,7 @@ public abstract class ColumnChooserPreferencePage extends PreferencePage impleme
 	public void initializeValues(String[] selectedColumnsArray) {
 		selectedColumnsList.removeAll();
 		availableColumnsList.removeAll();
-		if (selectedColumns == null) {
+		if (null == selectedColumns) {
 			selectedColumns = new ArrayList<String>();
 			availableColumns = new ArrayList<String>();		
 			String[] allColumnsArray = getAllColumns();
@@ -269,13 +269,13 @@ public abstract class ColumnChooserPreferencePage extends PreferencePage impleme
 	
 	private boolean isUpButtonEnabled() {
 		int[] selectedRows = selectedColumnsList.getSelectionIndices();
-		if (selectedRows.length == 0 || selectedRows[0] == 0) return false;
+		if (0 == selectedRows.length || 0 == selectedRows[0]) return false;
 		else return true;
 	}
 	
 	private boolean isDownButtonEnabled() {
 		int[] selectedRows = selectedColumnsList.getSelectionIndices();
-		if (selectedRows.length == 0 || selectedRows[selectedColumnsList.getSelectionCount() - 1] == selectedColumnsList.getItemCount() - 1)
+		if (0 == selectedRows.length || selectedRows[selectedColumnsList.getSelectionCount() - 1] == selectedColumnsList.getItemCount() - 1)
 			return false;
 		else
 			return true;

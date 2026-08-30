@@ -83,14 +83,14 @@ public class NewProjectMappingWizard extends Wizard {
 //				status.setSourceSystemEncoding(projectMappings.getLandscape().getEncoding1());
 //			}
 			status.setGroup(projectMappings.getLandscape().getGroup());
-			if (projectMappings.getLandscape().getEncoding2() != null && projectMappings.getLandscape().getEncoding2().trim().length() > 0) {
+			if (null != projectMappings.getLandscape().getEncoding2() && 0 < projectMappings.getLandscape().getEncoding2().trim().length()) {
 				status.setTargetSystemEncoding(projectMappings.getLandscape().getEncoding2());
 			}
 			projectPage.getMappingSection1().updateSourceFields(status);
 			projectPage.getMappingSection2().updateTargetFields(status);
 				
 			createMapping(status);
-			if (projectMappings.getLandscape().getRole() == Landscape.ROLE_ADMINISTRATOR) {
+			if (Landscape.ROLE_ADMINISTRATOR == projectMappings.getLandscape().getRole()) {
 				createFieldMappingFile(status);
 			}
 			if (addError) return;
@@ -107,14 +107,14 @@ public class NewProjectMappingWizard extends Wizard {
 //				status.setSourceSystemEncoding(projectMappings.getLandscape().getEncoding2());
 //			}
 			status.setGroup(projectMappings.getLandscape().getGroup());
-			if (projectMappings.getLandscape().getEncoding1() != null && projectMappings.getLandscape().getEncoding1().trim().length() > 0) {
+			if (null != projectMappings.getLandscape().getEncoding1() && 0 < projectMappings.getLandscape().getEncoding1().trim().length()) {
 				status.setTargetSystemEncoding(projectMappings.getLandscape().getEncoding1());
 			}
 			projectPage.getMappingSection2().updateSourceFields(status);
 			projectPage.getMappingSection1().updateTargetFields(status);
 			
 			createMapping(status);
-			if (projectMappings.getLandscape().getRole() == Landscape.ROLE_ADMINISTRATOR) {
+			if (Landscape.ROLE_ADMINISTRATOR == projectMappings.getLandscape().getRole()) {
 				createFieldMappingFile(status);
 			}
 		}
@@ -172,7 +172,7 @@ public class NewProjectMappingWizard extends Wizard {
 			if (!xslFile.exists()) {
 				try {
 					File sampleFile = status.getSampleXslFile();
-					if (sampleFile != null && sampleFile.exists()) {
+					if (null != sampleFile && sampleFile.exists()) {
 						xslFile.createNewFile();
 						CcfDataProvider.copyFile(sampleFile, xslFile);
 					}
@@ -187,12 +187,12 @@ public class NewProjectMappingWizard extends Wizard {
 	
 	public boolean validate() {
 		IMappingSection mappingSection1 = projectPage.getMappingSection1();
-		if (mappingSection1 != null && !mappingSection1.validate(projectMappings.getLandscape())) {
+		if (null != mappingSection1 && !mappingSection1.validate(projectMappings.getLandscape())) {
 			return false;
 		}
 		
 		IMappingSection mappingSection2 = projectPage.getMappingSection2();
-		if (mappingSection2 != null && !mappingSection2.validate(projectMappings.getLandscape())) {
+		if (null != mappingSection2 && !mappingSection2.validate(projectMappings.getLandscape())) {
 			return false;
 		}		
 		return true;

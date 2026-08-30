@@ -42,12 +42,12 @@ public class TeamForgeClient {
 		} else if (landscape.getType2().equals("TF")){
 			properties = landscape.getProperties2();
 		}
-		if (properties != null) {
+		if (null != properties) {
 			String serverUrl = properties.getProperty(Activator.PROPERTIES_SFEE_URL);
 			String userId = properties.getProperty(Activator.PROPERTIES_SFEE_USER);
 			String password = Activator.decodePassword(properties.getProperty(Activator.PROPERTIES_SFEE_PASSWORD));
 			client = clients.get(serverUrl + userId);
-			if (client == null || !client.getConnection().getPassword().equals(password)) {
+			if (null == client || !client.getConnection().getPassword().equals(password)) {
 				client = new TeamForgeClient(serverUrl, userId, password, null, null, null);
 			}
 		}	

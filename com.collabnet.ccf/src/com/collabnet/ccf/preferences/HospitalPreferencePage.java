@@ -61,7 +61,7 @@ public class HospitalPreferencePage extends ColumnChooserPreferencePage {
 
 	@Override
 	public void refresh() {
-		if (needsRefresh && HospitalView.getView() != null) {
+		if (needsRefresh && null != HospitalView.getView()) {
 			HospitalView.getView().refreshTableLayout();
 		}
 	}

@@ -34,12 +34,12 @@ public class UserMappingOptionHandler extends AbstractHandler {
 					MappingGroup mappingGroup = (MappingGroup)item;
 					projectMapping = mappingGroup.getFirstMapping();
 				}
-				if (projectMapping != null) {
+				if (null != projectMapping) {
 					CcfDataProvider ccfDataProvider = new CcfDataProvider();
 					String product = ScrumWorksCcfParticipant.getProduct(projectMapping);
 					try {
 						SynchronizationStatus[] projectMappings = ccfDataProvider.getSynchronizationStatuses(projectMapping.getLandscape(), projectMapping.getProjectMappings());
-						if (projectMappings != null) {
+						if (null != projectMappings) {
 							SynchronizationStatus taskMapping = null;
 							for (SynchronizationStatus mapping : projectMappings) {
 								if (mapping.getSourceRepositoryId().equals(product + "-Task") || mapping.getTargetRepositoryId().equals(product + "-Task")) {
@@ -47,10 +47,10 @@ public class UserMappingOptionHandler extends AbstractHandler {
 									break;
 								}
 							}
-							if (taskMapping != null) {
+							if (null != taskMapping) {
 								boolean mapToPointPerson = taskMapping.getSourceRepositoryKind().equals(ScrumWorksMappingSection.TEMPLATE_TASKS_FLEX_FIELD);
 								SetTaskPointPersonMappingOptionDialog dialog = new SetTaskPointPersonMappingOptionDialog(Display.getDefault().getActiveShell(), !mapToPointPerson);
-								if (dialog.open() == SetTaskPointPersonMappingOptionDialog.OK) {
+								if (SetTaskPointPersonMappingOptionDialog.OK == dialog.open()) {
 									for (SynchronizationStatus mapping : projectMappings) {
 										if (mapping.getSourceRepositoryId().equals(product + "-Task") || mapping.getTargetRepositoryId().equals(product + "-Task")) {
 											Filter sourceSystemFilter = new Filter(CcfDataProvider.SYNCHRONIZATION_STATUS_SOURCE_SYSTEM_ID, mapping.getSourceSystemId(), true);

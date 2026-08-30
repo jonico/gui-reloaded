@@ -38,7 +38,7 @@ public class JmxConsoleEditor extends FormEditor {
         setPartName(input.getName());
 		CcfEditorInput ccfEditorInput = (CcfEditorInput)getEditorInput();
 		landscape = ccfEditorInput.getLandscape();	
-		if (landscape != null) {
+		if (null != landscape) {
 			getMonitors();
 		}
     }
@@ -59,7 +59,7 @@ public class JmxConsoleEditor extends FormEditor {
 		createMappingsPage();
 		try {
 			String activePage = settings.get(JmxConsoleEditorPage.ACTIVE_PAGE);
-			if (activePage != null) {
+			if (null != activePage) {
 				setActivePage(activePage);	
 			}
 		} catch (Exception e) {}
@@ -119,7 +119,7 @@ public class JmxConsoleEditor extends FormEditor {
 	}
 	
 	public CcfDataProvider getDataProvider() {
-		if (dataProvider == null) {
+		if (null == dataProvider) {
 			dataProvider = new CcfDataProvider();
 		}
 		return dataProvider;

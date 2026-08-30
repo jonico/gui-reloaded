@@ -61,7 +61,7 @@ public class RequirementTypeSelectionDialog extends CcfDialog {
 		gd.widthHint = 300;
 		typeList.setLayoutData(gd);
 		
-		if (types != null) {
+		if (null != types) {
 			for (String type : types) {
 				typeList.add(type);
 			}
@@ -87,7 +87,7 @@ public class RequirementTypeSelectionDialog extends CcfDialog {
 	@Override
 	protected void okPressed() {
 		String[] selection = typeList.getSelection();
-		if (selection.length > 0) selectedType = selection[0];
+		if (0 < selection.length) selectedType = selection[0];
 		super.okPressed();
 	}
 
@@ -97,7 +97,7 @@ public class RequirementTypeSelectionDialog extends CcfDialog {
 
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
 			okButton.setEnabled(false);
 		}

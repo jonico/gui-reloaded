@@ -59,7 +59,7 @@ public class ResetProjectMappingDialog extends CcfDialog {
 		
 		if (needsPause) {
 			int delay = Activator.getDefault().getPreferenceStore().getInt(Activator.PREFERENCES_RESET_DELAY);
-			if (delay > 0) {
+			if (0 < delay) {
 				Label pauseLabel = new Label(composite, SWT.WRAP);
 				pauseLabel.setText("Synchronization will be paused for " + delay + " seconds before resetting, then resumed automatically.\n\n");
 			}
@@ -134,7 +134,7 @@ public class ResetProjectMappingDialog extends CcfDialog {
 			    public void verifyText(VerifyEvent e) {
 			    	String text = e.text;
 			    	for (int i = 0; i < text.length(); i++) {
-			    		if ("0123456789".indexOf(text.substring(i, i+1)) == -1) {
+			    		if (-1 == "0123456789".indexOf(text.substring(i, i+1))) {
 			    			e.doit = false;
 			    			break;
 			    		}
@@ -165,7 +165,7 @@ public class ResetProjectMappingDialog extends CcfDialog {
 			resetDate = new Timestamp(calendar.getTimeInMillis());
 		}
 		if (showVersionSelection) {
-			if (resetVersionText.getText().trim().length() == 0) {
+			if (0 == resetVersionText.getText().trim().length()) {
 				resetVersion = "0";
 			} else {
 				resetVersion = resetVersionText.getText();

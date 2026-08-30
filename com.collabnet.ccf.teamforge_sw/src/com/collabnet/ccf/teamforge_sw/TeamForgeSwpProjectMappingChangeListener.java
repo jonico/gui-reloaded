@@ -31,7 +31,7 @@ public class TeamForgeSwpProjectMappingChangeListener implements IProjectMapping
 						if (landscape.getType2().equals("TF")) {
 							properties = landscape.getProperties2();
 						}
-						if (properties != null) {
+						if (null != properties) {
 							String serverUrl = properties.getProperty(com.collabnet.ccf.Activator.PROPERTIES_SFEE_URL);
 							String userId = properties.getProperty(com.collabnet.ccf.Activator.PROPERTIES_SFEE_USER);
 							String password = Activator.decodePassword(properties.getProperty(com.collabnet.ccf.Activator.PROPERTIES_SFEE_PASSWORD));

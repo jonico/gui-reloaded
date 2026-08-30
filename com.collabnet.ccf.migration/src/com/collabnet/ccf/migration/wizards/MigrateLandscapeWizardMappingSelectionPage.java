@@ -156,9 +156,9 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 	}
 	
 	private void updateParentState(Object child, boolean baseChildState) {
-		if (child == null) return;
+		if (null == child) return;
 		Object parent = mappingsContentProvider.getParent(child);
-		if (parent == null) return;
+		if (null == parent) return;
 		boolean allSameState = true;
 		Object[] children = null;
 		children = mappingsContentProvider.getChildren(parent);
@@ -178,7 +178,7 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 	public void setVisible(boolean visible) {
 		setErrorMessage(null);
 		exception = null;
-		if (visible && projectMappings == null) {
+		if (visible && null == projectMappings) {
 			IRunnableWithProgress runnable = new IRunnableWithProgress() {				
 				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 					try {
@@ -196,12 +196,12 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 			} catch (Exception e) {
 				exception = e;
 			}
-			if (exception == null) {
+			if (null == exception) {
 				treeViewer.setInput(MigrateLandscapeWizardMappingSelectionPage.this);
 				treeViewer.expandAll();
 				treeViewer.setAllChecked(true);
 				updateSelectedProjectMappings();
-				if (projectMappings == null || projectMappings.length == 0) {
+				if (null == projectMappings || 0 == projectMappings.length) {
 					setErrorMessage("There are no unmigrated project mappings to migrate.");
 				}
 				else {
@@ -209,7 +209,7 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 				}
 			}
 		};
-		if (exception != null) {
+		if (null != exception) {
 			Activator.handleError(exception);
 			setErrorMessage(exception.getMessage());
 		}
@@ -255,7 +255,7 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 	}
 
 	private ExternalApp[] getExternalApps() {
-		if (externalApps == null) {
+		if (null == externalApps) {
 			externalAppMap = new HashMap<String, ExternalApp>();
 			List<ExternalApp> externalAppList = new ArrayList<ExternalApp>();
 			Collection<ProjectDO> projects = projectMap.values();
@@ -275,7 +275,7 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 	}
 	
 	private RepositoryMapping[] getRepositoryMappings(ExternalApp externalApp) {
-		if (repositoryMappingMap == null) {
+		if (null == repositoryMappingMap) {
 			synchronizationStatusMap = new HashMap<RepositoryMappingDirection, SynchronizationStatus>();
 			repositoryMappingMap = new HashMap<ExternalApp, List<RepositoryMapping>>();
 			repositoryMappingDirectionMap = new HashMap<RepositoryMapping, List<RepositoryMappingDirection>>();
@@ -314,7 +314,7 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 					rmList.add(teamForgeRepositoryId + participantRepositoryId);
 					ExternalApp projectMappingExternalApp = externalAppMap.get(projectMappingMap.get(projectMapping));
 					List<RepositoryMapping> repositoryMappingList = repositoryMappingMap.get(projectMappingExternalApp);
-					if (repositoryMappingList == null) {
+					if (null == repositoryMappingList) {
 						repositoryMappingList = new ArrayList<RepositoryMapping>();
 						repositoryMappingMap.put(projectMappingExternalApp, repositoryMappingList);
 					}
@@ -337,7 +337,7 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 		}
 	
 		List<RepositoryMapping> repositoryMappingList = repositoryMappingMap.get(externalApp);
-		if (repositoryMappingList != null) {
+		if (null != repositoryMappingList) {
 			RepositoryMapping[] repositoryMappings = new RepositoryMapping[repositoryMappingList.size()];
 			repositoryMappingList.toArray(repositoryMappings);
 			return repositoryMappings;
@@ -347,7 +347,7 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 	
 	private RepositoryMappingDirection[] getRepositoryMappingDirections(RepositoryMapping repositoryMapping) {
 		List<RepositoryMappingDirection> repositoryMappingDirectionList = repositoryMappingDirectionMap.get(repositoryMapping);
-		if (repositoryMappingDirectionList != null) {
+		if (null != repositoryMappingDirectionList) {
 			RepositoryMappingDirection[] repositoryMappingDirections = new RepositoryMappingDirection[repositoryMappingDirectionList.size()];
 			repositoryMappingDirectionList.toArray(repositoryMappingDirections);
 			return repositoryMappingDirections;
@@ -360,13 +360,13 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 			String trackerId = getProjectOrTrackerId(repositoryId);
 			String friendlyName = null;
 			TrackerDO trackerDO = trackerMap.get(trackerId);
-			if (trackerDO != null) {
+			if (null != trackerDO) {
 				friendlyName = trackerDO.getTitle();
 				if (repositoryId.endsWith("MetaData")) { //$NON-NLS-1$
 					friendlyName = friendlyName + " " + "MetaData"; //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
-			if (friendlyName != null) {
+			if (null != friendlyName) {
 				return friendlyName;
 			}
 		}
@@ -378,10 +378,10 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 	
 	private String getScrumWorksFriendlyName(String repositoryId) {
 		int index = repositoryId.indexOf("("); //$NON-NLS-1$
-		if (index != -1) {
+		if (-1 != index) {
 			StringBuffer stringBuffer = new StringBuffer(repositoryId.substring(0, index));
 			index = repositoryId.indexOf(")-"); //$NON-NLS-1$
-			if (index != -1) {
+			if (-1 != index) {
 				stringBuffer.append(" " + repositoryId.substring(index+2)); //$NON-NLS-1$
 				if (!repositoryId.endsWith("MetaData")) { //$NON-NLS-1$
 					stringBuffer.append("s"); //$NON-NLS-1$
@@ -394,7 +394,7 @@ public class MigrateLandscapeWizardMappingSelectionPage extends WizardPage {
 	
 	private static String getProjectOrTrackerId(String repositoryId) {
 		int index = repositoryId.indexOf("-"); //$NON-NLS-1$
-		if (index != -1) {
+		if (-1 != index) {
 			return repositoryId.substring(0, index);
 		}
 		return repositoryId;

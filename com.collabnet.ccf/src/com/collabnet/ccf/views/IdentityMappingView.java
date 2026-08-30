@@ -206,7 +206,7 @@ public class IdentityMappingView extends ViewPart {
 		
 		getSite().setSelectionProvider(tableViewer);	
 		
-		if (recreatingTable && identityMappings != null) {
+		if (recreatingTable && null != identityMappings) {
 			tableViewer.setInput(identityMappings);
 			parentComposite.layout();
 			parentComposite.redraw();
@@ -247,7 +247,7 @@ public class IdentityMappingView extends ViewPart {
 		IdentityMappingView.filters = filters;
 		IdentityMappingView.filtering = filtering;
 		if (filtering) {
-			if (description == null) {
+			if (null == description) {
 				contentDescription = "(Filters Active)";
 			} else {
 				contentDescription = description;
@@ -286,12 +286,12 @@ public class IdentityMappingView extends ViewPart {
 		int sortIndex = 0;
 		boolean sortReversed = false;
 		String sortColumn = settings.get("IdentityMappingView.sortColumn");
-		if (sortColumn != null) {
+		if (null != sortColumn) {
 			int index = columnHeaderList.indexOf(sortColumn);
-			if (index != -1) {
+			if (-1 != index) {
 				String columnName = allColumns.get(index);
 				int nameIndex = selectedColumns.indexOf(columnName);
-				if (nameIndex != -1) {
+				if (-1 != nameIndex) {
 					sortIndex = nameIndex;
 					sortReversed = settings.getBoolean("IdentityMappingView.sortReversed");					
 				}
@@ -326,7 +326,7 @@ public class IdentityMappingView extends ViewPart {
 		DisposeListener disposeListener = new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
 				TableColumn col = (TableColumn)e.getSource();
-				if (col.getWidth() > 0) settings.put("IdentityMappingView." + col.getText(), col.getWidth()); //$NON-NLS-1$
+				if (0 < col.getWidth()) settings.put("IdentityMappingView." + col.getText(), col.getWidth()); //$NON-NLS-1$
 			}			
 		};
 		
@@ -361,7 +361,7 @@ public class IdentityMappingView extends ViewPart {
 	
 	private void setSortColumn(TableViewer tableViewer, int column) {
 		IdentityMappingSorter oldSorter = (IdentityMappingSorter)tableViewer.getSorter();
-		if (oldSorter != null && column == oldSorter.getColumnNumber()) {
+		if (null != oldSorter && column == oldSorter.getColumnNumber()) {
 			oldSorter.setReversed(!oldSorter.isReversed());
 			if (oldSorter.isReversed()) tableViewer.getTable().setSortDirection(SWT.DOWN);
 			else tableViewer.getTable().setSortDirection(SWT.UP);	
@@ -381,7 +381,7 @@ public class IdentityMappingView extends ViewPart {
 	private void setColumnWidth(TableLayout layout,
 			DisposeListener disposeListener, TableColumn col, int defaultWidth) {
 		String columnWidth = settings.get("IdentityMappingView." + col.getText()); //$NON-NLS-1$
-		if (columnWidth == null || columnWidth.equals("0")) layout.addColumnData(new ColumnWeightData(defaultWidth, true)); //$NON-NLS-1$
+		if (null == columnWidth || columnWidth.equals("0")) layout.addColumnData(new ColumnWeightData(defaultWidth, true)); //$NON-NLS-1$
 		else layout.addColumnData(new ColumnPixelData(Integer.parseInt(columnWidth), true));
 		col.addDisposeListener(disposeListener);
 	}
@@ -425,14 +425,14 @@ public class IdentityMappingView extends ViewPart {
 	private void getIdentityMappings() {
 		BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
 			public void run() {
-				if (landscape == null || landscape.getDescription() == null) {
+				if (null == landscape || null == landscape.getDescription()) {
 					landscape = new Landscape();
 					landscape.setDatabaseUrl(Activator.getDefault().getPreferenceStore().getString(Activator.PREFERENCES_DATABASE_URL));
 					landscape.setDatabaseDriver(Activator.getDefault().getPreferenceStore().getString(Activator.PREFERENCES_DATABASE_DRIVER));
 					landscape.setDatabaseUser(Activator.getDefault().getPreferenceStore().getString(Activator.PREFERENCES_DATABASE_USER));
 					landscape.setDatabasePassword(Activator.getDefault().getPreferenceStore().getString(Activator.PREFERENCES_DATABASE_PASSWORD));
 				}
-				if (contentDescription == null) setContentDescription("");
+				if (null == contentDescription) setContentDescription("");
 				else setContentDescription(contentDescription);
 				try {
 					if (filtering) identityMappings = dataProvider.getIdentityMappings(landscape, filters);
@@ -474,7 +474,7 @@ public class IdentityMappingView extends ViewPart {
 		updateFilterList(filterList, CcfDataProvider.IDENTITY_MAPPING_DEP_PARENT_TARGET_ARTIFACT_ID, true);
 		updateFilterList(filterList, CcfDataProvider.IDENTITY_MAPPING_DEP_PARENT_TARGET_REPOSITORY_ID, true);
 		updateFilterList(filterList, CcfDataProvider.IDENTITY_MAPPING_DEP_PARENT_TARGET_REPOSITORY_KIND, true);
-		if (filterList.size() > 0) {
+		if (0 < filterList.size()) {
 			
 			Filter[] previousFilters = new Filter[filterList.size()];
 			filterList.toArray(previousFilters);
@@ -487,7 +487,7 @@ public class IdentityMappingView extends ViewPart {
 	
 	private void updateFilterList(List<Filter> filterList, String columnName, boolean stringValue) {
 		String filterValue = settings.get(Filter.IDENTITY_MAPPING_FILTER_VALUE + columnName);
-		if (filterValue != null && filterValue.length() > 0) {
+		if (null != filterValue && 0 < filterValue.length()) {
 			Filter filter = new Filter(columnName, filterValue, stringValue, settings.getInt(Filter.IDENTITY_MAPPING_FILTER_TYPE + columnName));
 			filterList.add(filter);			
 		}
@@ -524,85 +524,85 @@ public class IdentityMappingView extends ViewPart {
 			IdentityMapping identityMapping = (IdentityMapping)element;
 			switch (index) {
 			case 0:
-				if (identityMapping.getSourceSystemId() == null) return "";
+				if (null == identityMapping.getSourceSystemId()) return "";
 				else return identityMapping.getSourceSystemId();
 			case 1:
-				if (identityMapping.getSourceRepositoryId() == null) return "";
+				if (null == identityMapping.getSourceRepositoryId()) return "";
 				else return identityMapping.getSourceRepositoryId();		
 			case 2:
-				if (identityMapping.getTargetSystemId() == null) return "";
+				if (null == identityMapping.getTargetSystemId()) return "";
 				else return identityMapping.getTargetSystemId();
 			case 3:
-				if (identityMapping.getTargetRepositoryId() == null) return "";
+				if (null == identityMapping.getTargetRepositoryId()) return "";
 				else return identityMapping.getTargetRepositoryKind();	
 			case 4:
-				if (identityMapping.getSourceSystemKind() == null) return "";
+				if (null == identityMapping.getSourceSystemKind()) return "";
 				else return identityMapping.getSourceSystemKind();
 			case 5:
-				if (identityMapping.getSourceRepositoryKind() == null) return "";
+				if (null == identityMapping.getSourceRepositoryKind()) return "";
 				else return identityMapping.getSourceRepositoryKind();	
 			case 6:
-				if (identityMapping.getTargetSystemKind() == null) return "";
+				if (null == identityMapping.getTargetSystemKind()) return "";
 				else return identityMapping.getTargetSystemKind();
 			case 7:
-				if (identityMapping.getTargetRepositoryKind() == null) return "";
+				if (null == identityMapping.getTargetRepositoryKind()) return "";
 				else return identityMapping.getTargetRepositoryKind();	
 			case 8:
-				if (identityMapping.getSourceArtifactId() == null) return "";
+				if (null == identityMapping.getSourceArtifactId()) return "";
 				else return identityMapping.getSourceArtifactId();	
 			case 9:
-				if (identityMapping.getTargetArtifactId() == null) return "";
+				if (null == identityMapping.getTargetArtifactId()) return "";
 				else return identityMapping.getTargetArtifactId();	
 			case 10:
-				if (identityMapping.getSourceLastModificationTime() == null) return "";
+				if (null == identityMapping.getSourceLastModificationTime()) return "";
 				else return identityMapping.getSourceLastModificationTime().toString();
 			case 11:
-				if (identityMapping.getTargetLastModificationTime() == null) return "";
+				if (null == identityMapping.getTargetLastModificationTime()) return "";
 				else return identityMapping.getTargetLastModificationTime().toString();
 			case 12:
-				if (identityMapping.getSourceArtifactVersion() == null) return "";
+				if (null == identityMapping.getSourceArtifactVersion()) return "";
 				else return identityMapping.getSourceArtifactVersion();
 			case 13:
-				if (identityMapping.getTargetArtifactVersion() == null) return "";
+				if (null == identityMapping.getTargetArtifactVersion()) return "";
 				else return identityMapping.getTargetArtifactVersion();	
 			case 14:
-				if (identityMapping.getArtifactType() == null) return "";
+				if (null == identityMapping.getArtifactType()) return "";
 				else return identityMapping.getArtifactType();
 			case 15:
-				if (identityMapping.getChildSourceArtifactId() == null) return "";
+				if (null == identityMapping.getChildSourceArtifactId()) return "";
 				else return identityMapping.getChildSourceArtifactId();
 			case 16:
-				if (identityMapping.getChildSourceRepositoryId() == null) return "";
+				if (null == identityMapping.getChildSourceRepositoryId()) return "";
 				else return identityMapping.getChildSourceRepositoryId();	
 			case 17:
-				if (identityMapping.getChildSourceRepositoryKind() == null) return "";
+				if (null == identityMapping.getChildSourceRepositoryKind()) return "";
 				else return identityMapping.getChildSourceRepositoryKind();	
 			case 18:
-				if (identityMapping.getChildTargetArtifactId() == null) return "";
+				if (null == identityMapping.getChildTargetArtifactId()) return "";
 				else return identityMapping.getChildTargetArtifactId();
 			case 19:
-				if (identityMapping.getChildTargetRepositoryId() == null) return "";
+				if (null == identityMapping.getChildTargetRepositoryId()) return "";
 				else return identityMapping.getChildTargetRepositoryId();	
 			case 20:
-				if (identityMapping.getChildTargetRepositoryKind() == null) return "";
+				if (null == identityMapping.getChildTargetRepositoryKind()) return "";
 				else return identityMapping.getChildTargetRepositoryKind();	
 			case 21:
-				if (identityMapping.getParentSourceArtifactId() == null) return "";
+				if (null == identityMapping.getParentSourceArtifactId()) return "";
 				else return identityMapping.getParentSourceArtifactId();
 			case 22:
-				if (identityMapping.getParentSourceRepositoryId() == null) return "";
+				if (null == identityMapping.getParentSourceRepositoryId()) return "";
 				else return identityMapping.getParentSourceRepositoryId();	
 			case 23:
-				if (identityMapping.getParentSourceRepositoryKind() == null) return "";
+				if (null == identityMapping.getParentSourceRepositoryKind()) return "";
 				else return identityMapping.getParentSourceRepositoryKind();	
 			case 24:
-				if (identityMapping.getParentTargetArtifactId() == null) return "";
+				if (null == identityMapping.getParentTargetArtifactId()) return "";
 				else return identityMapping.getParentTargetArtifactId();
 			case 25:
-				if (identityMapping.getParentTargetRepositoryId() == null) return "";
+				if (null == identityMapping.getParentTargetRepositoryId()) return "";
 				else return identityMapping.getParentTargetRepositoryId();	
 			case 26:
-				if (identityMapping.getParentTargetRepositoryKind() == null) return "";
+				if (null == identityMapping.getParentTargetRepositoryKind()) return "";
 				else return identityMapping.getParentTargetRepositoryKind();										
 			default:
 				break;
@@ -650,7 +650,7 @@ public class IdentityMappingView extends ViewPart {
 
 		@Override
 		public int compare(Viewer viewer, Object e1, Object e2) {
-			if (e1 == null || e2 == null) return super.compare(viewer, e1, e2);
+			if (null == e1 || null == e2) return super.compare(viewer, e1, e2);
 			
 			IdentityMapping m1 = (IdentityMapping)e1;
 			IdentityMapping m2 = (IdentityMapping)e2;
@@ -710,16 +710,16 @@ public class IdentityMappingView extends ViewPart {
 			case 10:
 				Timestamp ts1 = m1.getSourceLastModificationTime();
 				Timestamp ts2 = m2.getSourceLastModificationTime();
-				if (ts1 == null && ts2 == null) return 0;
-				else if (ts1 == null) return -1;
-				else if (ts2 == null) return 1;
+				if (null == ts1 && null == ts2) return 0;
+				else if (null == ts1) return -1;
+				else if (null == ts2) return 1;
 				else return ts1.compareTo(ts2);
 			case 11:
 				ts1 = m1.getTargetLastModificationTime();
 				ts2 = m2.getTargetLastModificationTime();
-				if (ts1 == null && ts2 == null) return 0;
-				else if (ts1 == null) return -1;
-				else if (ts2 == null) return 1;
+				if (null == ts1 && null == ts2) return 0;
+				else if (null == ts1) return -1;
+				else if (null == ts2) return 1;
 				else return ts1.compareTo(ts2);
 			case 12:
 				value1 = m1.getSourceArtifactVersion();
@@ -784,8 +784,8 @@ public class IdentityMappingView extends ViewPart {
 			default:
 				break;
 			}
-			if (value1 == null) value1 = "";
-			if (value2 == null) value2 = "";
+			if (null == value1) value1 = "";
+			if (null == value2) value2 = "";
 			return value1.compareTo(value2);
 		}
 		
@@ -810,7 +810,7 @@ public class IdentityMappingView extends ViewPart {
 		}
 		public void run() {
 			IdentityMappingFilterDialog dialog = new IdentityMappingFilterDialog(Display.getDefault().getActiveShell(), filters, filtersActive);
-			if (dialog.open() == HospitalFilterDialog.OK) {				
+			if (HospitalFilterDialog.OK == dialog.open()) {				
 				filtering = dialog.isFiltering();
 				filtersActive = dialog.filtersActive();
 				setFilters(dialog.getFilters(), filtering, null);
@@ -886,7 +886,7 @@ public class IdentityMappingView extends ViewPart {
 		}
 		public void run() {
 			PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(Display.getDefault().getActiveShell(), IdentityMappingPreferencePage.ID, null, null);
-			if (pref != null) pref.open();		
+			if (null != pref) pref.open();		
 		}
 	}
 	
@@ -898,7 +898,7 @@ public class IdentityMappingView extends ViewPart {
 		}
 		public void run() {
 			PreferenceDialog pref = PreferencesUtil.createPreferenceDialogOn(Display.getDefault().getActiveShell(), CcfPreferencePage.ID, null, null);
-			if (pref != null) pref.open();			
+			if (null != pref) pref.open();			
 		}
 	}
 	
@@ -930,8 +930,8 @@ public class IdentityMappingView extends ViewPart {
 		}
 		
 		public void dragEnter(DropTargetEvent event) {
-			if (event.detail == DND.DROP_DEFAULT) {
-				if ((event.operations & DND.DROP_COPY) != 0) {
+			if (DND.DROP_DEFAULT == event.detail) {
+				if (0 != (event.operations & DND.DROP_COPY)) {
 					event.detail = DND.DROP_COPY;
 				} else {
 					event.detail = DND.DROP_NONE;
@@ -944,7 +944,7 @@ public class IdentityMappingView extends ViewPart {
 		}
 		
 		public void dragOperationChanged(DropTargetEvent event) {
-			if ((event.detail == DND.DROP_DEFAULT) || (event.operations & DND.DROP_COPY) != 0) {
+			if ((DND.DROP_DEFAULT == event.detail) || 0 != (event.operations & DND.DROP_COPY)) {
 
 				event.detail = DND.DROP_COPY;
 			} else {

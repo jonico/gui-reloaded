@@ -68,7 +68,7 @@ public class UpgradeTo54WizardPage extends WizardPage {
 		
 		checkTrackers();
 		
-		if (backLogEffortFieldsToRemove.size() > 0 || storyPointFieldsToHide.size() > 0) {
+		if (0 < backLogEffortFieldsToRemove.size() || 0 < storyPointFieldsToHide.size()) {
 			Group upgradeGroup = new Group(outerContainer, SWT.NONE);
 			upgradeGroup.setText("The following changes will be made:");
 			GridLayout upgradeLayout = new GridLayout();
@@ -80,14 +80,14 @@ public class UpgradeTo54WizardPage extends WizardPage {
 			upgradeList.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL | GridData.FILL_BOTH));
 			for (String pbiTracker : pbiTrackers) {
 				String backlogEffortField = backLogEffortFieldsToRemove.get(pbiTracker);
-				if (backlogEffortField != null) {
+				if (null != backlogEffortField) {
 					upgradeList.add("Copy Backlog Effort to Story Points for all artifacts in PBIs tracker (" + pbiTracker + ")");
 					upgradeList.add("Remove Backlog Effort field from PBIs tracker (" + pbiTracker + ")");
 				}
 			}
 			for (String taskTracker : taskTrackers) {
 				String storyPointsField = storyPointFieldsToHide.get(taskTracker);
-				if (storyPointsField != null) {
+				if (null != storyPointsField) {
 					upgradeList.add("Disable Story Points field in Tasks tracker (" + taskTracker + ")");
 				}
 			}
@@ -106,14 +106,14 @@ public class UpgradeTo54WizardPage extends WizardPage {
 				try {
 					for (String pbiTracker: pbiTrackers) {
 						String backLogEffortField = backLogEffortFieldsToRemove.get(pbiTracker);
-						if (backLogEffortField != null) {
+						if (null != backLogEffortField) {
 							monitor.subTask("Retrieving artifacts from PBIs tracker " + pbiTracker);
 							TrackerClient trackerClient = soapClient.getConnection().getTrackerClient();
 							ArtifactList artifactList = trackerClient.getArtifactList(pbiTracker, null);
 							ArtifactRow[] artifactRows = artifactList.getDataRows();
 							monitor.worked(1);
 							for (ArtifactRow artifactRow : artifactRows) {
-								if (artifactRow.getPoints() <= 0) {
+								if (0 >= artifactRow.getPoints()) {
 									monitor.subTask("Copying Backlog Effort to Story Points for PBI " + artifactRow.getId());
 									ArtifactDO artifactDO = trackerClient.getArtifactData(artifactRow.getId());
 									FieldValues fieldValues = artifactDO.getFlexFields();
@@ -123,13 +123,13 @@ public class UpgradeTo54WizardPage extends WizardPage {
 										if (fieldNames[i].equals("Backlog Effort")) {
 											Object[] values = fieldValues.getValues();
 											Object value = values[i];
-											if (value != null) {
+											if (null != value) {
 												String effort = value.toString();
 												int effortInt = 0;
 												try {
 													effortInt = Integer.parseInt(effort);
 												} catch (Exception e) {}
-												if (effortInt > 0) {
+												if (0 < effortInt) {
 													artifactDO.setPoints(effortInt);
 													trackerClient.setArtifactData(artifactDO, null, null, null, null);
 												}
@@ -147,7 +147,7 @@ public class UpgradeTo54WizardPage extends WizardPage {
 					}
 					for (String taskTracker: taskTrackers) {
 						String storyPointsField = storyPointFieldsToHide.get(taskTracker);
-						if (storyPointsField != null) {
+						if (null != storyPointsField) {
 							monitor.subTask("Disabling Story Points field in tracker " + taskTracker);
 							getSoapClient().setFieldEnablement(taskTracker, "points", true); // true = disabled
 							monitor.worked(1);
@@ -168,7 +168,7 @@ public class UpgradeTo54WizardPage extends WizardPage {
 			Activator.handleError(e);
 			upgradeTrackersError = e;
 		}
-		if (upgradeTrackersError != null) {
+		if (null != upgradeTrackersError) {
 			setErrorMessage("An unexpected error occurred while trying to upgrade TeamForge trackers.  See error log for details.");
 		}
 		return upgradeTrackersError == null;
@@ -200,10 +200,10 @@ public class UpgradeTo54WizardPage extends WizardPage {
 						else if (mapping.getTargetRepositoryId().endsWith("-Task")) {
 							taskTrackerId = mapping.getSourceRepositoryId();
 						}
-						if (pbiTrackerId != null && !pbiTrackers.contains(pbiTrackerId)) {
+						if (null != pbiTrackerId && !pbiTrackers.contains(pbiTrackerId)) {
 							pbiTrackers.add(pbiTrackerId);
 						}
-						else if (taskTrackerId != null && !taskTrackers.contains(taskTrackerId)) {
+						else if (null != taskTrackerId && !taskTrackers.contains(taskTrackerId)) {
 							taskTrackers.add(taskTrackerId);
 						}
 					}
@@ -243,9 +243,9 @@ public class UpgradeTo54WizardPage extends WizardPage {
 			Activator.handleError(e);
 			checkTrackersError = e;
 		}
-		if (checkTrackersError != null) {
+		if (null != checkTrackersError) {
 			setErrorMessage("An unexpected error occurred while checking TeamForge trackers.  See error log for details.");
-		} if (backLogEffortFieldsToRemove.size() == 0 && storyPointFieldsToHide.size() == 0) {
+		} if (0 == backLogEffortFieldsToRemove.size() && 0 == storyPointFieldsToHide.size()) {
 			setMessage("Tracker layouts are already correct for 5.4.  No upgrade required.");
 		} else {
 			setMessage("Upgrade trackers to 5.4 layout.");
@@ -262,14 +262,14 @@ public class UpgradeTo54WizardPage extends WizardPage {
 	}
 	
 	private TFSoapClient getSoapClient() {
-		if (soapClient == null) {
+		if (null == soapClient) {
 			Properties properties = null;
 			if (landscape.getType1().equals("TF")) {
 				properties = landscape.getProperties1();
 			} else {
 				properties = landscape.getProperties2();
 			}
-			if (properties != null) {
+			if (null != properties) {
 				String serverUrl = properties.getProperty(Activator.PROPERTIES_SFEE_URL);
 				String userId = properties.getProperty(Activator.PROPERTIES_SFEE_USER);
 				String password = Activator.decodePassword(properties.getProperty(Activator.PROPERTIES_SFEE_PASSWORD));

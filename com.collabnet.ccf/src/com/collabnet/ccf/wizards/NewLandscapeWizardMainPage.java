@@ -109,7 +109,7 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 			public void verifyText(VerifyEvent e) {
 		    	String text = e.text;
 		    	for (int i = 0; i < text.length(); i++) {
-		    		if (text.substring(i, i+1).trim().length() > 0 && !text.substring(i, i+1).matches("\\p{Alnum}+")) {
+		    		if (0 < text.substring(i, i+1).trim().length() && !text.substring(i, i+1).matches("\\p{Alnum}+")) {
 		    			e.doit = false;
 		    			break;
 		    		}
@@ -127,7 +127,7 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 				database.setUrl(wizard.getDatabaseUrl());
 				database.setPassword(wizard.getDatabasePassword());			
 				GroupSelectionDialog dialog = new GroupSelectionDialog(getShell(), database);
-				if (dialog.open() == GroupSelectionDialog.OK) {
+				if (GroupSelectionDialog.OK == dialog.open()) {
 					groupText.setText(dialog.getSelectedGroup());
 				}
 			}			
@@ -137,7 +137,7 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 		try {
 			lastRole = settings.getInt(LAST_ROLE);
 		} catch (Exception e) {}
-		if (lastRole == Landscape.ROLE_OPERATOR) operatorButton.setSelection(true);
+		if (Landscape.ROLE_OPERATOR == lastRole) operatorButton.setSelection(true);
 		else administratorButton.setSelection(true);
 		
 		if (!operatorButton.getSelection()) {
@@ -191,25 +191,25 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 	private void getCcfParticipants() {
 		String lastParticipant1Selection = settings.get(LAST_CCF_PARTICIPANT_1);
 		String lastParticipant2Selection = settings.get(LAST_CCF_PARTICIPANT_2);
-		if (lastParticipant2Selection != null && lastParticipant2Selection.equals("ScrumWorksPro")) {
+		if (null != lastParticipant2Selection && lastParticipant2Selection.equals("ScrumWorksPro")) {
 			lastParticipant2Selection = "ScrumWorks Pro";
 		}
 		for (ICcfParticipant ccfParticipant : ccfParticipants) {
 			participant1Combo.add(ccfParticipant.getName());
 			participant2Combo.add(ccfParticipant.getName());
 		}
-		if (lastParticipant1Selection != null && participant1Combo.indexOf(lastParticipant1Selection) != -1) {
+		if (null != lastParticipant1Selection && -1 != participant1Combo.indexOf(lastParticipant1Selection)) {
 			participant1Combo.setText(lastParticipant1Selection);
 			selectedParticipant1 = ccfParticipants[participant1Combo.indexOf(lastParticipant1Selection)];
 		} else {
 			participant1Combo.setText(ccfParticipants[0].getName());
 			selectedParticipant1 = ccfParticipants[0];
 		}
-		if (lastParticipant2Selection != null && participant2Combo.indexOf(lastParticipant2Selection) != -1) {
+		if (null != lastParticipant2Selection && -1 != participant2Combo.indexOf(lastParticipant2Selection)) {
 			participant2Combo.setText(lastParticipant2Selection);
 			selectedParticipant2 = ccfParticipants[participant2Combo.indexOf(lastParticipant2Selection)];
 		} else {
-			if (ccfParticipants.length > 1) {
+			if (1 < ccfParticipants.length) {
 				participant2Combo.setText(ccfParticipants[1].getName());
 				selectedParticipant2 = ccfParticipants[1];
 			} else {
@@ -229,7 +229,7 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 					index = participant2Combo.getSelectionIndex();
 				}
 				ICcfParticipant selectedParticipant = null;
-				if (index != -1) {
+				if (-1 != index) {
 					selectedParticipant = ccfParticipants[index];
 				}
 				if (e.getSource() == participant1Combo) {
@@ -252,7 +252,7 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 
 	private void createDescriptionArea() {
 		boolean needsRedraw = descriptionGroup != null;
-		if (descriptionGroup == null) {
+		if (null == descriptionGroup) {
 			descriptionGroup = new Group(outerContainer, SWT.NONE);
 			GridLayout descriptionLayout = new GridLayout();
 			descriptionLayout.numColumns = 1;
@@ -261,12 +261,12 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 			new GridData(GridData.GRAB_HORIZONTAL | GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_VERTICAL | GridData.VERTICAL_ALIGN_FILL));			
 		}
 		descriptionGroup.setText(selectedParticipant1.getName() + "/" + selectedParticipant2.getName());
-		if (descriptionLabel != null && !descriptionLabel.isDisposed()) descriptionLabel.dispose();
-		if (descriptionImage1 != null && !descriptionImage1.isDisposed()) descriptionImage1.dispose();
-		if (arrowImage != null && !arrowImage.isDisposed()) arrowImage.dispose();
-		if (descriptionImage2 != null && !descriptionImage2.isDisposed()) descriptionImage2.dispose();
+		if (null != descriptionLabel && !descriptionLabel.isDisposed()) descriptionLabel.dispose();
+		if (null != descriptionImage1 && !descriptionImage1.isDisposed()) descriptionImage1.dispose();
+		if (null != arrowImage && !arrowImage.isDisposed()) arrowImage.dispose();
+		if (null != descriptionImage2 && !descriptionImage2.isDisposed()) descriptionImage2.dispose();
 
-		if (imageGroup == null) {
+		if (null == imageGroup) {
 			imageGroup = new Composite(descriptionGroup, SWT.NONE);
 			GridLayout imageLayout = new GridLayout();
 			imageLayout.numColumns = 3;
@@ -275,7 +275,7 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 			imageGroup.setLayoutData(data);
 		}
 		
-		if (selectedParticipant1.getImage() != null) {
+		if (null != selectedParticipant1.getImage()) {
 			descriptionImage1 = new Label(imageGroup, SWT.NONE);
 			descriptionImage1.setImage(selectedParticipant1.getImage());			
 		}
@@ -283,7 +283,7 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 		GridData data = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
 		arrowImage.setLayoutData(data);
 		arrowImage.setImage(Activator.getImage(Activator.IMAGE_ARROWS));	
-		if (selectedParticipant2.getImage() != null) {
+		if (null != selectedParticipant2.getImage()) {
 			descriptionImage2 = new Label(imageGroup, SWT.NONE);
 			descriptionImage2.setImage(selectedParticipant2.getImage());			
 		}
@@ -308,7 +308,7 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 	}
 
 	public String getDescription() {
-		if (descriptionText.getText().trim().length() == 0)
+		if (0 == descriptionText.getText().trim().length())
 			return selectedParticipant1.getName() + "/" + selectedParticipant2.getName();
 		else
 			return descriptionText.getText().trim();
@@ -320,7 +320,7 @@ public class NewLandscapeWizardMainPage extends WizardPage {
 	}
 	
 	public String getGroup() {
-		if (administratorButton.getSelection() || groupText.getText().trim().length() == 0) return null;
+		if (administratorButton.getSelection() || 0 == groupText.getText().trim().length()) return null;
 		else return groupText.getText().trim();
 	}
 

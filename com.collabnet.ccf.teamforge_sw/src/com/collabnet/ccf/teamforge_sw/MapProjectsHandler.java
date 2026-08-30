@@ -34,7 +34,7 @@ public class MapProjectsHandler extends AbstractHandler {
 					}
 					ProjectMappingWizard wizard = new ProjectMappingWizard(landscape, projectMappings);
 					WizardDialog dialog = new CustomWizardDialog(Display.getDefault().getActiveShell(), wizard);
-					if (dialog.open() == WizardDialog.OK && CcfExplorerView.getView() != null) {
+					if (WizardDialog.OK == dialog.open() && null != CcfExplorerView.getView()) {
 						Activator.notifyChanged(projectMappings);
 					}
 				}

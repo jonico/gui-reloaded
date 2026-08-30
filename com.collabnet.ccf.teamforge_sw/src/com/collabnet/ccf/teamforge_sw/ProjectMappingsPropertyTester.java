@@ -26,7 +26,7 @@ public class ProjectMappingsPropertyTester extends PropertyTester {
 		}
 		if (receiver instanceof MappingGroup && property.equals("isTrackerPbisMapping")) {
 			SynchronizationStatus projectMapping = ((MappingGroup)receiver).getFirstMapping();
-			if (projectMapping != null && isTeamForgeSwpLandscape(projectMapping.getProjectMappings())) {
+			if (null != projectMapping && isTeamForgeSwpLandscape(projectMapping.getProjectMappings())) {
 				return projectMapping.toString().indexOf("-PBI") != -1;
 			}
 		}
@@ -42,14 +42,14 @@ public class ProjectMappingsPropertyTester extends PropertyTester {
 	}
 	
 	private boolean isTeamForgeSwpLandscape(ProjectMappings projectMappings) {
-		if (projectMappings != null) {
+		if (null != projectMappings) {
 			return isTeamForgeSwpLandscape(projectMappings.getLandscape());
 		}
 		return false;
 	}
 	
 	private boolean isTeamForgeSwpLandscape(Landscape landscape) {
-		if (landscape != null) {
+		if (null != landscape) {
 			if (!landscape.getType1().equals(landscape.getType2())) {
 				if (landscape.getType1().equals("TF") || landscape.getType1().equals("SWP")) {
 					if (landscape.getType2().equals("TF") || landscape.getType2().equals("SWP")) {

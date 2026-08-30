@@ -148,7 +148,7 @@ public class EditFieldMappingsWizard extends Wizard {
 							canceled = true;
 							return;
 						}
-						if (mfdFile != null && !mfdFile.exists()) {
+						if (null != mfdFile && !mfdFile.exists()) {
 							monitor.subTask("Generating MFD-File");
 							File createInitialMFDFile = projectMapping.getCreateInitialMFDFile();
 							if (!createInitialMFDFile.exists()) {
@@ -175,7 +175,7 @@ public class EditFieldMappingsWizard extends Wizard {
 						Activator.handleError(e);
 					}
 				}	
-				if (canceled || mapForceException != null) {
+				if (canceled || null != mapForceException) {
 					return;
 				}
 				try {
@@ -254,13 +254,13 @@ public class EditFieldMappingsWizard extends Wizard {
 			mapForceException = e;
 			Activator.handleError(e);
 		}
-		if (mapForceException != null) {
+		if (null != mapForceException) {
 			String errorMessage = null;
 			if (mapForceException instanceof InvocationTargetException) {
 				errorMessage = mapForceException.getCause().getMessage();
 			} else {
-				if (mapForceException.getMessage() == null
-						|| mapForceException.getMessage().trim().length() == 0) {
+				if (null == mapForceException.getMessage()
+						|| 0 == mapForceException.getMessage().trim().length()) {
 					errorMessage = mapForceException.toString();
 				} else {
 					errorMessage = mapForceException.getMessage();
@@ -284,7 +284,7 @@ public class EditFieldMappingsWizard extends Wizard {
 	}
 	
 	public boolean edit(boolean prompt) {
-		if (mainPage != null && mainPage.isSwitchToNonGraphicalMapping()) {
+		if (null != mainPage && mainPage.isSwitchToNonGraphicalMapping()) {
 			projectMapping.switchToNonGraphicalMapping();
 			CcfDataProvider dataProvider = new CcfDataProvider();
 			try {
@@ -295,7 +295,7 @@ public class EditFieldMappingsWizard extends Wizard {
 			}
 		}
 		File xslFile = projectMapping.getXslFile();
-		if (mainPage != null && mainPage.isRestoreDefaultMapping() && xslFile.exists()) {
+		if (null != mainPage && mainPage.isRestoreDefaultMapping() && xslFile.exists()) {
 			if (!confirmRestoreDefaultMapping()) {
 				return false;
 			}
@@ -308,7 +308,7 @@ public class EditFieldMappingsWizard extends Wizard {
 			try {
 				xslFile.createNewFile();
 				File sampleFile = projectMapping.getSampleXslFile();
-				if (sampleFile != null && sampleFile.exists()) {
+				if (null != sampleFile && sampleFile.exists()) {
 					CcfDataProvider.copyFile(sampleFile, xslFile);
 				}
 			} catch (IOException e) {
@@ -322,7 +322,7 @@ public class EditFieldMappingsWizard extends Wizard {
 		IEditorRegistry registry = Activator.getDefault().getWorkbench().getEditorRegistry();
 		IEditorDescriptor descriptor = registry.getDefaultEditor(xslFile.getName());
 		String id;
-		if (descriptor == null) {
+		if (null == descriptor) {
 			id = "org.eclipse.ui.DefaultTextEditor"; //$NON-NLS-1$
 		} else {
 			id = descriptor.getId();
@@ -355,7 +355,7 @@ public class EditFieldMappingsWizard extends Wizard {
 		} catch (IOException e) {
 			throw e;
 		} finally {
-			if (out != null) {
+			if (null != out) {
 				try {
 					out.close();
 				} catch (Exception e) {

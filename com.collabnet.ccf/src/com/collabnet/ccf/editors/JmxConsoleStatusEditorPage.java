@@ -321,26 +321,26 @@ public class JmxConsoleStatusEditorPage extends JmxConsoleEditorPage {
 		}
 		extractionTime = monitor1.getArtifactExtractionProcessingTime(readerMetricsName);
 		updateTime = monitor1.getArtifactUpdateProcessingTime(writerMetricsName);
-		if (extractionTime == null) extractionTimeText1.setText("");
+		if (null == extractionTime) extractionTimeText1.setText("");
 		else extractionTimeText1.setText(extractionTime);
-		if (updateTime == null) updateTimeText1.setText("");
+		if (null == updateTime) updateTimeText1.setText("");
 		else updateTimeText1.setText(updateTime);
 		String memoryConsumption = monitor1.getCCFMemoryConsumption();
-		if (memoryConsumption == null) memoryConsumptionText1.setText("");
+		if (null == memoryConsumption) memoryConsumptionText1.setText("");
 		else memoryConsumptionText1.setText(memoryConsumption);
 		restartButton1.setEnabled(running1);
 		String artifactsShipped = monitor1.getNumberOfArtifactsShipped(readerMetricsName);
-		if (artifactsShipped == null) artifactsShippedText1.setText("");
+		if (null == artifactsShipped) artifactsShippedText1.setText("");
 		else artifactsShippedText1.setText(artifactsShipped);
 		String exceptionsCaught = monitor1.getNumberOfCCFExceptionsCaught();
-		if (exceptionsCaught == null) exceptionsCaughtText1.setText("");
+		if (null == exceptionsCaught) exceptionsCaughtText1.setText("");
 		else exceptionsCaughtText1.setText(exceptionsCaught);
 		String artifactsQuarantined = monitor1.getNumberOfArtifactsQuarantined();
-		if (artifactsQuarantined == null) artifactsQuarantinedText1.setText("");
+		if (null == artifactsQuarantined) artifactsQuarantinedText1.setText("");
 		else artifactsQuarantinedText1.setText(artifactsQuarantined);
 		
 		int hospitalEntries = getHospitalCount(landscape.getType2());
-		if (hospitalEntries == 0) hospitalCountText1.setText("");
+		if (0 == hospitalEntries) hospitalCountText1.setText("");
 		else hospitalCountText1.setText(Integer.toString(hospitalEntries));
 	}
 	
@@ -363,26 +363,26 @@ public class JmxConsoleStatusEditorPage extends JmxConsoleEditorPage {
 		}
 		extractionTime = monitor2.getArtifactExtractionProcessingTime(readerMetricsName);
 		updateTime = monitor2.getArtifactUpdateProcessingTime(writerMetricsName);
-		if (extractionTime == null) extractionTimeText2.setText("");
+		if (null == extractionTime) extractionTimeText2.setText("");
 		else extractionTimeText2.setText(extractionTime);
-		if (updateTime == null) updateTimeText2.setText("");
+		if (null == updateTime) updateTimeText2.setText("");
 		else updateTimeText2.setText(updateTime);
 		String memoryConsumption = monitor2.getCCFMemoryConsumption();
-		if (memoryConsumption == null) memoryConsumptionText2.setText("");
+		if (null == memoryConsumption) memoryConsumptionText2.setText("");
 		else memoryConsumptionText2.setText(memoryConsumption);
 		restartButton2.setEnabled(running2);
 		String artifactsShipped = monitor2.getNumberOfArtifactsShipped(readerMetricsName);
-		if (artifactsShipped == null) artifactsShippedText2.setText("");
+		if (null == artifactsShipped) artifactsShippedText2.setText("");
 		else artifactsShippedText2.setText(artifactsShipped);
 		String exceptionsCaught = monitor2.getNumberOfCCFExceptionsCaught();
-		if (exceptionsCaught == null) exceptionsCaughtText2.setText("");
+		if (null == exceptionsCaught) exceptionsCaughtText2.setText("");
 		else exceptionsCaughtText2.setText(exceptionsCaught);
 		String artifactsQuarantined = monitor2.getNumberOfArtifactsQuarantined();
-		if (artifactsQuarantined == null) artifactsQuarantinedText2.setText("");
+		if (null == artifactsQuarantined) artifactsQuarantinedText2.setText("");
 		else artifactsQuarantinedText2.setText(artifactsQuarantined);
 		
 		int hospitalEntries = getHospitalCount(landscape.getType1());
-		if (hospitalEntries == 0) hospitalCountText2.setText("");
+		if (0 == hospitalEntries) hospitalCountText2.setText("");
 		else hospitalCountText2.setText(Integer.toString(hospitalEntries));
 	}
 	
@@ -393,20 +393,20 @@ public class JmxConsoleStatusEditorPage extends JmxConsoleEditorPage {
 	}
 	
 	private String getTime(Long milliseconds) {
-		if (milliseconds != null) {
+		if (null != milliseconds) {
 			long timeMilliseconds = milliseconds.longValue();
 			long time = timeMilliseconds/1000;
 			String seconds = Integer.toString((int)(time % 60));  
 			String minutes = Integer.toString((int)((time % 3600) / 60));  
 			String hours = Integer.toString((int)(time / 3600));  
 			for (int i = 0; i < 2; i++) {  
-				if (seconds.length() < 2) {  
+				if (2 > seconds.length()) {  
 					seconds = "0" + seconds;  
 				}  
-				if (minutes.length() < 2) {  
+				if (2 > minutes.length()) {  
 					minutes = "0" + minutes;  
 				}  
-				if (hours.length() < 2) {  
+				if (2 > hours.length()) {  
 					hours = "0" + hours;  
 				}  
 			}

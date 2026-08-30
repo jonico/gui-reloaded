@@ -46,9 +46,9 @@ public class MigrateLandscapeAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			boolean enabled = false;
-			if (fSelection != null && fSelection.getFirstElement() instanceof Landscape) {
+			if (null != fSelection && fSelection.getFirstElement() instanceof Landscape) {
 				Landscape landscape = (Landscape)fSelection.getFirstElement();
 				enabled = landscape.getType1().equals("TF") || landscape.getType2().equals("TF");
 			}

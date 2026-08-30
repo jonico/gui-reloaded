@@ -337,19 +337,19 @@ public class Patient implements IPropertySource {
 		StringBuffer clipboard = new StringBuffer();
 		// avoid NPE by adding at least one constant header
 		clipboard.append("Content of CCF hospital table\n");
-		if (exceptionMessage != null) {
+		if (null != exceptionMessage) {
 			clipboard.append("Exception Message:\n\n");
 			clipboard.append(exceptionMessage + "\n\n");
 		}
-		if (causeExceptionMessage != null) {
+		if (null != causeExceptionMessage) {
 			clipboard.append("Cause Exception Message:\n\n");
 			clipboard.append(causeExceptionMessage + "\n\n");
 		}
-		if (stackTrace != null) {
+		if (null != stackTrace) {
 			clipboard.append("Stack Trace:\n\n");
 			clipboard.append(stackTrace + "\n\n");
 		}
-		if (genericArtifact != null) {
+		if (null != genericArtifact) {
 			clipboard.append("Payload:\n\n");
 			clipboard.append(genericArtifact);
 		}
@@ -399,10 +399,10 @@ public class Patient implements IPropertySource {
 		if (P_ID_TARGET_ARTIFACT_ID.equals(id)) return targetArtifactId;
 		if (P_ID_ERROR_CODE.equals(id)) return errorCode;
 		if (P_ID_SOURCE_LAST_MODIFIED.equals(id)) {
-			if (sourceLastModificationTime != null) return sourceLastModificationTime.toString();
+			if (null != sourceLastModificationTime) return sourceLastModificationTime.toString();
 		}
 		if (P_ID_TARGET_LAST_MODIFIED.equals(id)) {
-			if (targetLastModificationTime != null) return targetLastModificationTime.toString();
+			if (null != targetLastModificationTime) return targetLastModificationTime.toString();
 		}
 		if (P_ID_SOURCE_ARTIFACT_VERSION.equals(id)) return sourceArtifactVersion;
 		if (P_ID_TARGET_ARTIFACT_VERSION.equals(id)) return targetArtifactVersion;

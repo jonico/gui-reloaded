@@ -93,23 +93,23 @@ public class Landscape implements IPropertySource {
 	}		
 
 	public String getDescription() {
-		if (description == null) {
+		if (null == description) {
 			String t1 = null;
 			String t2 = null;
 			try {
 				ICcfParticipant p1 = Activator.getCcfParticipantForType(type1);
-				if (p1 != null) {
+				if (null != p1) {
 					t1 = p1.getName();
 				}
 				ICcfParticipant p2 = Activator.getCcfParticipantForType(type2);
-				if (p2 != null) {
+				if (null != p2) {
 					t2 = p2.getName();
 				}
 			} catch (Exception e) {}
-			if (t1 == null) {
+			if (null == t1) {
 				t1 = type1;
 			}
-			if (t2 == null) {
+			if (null == t2) {
 				t2 = type2;
 			}		
 			return t1 + "/" + t2;
@@ -144,7 +144,7 @@ public class Landscape implements IPropertySource {
 		this.type2 = type2;
 	}
 	public String getConfigurationFolder() {
-		if (configurationFolder1 == null) return configurationFolder2;
+		if (null == configurationFolder1) return configurationFolder2;
 		else return configurationFolder1;
 	}
 	public String getConfigurationFolder1() {
@@ -206,40 +206,40 @@ public class Landscape implements IPropertySource {
 	}
 	
 	public String getDatabaseUrl() {
-		if (databaseUrl != null) return databaseUrl;
+		if (null != databaseUrl) return databaseUrl;
 		String url = null;
 		ccfProperties1 = getCcfProperties1();
-		if (ccfProperties1 != null) {
+		if (null != ccfProperties1) {
 			url = ccfProperties1.getProperty(Activator.PROPERTIES_CCF_URL);
 		}
 		return url;
 	}
 	
 	public String getDatabaseDriver() {
-		if (databaseDriver != null) return databaseDriver;
+		if (null != databaseDriver) return databaseDriver;
 		String driver = null;
 		ccfProperties1 = getCcfProperties1();
-		if (ccfProperties1 != null) {
+		if (null != ccfProperties1) {
 			driver = ccfProperties1.getProperty(Activator.PROPERTIES_CCF_DRIVER);
 		}
 		return driver;
 	}
 	
 	public String getDatabaseUser() {
-		if (databaseUser != null) return databaseUser;
+		if (null != databaseUser) return databaseUser;
 		String user = null;
 		ccfProperties1 = getCcfProperties1();
-		if (ccfProperties1 != null) {
+		if (null != ccfProperties1) {
 			user = ccfProperties1.getProperty(Activator.PROPERTIES_CCF_USER);
 		}
 		return user;
 	}
 	
 	public String getDatabasePassword() {
-		if (databasePassword != null) return databasePassword;
+		if (null != databasePassword) return databasePassword;
 		String password = null;
 		ccfProperties1 = getCcfProperties1();
-		if (ccfProperties1 != null) {
+		if (null != ccfProperties1) {
 			password = Activator.decodePassword(ccfProperties1.getProperty(Activator.PROPERTIES_CCF_PASSWORD));
 		}
 		return password;
@@ -272,7 +272,7 @@ public class Landscape implements IPropertySource {
 	public String getHostName1() {
 		String hostName = getCcfHost1();
 		int index = hostName.indexOf("//");
-		if (index != -1) {
+		if (-1 != index) {
 			hostName = hostName.substring(index + 2);
 		}
 		return hostName;
@@ -281,37 +281,37 @@ public class Landscape implements IPropertySource {
 	public String getHostName2() {
 		String hostName = getCcfHost2();
 		int index = hostName.indexOf("//");
-		if (index != -1) {
+		if (-1 != index) {
 			hostName = hostName.substring(index + 2);
 		}
 		return hostName;
 	}
 	
 	public String getCcfHost1() {
-		if (ccfHost1 != null) return ccfHost1;
+		if (null != ccfHost1) return ccfHost1;
 		String hostName = null;
 		ccfProperties1 = getCcfProperties1();
-		if (ccfProperties1 != null) {
+		if (null != ccfProperties1) {
 			hostName = ccfProperties1.getProperty(Activator.PROPERTIES_CCF_HOST_NAME, "http://localhost");
 		}
 		return hostName;
 	}
 	
 	public String getCcfHost2() {
-		if (ccfHost2 != null) return ccfHost2;
+		if (null != ccfHost2) return ccfHost2;
 		String hostName = null;
 		ccfProperties2 = getCcfProperties2();
-		if (ccfProperties2 != null) {
+		if (null != ccfProperties2) {
 			hostName = ccfProperties2.getProperty(Activator.PROPERTIES_CCF_HOST_NAME, "http://localhost");
 		}
 		return hostName;
 	}		
 	
 	public String getJmxPort1() {
-		if (jmxPort1 != null) return jmxPort1;
+		if (null != jmxPort1) return jmxPort1;
 		String port = null;
 		ccfProperties1 = getCcfProperties1();
-		if (ccfProperties1 != null) {
+		if (null != ccfProperties1) {
 			port = ccfProperties1.getProperty(Activator.PROPERTIES_CCF_JMX_PORT);
 		}
 		return port;
@@ -320,7 +320,7 @@ public class Landscape implements IPropertySource {
 	public String getJmxUrl1() {
 		StringBuffer url = new StringBuffer(getCcfHost1());
 		String port = getJmxPort1();
-		if (port != null && port.length() > 0) {
+		if (null != port && 0 < port.length()) {
 			url.append(":" + port);
 		}
 		return url.toString();
@@ -337,17 +337,17 @@ public class Landscape implements IPropertySource {
 	public String getJmxUrl2() {
 		StringBuffer url = new StringBuffer(getCcfHost2());
 		String port = getJmxPort2();
-		if (port != null && port.length() > 0) {
+		if (null != port && 0 < port.length()) {
 			url.append(":" + port);
 		}
 		return url.toString();
 	}
 	
 	public String getJmxPort2() {
-		if (jmxPort2 != null) return jmxPort2;
+		if (null != jmxPort2) return jmxPort2;
 		String port = null;
 		ccfProperties2 = getCcfProperties2();
-		if (ccfProperties2 != null) {
+		if (null != ccfProperties2) {
 			port = ccfProperties2.getProperty(Activator.PROPERTIES_CCF_JMX_PORT);
 		}
 		return port;
@@ -356,7 +356,7 @@ public class Landscape implements IPropertySource {
 	public String getLogMessageTemplate1() {
 		String template = null;
 		ccfProperties1 = getCcfProperties1();
-		if (ccfProperties1 != null) {
+		if (null != ccfProperties1) {
 			template = ccfProperties1.getProperty(Activator.PROPERTIES_CCF_LOG_MESSAGE_TEMPLATE);
 		}
 		return template;
@@ -365,7 +365,7 @@ public class Landscape implements IPropertySource {
 	public String getLogMessageTemplate2() {
 		String template = null;
 		ccfProperties2 = getCcfProperties2();
-		if (ccfProperties2 != null) {
+		if (null != ccfProperties2) {
 			template = ccfProperties2.getProperty(Activator.PROPERTIES_CCF_LOG_MESSAGE_TEMPLATE);
 		}
 		return template;
@@ -382,7 +382,7 @@ public class Landscape implements IPropertySource {
 	public String getTimezone1() {
 		String timezone = null;
 		properties1 = getProperties1();
-		if (properties1 != null) {
+		if (null != properties1) {
 			timezone = properties1.getProperty(Activator.PROPERTIES_SYSTEM_TIMEZONE, TimeZone.getDefault().getID());
 		}
 		return timezone;
@@ -391,7 +391,7 @@ public class Landscape implements IPropertySource {
 	public String getTimezone2() {
 		String timezone = null;
 		properties2 = getProperties2();
-		if (properties2 != null) {
+		if (null != properties2) {
 			timezone = properties2.getProperty(Activator.PROPERTIES_SYSTEM_TIMEZONE, TimeZone.getDefault().getID());
 		}
 		return timezone;
@@ -400,7 +400,7 @@ public class Landscape implements IPropertySource {
 	public String getEncoding1() {
 		String encoding = null;
 		properties1 = getProperties1();
-		if (properties1 != null) {
+		if (null != properties1) {
 			encoding = properties1.getProperty(Activator.PROPERTIES_SYSTEM_ENCODING);
 		}
 		return encoding;
@@ -409,49 +409,49 @@ public class Landscape implements IPropertySource {
 	public String getEncoding2() {
 		String encoding = null;
 		properties2 = getProperties2();
-		if (properties2 != null) {
+		if (null != properties2) {
 			encoding = properties2.getProperty(Activator.PROPERTIES_SYSTEM_ENCODING);
 		}
 		return encoding;
 	}
 	
 	public Properties getCcfProperties1() {
-		if (ccfProperties1 == null) {
+		if (null == ccfProperties1) {
 			ccfProperties1 = getProperties(configurationFolder1, TYPE_CCF);
 		}
 		return ccfProperties1;
 	}
 	
 	public Properties getCcfProperties2() {
-		if (ccfProperties2 == null) {
+		if (null == ccfProperties2) {
 			ccfProperties2 = getProperties(configurationFolder2, TYPE_CCF);
 		}
 		return ccfProperties2;
 	}
 
 	public Properties getProperties1() {
-		if (properties1 == null) {
+		if (null == properties1) {
 			properties1 = getProperties(configurationFolder1, type1);
 		}
 		return properties1;
 	}
 	
 	public Properties getProperties2() {
-		if (properties2 == null) {
+		if (null == properties2) {
 			properties2 = getProperties(configurationFolder2, type2);
 		}
 		return properties2;
 	}
 	
 	public File getConfigurationFile1() {
-		if (configFile1 == null) {
+		if (null == configFile1) {
 			configFile1 = new File(getConfigurationFolder1(), "config.xml");
 		}
 		return configFile1;
 	}
 	
 	public File getConfigurationFile2() {
-		if (configFile2 == null) {
+		if (null == configFile2) {
 			configFile2 = new File(getConfigurationFolder2(), "config.xml");
 		}
 		return configFile2;
@@ -459,12 +459,12 @@ public class Landscape implements IPropertySource {
 	
 	public File getLogsFolder1() {
 		String logsPath = getLogsPath1();
-		if (logsPath != null) {
+		if (null != logsPath) {
 			File logsFolder = new File(logsPath);
 			if (logsFolder.exists()) return logsFolder;
 			else return null;
 		}
-		if (logsFolder1 == null) {
+		if (null == logsFolder1) {
 			logsFolder1 = getLogsFolder(configurationFolder2);
 		}
 		if (logsFolder1.exists()) return logsFolder1;
@@ -473,12 +473,12 @@ public class Landscape implements IPropertySource {
 	
 	public File getLogsFolder2() {
 		String logsPath = getLogsPath2();
-		if (logsPath != null) {
+		if (null != logsPath) {
 			File logsFolder = new File(logsPath);
 			if (logsFolder.exists()) return logsFolder;
 			else return null;
 		}
-		if (logsFolder2 == null) {
+		if (null == logsFolder2) {
 			logsFolder2 = getLogsFolder(configurationFolder1);
 		}
 		if (logsFolder2.exists()) return logsFolder2;
@@ -492,7 +492,7 @@ public class Landscape implements IPropertySource {
 	}
 	
 	public File getXsltFolder1() {
-		if (xsltFolder1 == null) {
+		if (null == xsltFolder1) {
 			xsltFolder1 = getXsltFolder(configurationFolder1);
 		}
 		if (xsltFolder1.exists()) return xsltFolder1;
@@ -500,7 +500,7 @@ public class Landscape implements IPropertySource {
 	}
 	
 	public File getXsltFolder2() {
-		if (xsltFolder2 == null) {
+		if (null == xsltFolder2) {
 			xsltFolder2 = getXsltFolder(configurationFolder2);
 		}
 		if (xsltFolder2.exists()) return xsltFolder2;
@@ -514,9 +514,9 @@ public class Landscape implements IPropertySource {
 	}
 	
 	public File getLog4jFile() {
-		if (log4jFile == null) {
+		if (null == log4jFile) {
 			libFolder = getLibFolder();
-			if (libFolder != null) {
+			if (null != libFolder) {
 				log4jFile = new File(libFolder, "log4j.xml");
 			}
 		}
@@ -524,9 +524,9 @@ public class Landscape implements IPropertySource {
 	}
 	
 	public File getLog4jRenameFile() {
-		if (log4jRenameFile == null) {
+		if (null == log4jRenameFile) {
 			libFolder = getLibFolder();
-			if (libFolder != null) {
+			if (null != libFolder) {
 				log4jRenameFile = new File(libFolder, "log4j.xml.rename_me");
 			}
 		}
@@ -536,11 +536,11 @@ public class Landscape implements IPropertySource {
 	public boolean enableEditFieldMapping() {
 		try {
 			ICcfParticipant participant1 = Activator.getCcfParticipantForType(type1);
-			if (participant1 != null && !participant1.enableFieldMappingEditing(type2)) {
+			if (null != participant1 && !participant1.enableFieldMappingEditing(type2)) {
 				return false;
 			}
 			ICcfParticipant participant2 = Activator.getCcfParticipantForType(type2);
-			if (participant2 != null && !participant2.enableFieldMappingEditing(type1)) {
+			if (null != participant2 && !participant2.enableFieldMappingEditing(type1)) {
 				return false;
 			}
 		} catch (Exception e) {}
@@ -548,16 +548,16 @@ public class Landscape implements IPropertySource {
 	}
 	
 	private File getLibFolder() {
-		if (libFolder == null) {
+		if (null == libFolder) {
 			File configurationFolder = new File(getConfigurationFolder());
 			File parent = configurationFolder.getParentFile();
-			if (parent != null) {
+			if (null != parent) {
 				parent = parent.getParentFile();
-				if (parent != null) {
+				if (null != parent) {
 					parent = parent.getParentFile();
-					if (parent != null) {
+					if (null != parent) {
 						parent = parent.getParentFile();
-						if (parent != null) {
+						if (null != parent) {
 							libFolder = new File(parent, "lib");
 						}
 					}
@@ -570,7 +570,7 @@ public class Landscape implements IPropertySource {
 	public Log[] getLogs1(Logs logs) {
 		List<Log> logList = new ArrayList<Log>();
 		File[] logFiles = getLogFiles(getLogsFolder1());
-		if (logFiles != null) {
+		if (null != logFiles) {
 			for (File logFile : logFiles) {
 				Log log = new Log(logs, logFile);
 				logList.add(log);
@@ -584,7 +584,7 @@ public class Landscape implements IPropertySource {
 	public Log[] getLogs2(Logs logs) {
 		List<Log> logList = new ArrayList<Log>();
 		File[] logFiles = getLogFiles(getLogsFolder2());
-		if (logFiles != null) {
+		if (null != logFiles) {
 			for (File logFile : logFiles) {
 				Log log = new Log(logs, logFile);
 				logList.add(log);
@@ -596,7 +596,7 @@ public class Landscape implements IPropertySource {
 	}
 	
 	public Log[] getLogs(Logs logs) {
-		if (logs.getType() == Logs.TYPE_1_2) return getLogs2(logs);
+		if (Logs.TYPE_1_2 == logs.getType()) return getLogs2(logs);
 		else return getLogs1(logs);
 	}
 	
@@ -604,7 +604,7 @@ public class Landscape implements IPropertySource {
 		String url = null;
 		try {
 		ICcfParticipant ccfParticipant;
-			if (systemNumber == 1 ) {
+			if (1 == systemNumber ) {
 				ccfParticipant = Activator.getCcfParticipantForType(getType1());
 			} else {
 				ccfParticipant = Activator.getCcfParticipantForType(getType2());
@@ -644,7 +644,7 @@ public class Landscape implements IPropertySource {
 		String description = null;
 		try {
 			ICcfParticipant ccfParticipant = Activator.getCcfParticipantForType(type);
-			if (ccfParticipant != null) {
+			if (null != ccfParticipant) {
 				return ccfParticipant.getName();
 			}
 		} catch (Exception e) {
@@ -665,9 +665,9 @@ public class Landscape implements IPropertySource {
 	private File[] getLogFiles(File logsFolder) {
 		List<File> logFiles = new ArrayList<File>();
 		File[] logs = null;
-		if (logsFolder != null) {
+		if (null != logsFolder) {
 			logs = logsFolder.listFiles();
-			if (logs != null) {
+			if (null != logs) {
 				for (File logFile : logs) {
 					if (!logFile.isDirectory()) {
 						logFiles.add(logFile);
@@ -681,7 +681,7 @@ public class Landscape implements IPropertySource {
 	}
 	
 	private Properties getProperties(String configurationFolder, String type) {
-		if (configurationFolder == null) return null;
+		if (null == configurationFolder) return null;
 		Properties properties = null;
 		File folder = new File(configurationFolder);
 		String propertyFile = null;
@@ -695,7 +695,7 @@ public class Landscape implements IPropertySource {
 				Activator.handleError(e);
 			}
 		}
-		if (propertyFile != null) {
+		if (null != propertyFile) {
 			File propertiesFile = new File(folder, propertyFile);
 			if (propertiesFile.exists()) {
 				try {
@@ -725,7 +725,7 @@ public class Landscape implements IPropertySource {
 	public Object getPropertyValue(Object id) {
 		if (P_ID_DESCRIPTION.equals(id)) return getDescription();
 		if (P_ID_ROLE.equals(id)) {
-			if (role == ROLE_OPERATOR) return "Operator";
+			if (ROLE_OPERATOR == role) return "Operator";
 			else return "Administrator";
 		}
 		if (P_ID_GROUP.equals(id)) return group;

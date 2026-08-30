@@ -114,7 +114,7 @@ public class ProjectMappingWizard extends Wizard {
 				int totalWork = 12;
 				
 				// Need to create project.
-				if (getSelectedProject() == null) {
+				if (null == getSelectedProject()) {
 					totalWork++;
 					newProject = true;
 				}
@@ -140,7 +140,7 @@ public class ProjectMappingWizard extends Wizard {
 				String taskTrackerId = null;
 				
 				try {			
-					if (getSelectedProject() == null) {
+					if (null == getSelectedProject()) {
 						monitor.subTask("Creating project " + projectPage.getNewProjectTitle());
 						ProjectDO projectDO = getSoapClient().createProject(null, projectPage.getNewProjectTitle(), previewPage.getNewProjectDescription());
 						projectId = projectDO.getId();
@@ -149,7 +149,7 @@ public class ProjectMappingWizard extends Wizard {
 						projectId = getSelectedProject().getId();
 					}
 					
-					if (getSelectedPbiTracker() == null) {
+					if (null == getSelectedPbiTracker()) {
 						monitor.subTask("Creating tracker " + trackerPage.getNewPbiTrackerTitle());
 						TrackerDO trackerDO = getSoapClient().createTracker(projectId, null, trackerPage.getNewPbiTrackerTitle(), TRACKER_DESCRIPTION_PBIS, TRACKER_ICON_PBIS);
 						pbiTrackerId = trackerDO.getId();
@@ -160,7 +160,7 @@ public class ProjectMappingWizard extends Wizard {
 					setPbiTrackerFields(pbiTrackerId);
 					monitor.worked(1);
 					
-					if (getSelectedTaskTracker() == null) {
+					if (null == getSelectedTaskTracker()) {
 						monitor.subTask("Creating tracker " + trackerPage.getNewTaskTrackerTitle());
 						TrackerDO trackerDO = getSoapClient().createTracker(projectId, null, trackerPage.getNewTaskTrackerTitle(), TRACKER_DESCRIPTION_TASKS, TRACKER_ICON_TASKS);
 						taskTrackerId = trackerDO.getId();
@@ -184,7 +184,7 @@ public class ProjectMappingWizard extends Wizard {
 				SynchronizationStatus projectMapping = new SynchronizationStatus();
 				projectMapping.setGroup(landscape.getGroup());
 				projectMapping.setTargetRepositoryKind("TRACKER");
-				if (landscape.getEncoding2() != null && landscape.getEncoding2().trim().length() > 0) {
+				if (null != landscape.getEncoding2() && 0 < landscape.getEncoding2().trim().length()) {
 					projectMapping.setTargetSystemEncoding(landscape.getEncoding2());
 				}				
 				if (landscape.getType1().equals("TF")) {
@@ -305,10 +305,10 @@ public class ProjectMappingWizard extends Wizard {
 			MessageDialog.openError(getShell(), "Create Project Mappings", e.getMessage());
 			return false;
 		}
-		if (errors.size() > 0) {
+		if (0 < errors.size()) {
 			StringBuffer errorMessage = new StringBuffer();
 			for (Exception error : errors) {
-				if (errorMessage.length() > 0) {
+				if (0 < errorMessage.length()) {
 					errorMessage.append("\n\n");
 				}
 				errorMessage.append(error.getMessage());
@@ -319,11 +319,11 @@ public class ProjectMappingWizard extends Wizard {
 		if (userMappingErrors) {
 			MessageDialog.openError(getShell(), "Map Users", "Errors occurred mapping ScrumWorks users to TeamForge.  See error log for details.");
 		}
-		if (duplicateUsers != null && duplicateUsers.size() > 0) {
+		if (null != duplicateUsers && 0 < duplicateUsers.size()) {
 			DuplicateUserDialog dialog = new DuplicateUserDialog(getShell(), duplicateUsers);
 			dialog.open();
 		}
-		if (notCreated.size() > 0) {
+		if (0 < notCreated.size()) {
 			StringBuffer notCreatedMessage = new StringBuffer("The following mappings already existed and were not created:\n");
 			for (String mapping : notCreated) {
 				notCreatedMessage.append("\n" + mapping);
@@ -365,14 +365,14 @@ public class ProjectMappingWizard extends Wizard {
 	}
 	
 	public TFSoapClient getSoapClient() {
-		if (soapClient == null) {
+		if (null == soapClient) {
 			Properties properties = null;
 			if (landscape.getType1().equals("TF")) {
 				properties = landscape.getProperties1();
 			} else {
 				properties = landscape.getProperties2();
 			}
-			if (properties != null) {
+			if (null != properties) {
 				String serverUrl = properties.getProperty(Activator.PROPERTIES_SFEE_URL);
 				userId = properties.getProperty(Activator.PROPERTIES_SFEE_USER);
 				String password = Activator.decodePassword(properties.getProperty(Activator.PROPERTIES_SFEE_PASSWORD));
@@ -395,7 +395,7 @@ public class ProjectMappingWizard extends Wizard {
 			List<Sprint> sprints = getScrumWorksEndpoint().getSprintsForProduct(product.getId());
 			for (Sprint sprint : sprints) {
 				List<String> sprintUsers = getScrumWorksEndpoint().getUsersForSprint(sprint.getId());
-				if (sprintUsers != null) {
+				if (null != sprintUsers) {
 					for (String sprintUser : sprintUsers) {
 						if (!productUserList.contains(sprintUser)) {
 							productUserList.add(sprintUser);
@@ -431,7 +431,7 @@ public class ProjectMappingWizard extends Wizard {
 				try {
 					List<String> newUsers = new ArrayList<String>();
 					List<User> swpUsers = getScrumWorksEndpoint().getUsers();
-					if (swpUsers != null) {
+					if (null != swpUsers) {
 						for (User swpUser : swpUsers) {
 							if (productUserList.contains(swpUser.getDisplayName())) {
 								boolean createUserError = false;
@@ -439,9 +439,9 @@ public class ProjectMappingWizard extends Wizard {
 								try {
 									userDO = getSoapClient().getUserData(swpUser.getUserName());
 								} catch (Exception e) {}
-								if (userDO == null) {
+								if (null == userDO) {
 									String email = swpUser.getEmail();
-									if (email == null) {
+									if (null == email) {
 										email = swpUser.getUserName() + "@default.com";
 									}
 									String locale = "en";
@@ -482,7 +482,7 @@ public class ProjectMappingWizard extends Wizard {
 							}
 						}
 					}
-					if (newUsers != null && newUsers.size() > 0) {
+					if (null != newUsers && 0 < newUsers.size()) {
 						createRole(projectId, newUsers);
 					}
 				} catch (Exception e) {
@@ -505,7 +505,7 @@ public class ProjectMappingWizard extends Wizard {
 				break;
 			}
 		}		
-		if (roleId == null) {
+		if (null == roleId) {
 			RoleDO roleDO = getSoapClient().createRole(projectId, PRODUCT_DEVELOPER_ROLE_TITLE, PRODUCT_DEVELOPER_ROLE_DESCRIPTION);
 			roleId = roleDO.getId();
 			getSoapClient().addCluster(roleId, RbacClient.TRACKER_CREATE, "");
@@ -543,16 +543,16 @@ public class ProjectMappingWizard extends Wizard {
 		Map<Long, Team> teamMap = new HashMap<Long, Team>();
 		List<String> teamSprintList = new ArrayList<String>();
 		List<Sprint> sprints = getSprints(getSelectedProduct());
-		if (sprints != null) {
+		if (null != sprints) {
 			for (Sprint sprint : sprints) {
 				Team team = teamMap.get(sprint.getTeamId());
-				if (team == null) {
+				if (null == team) {
 					team = getTeam(sprint.getTeamId());
-					if (team != null) {
+					if (null != team) {
 						teamMap.put(sprint.getTeamId(), team);
 					}
 				}
-				if (team != null) {
+				if (null != team) {
 					teamSprintList.add(com.collabnet.ccf.teamforge_sw.Activator.getTeamSprintStringRepresentation(sprint, team, swpTimezone));
 				}
 			}
@@ -566,7 +566,7 @@ public class ProjectMappingWizard extends Wizard {
 	private String[] getThemeValues() throws MalformedURLException, ScrumWorksException {
 		List<String> themeList = new ArrayList<String>();
 		List<Theme> themes = getThemes(getSelectedProduct());
-		if (themes != null) {
+		if (null != themes) {
 			for (Theme theme : themes) {
 				themeList.add(getValue(theme));
 			}
@@ -578,7 +578,7 @@ public class ProjectMappingWizard extends Wizard {
 	}
 	
 	private ScrumWorksAPIService getScrumWorksEndpoint() throws MalformedURLException {
-		if (scrumWorksEndpoint == null) {
+		if (null == scrumWorksEndpoint) {
 			scrumWorksEndpoint = com.collabnet.ccf.sw.Activator.getScrumWorksEndpoint(landscape);
 		}
 		return scrumWorksEndpoint;
@@ -599,7 +599,7 @@ public class ProjectMappingWizard extends Wizard {
 			errors.add(e);
 			return;
 		}
-		if (landscape.getRole() == Landscape.ROLE_ADMINISTRATOR) {
+		if (Landscape.ROLE_ADMINISTRATOR == landscape.getRole()) {
 			createFieldMappingFile(status);
 		}
 	}
@@ -613,7 +613,7 @@ public class ProjectMappingWizard extends Wizard {
 				try {
 					xslFile.createNewFile();
 					File sampleFile = status.getSampleXslFile();
-					if (sampleFile != null && sampleFile.exists()) {
+					if (null != sampleFile && sampleFile.exists()) {
 						CcfDataProvider.copyFile(sampleFile, xslFile);
 					}
 				} catch (IOException e) {
@@ -625,7 +625,7 @@ public class ProjectMappingWizard extends Wizard {
 	}
 	
 	public List<SynchronizationStatus> getExistingMappings() {
-		if (existingMappings == null) {
+		if (null == existingMappings) {
 			existingMappings = new ArrayList<SynchronizationStatus>();
 			try {
 				SynchronizationStatus[] existingMappingsArray = dataProvider.getSynchronizationStatuses(landscape, projectMappings);
@@ -762,18 +762,18 @@ public class ProjectMappingWizard extends Wizard {
 	}
 	
 	private String getValue(Theme theme) throws MalformedURLException, ScrumWorksException {
-		if (programMap == null) {
+		if (null == programMap) {
 			programMap = new HashMap<Long, Program>();
 		}
 		Program program = null;
-		if (theme.getProgramId() != null) {
+		if (null != theme.getProgramId()) {
 			program = programMap.get(theme.getProgramId());
-			if (program == null) {
+			if (null == program) {
 				program = getScrumWorksEndpoint().getProgramById(theme.getProgramId());
 				programMap.put(theme.getProgramId(), program);
 			}
 		}
-		if (program == null) {
+		if (null == program) {
 			return theme.getName();
 		} else {
 			return theme.getName() + " (" + program.getName() + ")";

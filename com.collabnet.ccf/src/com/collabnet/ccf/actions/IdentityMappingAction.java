@@ -35,7 +35,7 @@ public class IdentityMappingAction extends ActionDelegate {
 				}
 				try {
 					IdentityMappingView.setLandscape(landscape);
-					if (status == null) {
+					if (null == status) {
 						// TODO: Landscape filtering
 						IdentityMappingView.setFilters(null, true, landscape.getDescription());
 					} else {

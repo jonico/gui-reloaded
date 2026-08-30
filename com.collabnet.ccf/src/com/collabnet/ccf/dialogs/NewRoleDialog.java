@@ -50,7 +50,7 @@ public class NewRoleDialog extends CcfDialog {
 	
 	@Override
 	protected void okPressed() {
-		if (role == null) {
+		if (null == role) {
 			role = new Role(nameText.getText().trim());
 		} else {
 			role.setName(nameText.getText().trim());
@@ -60,7 +60,7 @@ public class NewRoleDialog extends CcfDialog {
 	
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
 			okButton.setEnabled(false);
 		}

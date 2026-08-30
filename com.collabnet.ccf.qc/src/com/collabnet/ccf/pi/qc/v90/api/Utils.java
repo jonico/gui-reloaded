@@ -32,7 +32,7 @@ public class Utils {
 	public static List<Comment> splitComments(String s) {
 		List<Comment> cl = new ArrayList<Comment>();
 	
-		if( s == null ) return cl;
+		if( null == s ) return cl;
 	
 		String p = "<font\\scolor=[\"']#[0-9a-fA-F]{6}[\"']><b>([^,<>]+),\\s([0-9\\:\\-\\s\\/\\.]+)";
 		Pattern pattern = Pattern.compile(p,Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
@@ -50,7 +50,7 @@ public class Utils {
 			begin = matcher.start();
 			end = matcher.end();
 			
-			if( prevEnd >= 0 ) {
+			if( 0 <= prevEnd ) {
 				body = s.substring(prevEnd,begin);
 				addCommentIfNotEmpty(cl, fullName, created, body);
 			}
@@ -62,7 +62,7 @@ public class Utils {
 			prevEnd = end;
 		}
 		
-		if( prevEnd >= 0 ) {
+		if( 0 <= prevEnd ) {
 			body = s.substring(end,s.length());
 			addCommentIfNotEmpty(cl, fullName, created, body);
 		}
@@ -76,7 +76,7 @@ public class Utils {
 		tdc.setCreated(created.trim());
 		tdc.setBody(normalize(body));
 
-		if( tdc.getBody().length() != 0 && tdc.getAuthor().length() != 0 ) {
+		if( 0 != tdc.getBody().length() && 0 != tdc.getAuthor().length() ) {
 			cl.add(tdc);
 		}
 	}	
@@ -117,7 +117,7 @@ public class Utils {
 	}
 
 	public static String addCommentToHTML(String html, IComment comment) {
-		if( html == null || html.trim().length() == 0 ) html = "<html><body></body></html>";
+		if( null == html || 0 == html.trim().length() ) html = "<html><body></body></html>";
 		
 		int notBody = html.indexOf("</body></html>");
 		html = html.substring(0,notBody);

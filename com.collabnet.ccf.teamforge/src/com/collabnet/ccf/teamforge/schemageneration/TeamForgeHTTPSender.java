@@ -19,7 +19,7 @@ public class TeamForgeHTTPSender extends CommonsHTTPSender {
 	@Override
 	protected HostConfiguration getHostConfiguration(HttpClient client, MessageContext context, URL url) {
 		Proxy proxy = Activator.getPlatformProxy(url.toString());
-		if (proxy != null) {
+		if (null != proxy) {
 			proxy.setProxy(client);
 		}
 

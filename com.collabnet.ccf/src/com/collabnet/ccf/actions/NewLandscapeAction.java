@@ -35,7 +35,7 @@ public class NewLandscapeAction extends Action {
 	public void run() {
 		try {
 			ICcfParticipant[] ccfParticipants = Activator.getCcfParticipants();
-			if (ccfParticipants == null || ccfParticipants.length == 0) {
+			if (null == ccfParticipants || 0 == ccfParticipants.length) {
 				MessageDialog.openError(Display.getDefault().getActiveShell(), "New CCF Landscape", "A CCF Landscape cannot be created because there are no CCF participants installed.");
 				return;
 			}
@@ -45,7 +45,7 @@ public class NewLandscapeAction extends Action {
 		NewLandscapeWizard wizard = new NewLandscapeWizard();
 		WizardDialog dialog = new CustomWizardDialog(Display.getDefault().getActiveShell(), wizard);
 		dialog.open();
-		if (wizard.getNewLandscape() != null) {
+		if (null != wizard.getNewLandscape()) {
 			CcfEditorInput editorInput = new CcfEditorInput(wizard.getNewLandscape(), CcfEditorInput.EDITOR_TYPE_LANDSCAPE);
 			IWorkbenchPage page = Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			try {

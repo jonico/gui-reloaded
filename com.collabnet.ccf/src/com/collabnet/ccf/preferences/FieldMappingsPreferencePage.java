@@ -70,7 +70,7 @@ public class FieldMappingsPreferencePage extends PreferencePage implements IWork
 				String[] filterExtensions = { "*.exe" };
 				d.setFilterExtensions(filterExtensions);
 				String file = d.open();
-				if(file!=null) {
+				if(null!=file) {
 					IPath path = new Path(file);
 					mapForcePathText.setText(path.toOSString());
 				}		

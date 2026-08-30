@@ -46,7 +46,7 @@ public class DefaultMappingAction extends ActionDelegate {
 				} else {
 					modelFile = projectMapping.getXslFile();
 				}
-				if (modelFile == null || !modelFile.exists()) {
+				if (null == modelFile || !modelFile.exists()) {
 					MessageDialog
 							.openInformation(
 									Display.getDefault().getActiveShell(),
@@ -90,7 +90,7 @@ public class DefaultMappingAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection = (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			action.setEnabled(Activator.getDefault().getActiveRole()
 					.isEditFieldMappings());
 		}
@@ -109,7 +109,7 @@ public class DefaultMappingAction extends ActionDelegate {
 		} catch (IOException e) {
 			throw e;
 		} finally {
-			if (out != null) {
+			if (null != out) {
 				try {
 					out.close();
 				} catch (Exception e) {
@@ -129,12 +129,12 @@ public class DefaultMappingAction extends ActionDelegate {
 			while ((bytes_read = from.read(buffer)) != -1)
 				to.write(buffer, 0, bytes_read);
 		} finally {
-			if (from != null)
+			if (null != from)
 				try {
 					from.close();
 				} catch (IOException e) {
 				}
-			if (to != null)
+			if (null != to)
 				try {
 					to.close();
 				} catch (IOException e) {

@@ -75,9 +75,9 @@ public class QualityCenterMappingSection extends MappingSection {
 		qcGroup.setLayoutData(gd);	
 		
 		if (landscape.getType1().equals("QC") && landscape.getType2().equals("QC")) {
-			if (landscape.getRole() == Landscape.ROLE_ADMINISTRATOR) {
+			if (Landscape.ROLE_ADMINISTRATOR == landscape.getRole()) {
 				String url;
-				if (getSystemNumber() == 1) {
+				if (1 == getSystemNumber()) {
 					url = landscape.getProperties1().getProperty(QualityCenterCcfParticipant.PROPERTIES_QC_URL);
 				} else {
 					url = landscape.getProperties2().getProperty(QualityCenterCcfParticipant.PROPERTIES_QC_URL);
@@ -112,10 +112,10 @@ public class QualityCenterMappingSection extends MappingSection {
 		projectBrowseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent arg0) {
 				DomainProjectSelectionDialog dialog = new DomainProjectSelectionDialog(Display.getDefault().getActiveShell(), landscape, domainText.getText(), projectText.getText(), DomainProjectSelectionDialog.BROWSER_TYPE_PROJECT);
-				if (dialog.open() == DomainProjectSelectionDialog.OK) {
+				if (DomainProjectSelectionDialog.OK == dialog.open()) {
 					domainText.setText(dialog.getDomain());
 					projectText.setText(dialog.getProject());
-					if (getProjectPage() != null) {
+					if (null != getProjectPage()) {
 						getProjectPage().setPageComplete();
 					}
 				}
@@ -163,9 +163,9 @@ public class QualityCenterMappingSection extends MappingSection {
 					return;
 				}
 				RequirementTypeSelectionDialog dialog = new RequirementTypeSelectionDialog(Display.getDefault().getActiveShell(), landscape, domainText.getText().trim(), projectText.getText().trim());
-				if (dialog.open() == RequirementTypeSelectionDialog.OK) {
+				if (RequirementTypeSelectionDialog.OK == dialog.open()) {
 					requirementTypeText.setText(dialog.getType());
-					if (getProjectPage() != null) {
+					if (null != getProjectPage()) {
 						getProjectPage().setPageComplete();
 					}
 				}
@@ -187,14 +187,14 @@ public class QualityCenterMappingSection extends MappingSection {
 		requirementsErrorMessageLabel.setText("CCF cannot map requirement types containing \"-\" character");
 		requirementsErrorMessageLabel.setVisible(false);
 		
-		if (landscape.getRole() == Landscape.ROLE_OPERATOR) {
+		if (Landscape.ROLE_OPERATOR == landscape.getRole()) {
 			projectBrowseButton.setEnabled(false);
 			requirementTypeBrowseButton.setEnabled(false);
 		}
 	
 		ModifyListener modifyListener = new ModifyListener() {
 			public void modifyText(ModifyEvent me) {
-				if (getProjectPage() != null) {
+				if (null != getProjectPage()) {
 					getProjectPage().setPageComplete();
 				}
 			}			
@@ -206,7 +206,7 @@ public class QualityCenterMappingSection extends MappingSection {
 		
 		domainText.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
-				if (getProjectPage() != null) {
+				if (null != getProjectPage()) {
 					getProjectPage().setPageComplete();
 				}
 			}			
@@ -223,7 +223,7 @@ public class QualityCenterMappingSection extends MappingSection {
 				requirementTypeLabel.setVisible(requirementsButton.getSelection());
 				requirementTypeText.setVisible(requirementsButton.getSelection());
 				requirementTypeBrowseButton.setVisible("win32".equals(SWT.getPlatform()) && requirementsButton.getSelection() && advancedProjectMappingOptionsEnabled);
-				if (getProjectPage() != null) {
+				if (null != getProjectPage()) {
 					getProjectPage().setPageComplete();
 				}
 			}			
@@ -245,7 +245,7 @@ public class QualityCenterMappingSection extends MappingSection {
 		domainText.setText(getDomain(projectMapping, type));
 		projectText.setText(getProject(projectMapping, type));
 		String requirementType = getRequirementType(projectMapping, type);
-		if (requirementType != null) {
+		if (null != requirementType) {
 			requirementTypeLabel.setVisible(true);
 			requirementTypeText.setVisible(true);
 			requirementTypeBrowseButton.setVisible(true);
@@ -270,15 +270,15 @@ public class QualityCenterMappingSection extends MappingSection {
 			requirementsErrorLabel.setVisible(false);
 			requirementsErrorMessageLabel.setVisible(false);
 		}
-		if (domainText == null) {
+		if (null == domainText) {
 			return false;
 		}
-		if (domainText.getText().trim().length() == 0 ||
-			projectText.getText().trim().length() == 0) {
+		if (0 == domainText.getText().trim().length() ||
+			0 == projectText.getText().trim().length()) {
 			return false;
 		}
 		if (requirementTypeText.isVisible()) {
-			if (requirementTypeText.getText().trim().length() == 0) {
+			if (0 == requirementTypeText.getText().trim().length()) {
 				return false;
 			}
 			if (requirementTypeText.getText().contains("-")) {
@@ -290,7 +290,7 @@ public class QualityCenterMappingSection extends MappingSection {
 
 	public boolean validate(Landscape landscape) {
 		// Only validate on 32-bit windows, because the COM driver doesn't work on 64-bit windows.
-		if (landscape.getRole() == Landscape.ROLE_OPERATOR || !"win32".equals(SWT.getPlatform())) return true;
+		if (Landscape.ROLE_OPERATOR == landscape.getRole() || !"win32".equals(SWT.getPlatform())) return true;
 		
 		// Only validate if "Enable advanced project mapping wizard options" preference is selected.
 		if (!advancedProjectMappingOptionsEnabled) {
@@ -329,29 +329,29 @@ public class QualityCenterMappingSection extends MappingSection {
 	
 	private String getDomain(SynchronizationStatus projectMapping, int type) {
 		String repositoryId;
-		if (type == IMappingSection.TYPE_SOURCE) {
+		if (IMappingSection.TYPE_SOURCE == type) {
 			repositoryId = projectMapping.getSourceRepositoryId();
 		} else {
 			repositoryId = projectMapping.getTargetRepositoryId();
 		}
 		int index = repositoryId.indexOf("-");
-		if (index == -1) return "";
+		if (-1 == index) return "";
 		else return repositoryId.substring(0, index);
 	}
 	
 	private String getProject(SynchronizationStatus projectMapping, int type) {
 		String repositoryId;
-		if (type == IMappingSection.TYPE_SOURCE) {
+		if (IMappingSection.TYPE_SOURCE == type) {
 			repositoryId = projectMapping.getSourceRepositoryId();
 		} else {
 			repositoryId = projectMapping.getTargetRepositoryId();
 		}
 		int index = repositoryId.indexOf("-");
-		if (index == -1) return "";
+		if (-1 == index) return "";
 		else {
 			String project = repositoryId = repositoryId.substring(index + 1);
 			index = project.indexOf("-");
-			if (index != -1) {
+			if (-1 != index) {
 				project = project.substring(0, index);
 			}
 			return project;
@@ -360,16 +360,16 @@ public class QualityCenterMappingSection extends MappingSection {
 	
 	private String getRequirementType(SynchronizationStatus projectMapping, int type) {
 		String repositoryId;
-		if (type == IMappingSection.TYPE_SOURCE) {
+		if (IMappingSection.TYPE_SOURCE == type) {
 			repositoryId = projectMapping.getSourceRepositoryId();
 		} else {
 			repositoryId = projectMapping.getTargetRepositoryId();
 		}
 		int index = repositoryId.indexOf("-");
-		if (index != -1) {
+		if (-1 != index) {
 			String project = repositoryId.substring(index + 1);
 			index = project.indexOf("-");
-			if (index != -1) {
+			if (-1 != index) {
 				return project.substring(index + 1);
 			}
 		}

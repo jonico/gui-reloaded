@@ -90,7 +90,7 @@ public class TeamForgeSelectionDialog extends CcfDialog {
 		
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
-				if (okButton != null) {
+				if (null != okButton) {
 					okButton.setEnabled(canFinish());
 				}
 			}		
@@ -119,7 +119,7 @@ public class TeamForgeSelectionDialog extends CcfDialog {
 	
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
 			okButton.setEnabled(false);
 		}
@@ -149,19 +149,19 @@ public class TeamForgeSelectionDialog extends CcfDialog {
 	}
 	
 	public String getSelectedId() {
-		if (type == BROWSER_TYPE_PROJECT) return getProjectId();
+		if (BROWSER_TYPE_PROJECT == type) return getProjectId();
 		else return getTrackerId();
 	}
 	
 	private TFSoapClient getSoapClient() {
-		if (soapClient == null) {
+		if (null == soapClient) {
 			Properties properties = null;
 			if (landscape.getType1().equals("TF")) {
 				properties = landscape.getProperties1();
 			} else {
 				properties = landscape.getProperties2();
 			}
-			if (properties != null) {
+			if (null != properties) {
 				String serverUrl = properties.getProperty(Activator.PROPERTIES_SFEE_URL);
 				String userId = properties.getProperty(Activator.PROPERTIES_SFEE_USER);
 				String password = Activator.decodePassword(properties.getProperty(Activator.PROPERTIES_SFEE_PASSWORD));
@@ -175,7 +175,7 @@ public class TeamForgeSelectionDialog extends CcfDialog {
 		IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
 		if (selection.isEmpty()) return false;
 		Object firstSelection = selection.getFirstElement();
-		if (type == BROWSER_TYPE_PROJECT) return (firstSelection instanceof ProjectRow);
+		if (BROWSER_TYPE_PROJECT == type) return (firstSelection instanceof ProjectRow);
 		else return (firstSelection instanceof TrackerRow);
 	}
 	
@@ -191,7 +191,7 @@ public class TeamForgeSelectionDialog extends CcfDialog {
 				}
 			}
 		});
-		if (projects == null) return new ProjectRow[0];
+		if (null == projects) return new ProjectRow[0];
 		else return projects;
 	}
 	
@@ -207,7 +207,7 @@ public class TeamForgeSelectionDialog extends CcfDialog {
 				}
 			}
 		});
-		if (trackers == null) return new TrackerRow[0];
+		if (null == trackers) return new TrackerRow[0];
 		else return trackers;
 	}
 	

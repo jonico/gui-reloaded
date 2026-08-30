@@ -32,7 +32,7 @@ public class DeleteIdentityMappingsAction extends ActionDelegate {
 
 		String message;
 		String warningMessage = "WARNING:  This operation cannot be undone!";
-		if (statuses.size() == 1) {
+		if (1 == statuses.size()) {
 			message = "Delete identity mappings for " + statuses.get(0) + " project mapping?\n\n" + warningMessage;
 		} else {
 			message = "Delete identity mappings for the " + statuses.size() + " selected project mappings?\n\n" + warningMessage;
@@ -63,7 +63,7 @@ public class DeleteIdentityMappingsAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isDeleteProjectMappingIdentityMappings());
 		}
 	}	

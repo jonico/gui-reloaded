@@ -61,7 +61,7 @@ public class MigrateLandscapeWizardCcfMasterPage extends WizardPage {
 		
 	    for (int i = 0; i < 5; i++) {
 	        String url = settings.get("CCFMaster.url." + i); //$NON-NLS-1$ //$NON-NLS-2$
-	        if (url == null)
+	        if (null == url)
 	          break;
 	        ccfMasterUrlCombo.add(url);
 	    }
@@ -69,7 +69,7 @@ public class MigrateLandscapeWizardCcfMasterPage extends WizardPage {
 	    ccfMasterUrlCombo.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				String user = settings.get("CCFMaster.user." + ccfMasterUrlCombo.getText());
-				if (user != null) {
+				if (null != user) {
 					ccfMasterUserText.setText(user);
 					ccfMasterPasswordText.setFocus();
 					ccfMasterPasswordText.selectAll();
@@ -136,13 +136,13 @@ public class MigrateLandscapeWizardCcfMasterPage extends WizardPage {
 		if (!url.startsWith("http://") && !url.startsWith("https://")) {
 			return false;
 		}
-		if (url.startsWith("http://") && url.length() < 8) {
+		if (url.startsWith("http://") && 8 > url.length()) {
 			return false;
 		}
-		else if (url.startsWith("https://") && url.length() < 9) {
+		else if (url.startsWith("https://") && 9 > url.length()) {
 			return false;
 		}
-		if (ccfMasterUserText.getText().trim().length() == 0 || ccfMasterPasswordText.getText().trim().length() == 0) {
+		if (0 == ccfMasterUserText.getText().trim().length() || 0 == ccfMasterPasswordText.getText().trim().length()) {
 			return false;
 		}
 		return true;

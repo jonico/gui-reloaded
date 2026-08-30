@@ -49,9 +49,9 @@ public class ProjectTrackerMappingSection extends MappingSection {
 		ptGroup.setLayoutData(gd);	
 		
 		if (landscape.getType1().equals("PT") && landscape.getType2().equals("PT")) {
-			if (landscape.getRole() == Landscape.ROLE_ADMINISTRATOR) {
+			if (Landscape.ROLE_ADMINISTRATOR == landscape.getRole()) {
 				String url;
-				if (getSystemNumber() == 1) {
+				if (1 == getSystemNumber()) {
 					url = landscape.getProperties1().getProperty(ProjectTrackerCcfParticipant.PROPERTIES_CEE_URL);
 				} else {
 					url = landscape.getProperties2().getProperty(ProjectTrackerCcfParticipant.PROPERTIES_CEE_URL);
@@ -75,9 +75,9 @@ public class ProjectTrackerMappingSection extends MappingSection {
 		projectBrowseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
 				ProjectTrackerSelectionDialog dialog = new ProjectTrackerSelectionDialog(Display.getDefault().getActiveShell(), landscape, ProjectTrackerSelectionDialog.BROWSER_TYPE_PROJECT, getSystemNumber());
-				if (dialog.open() == ProjectTrackerSelectionDialog.OK) {
+				if (ProjectTrackerSelectionDialog.OK == dialog.open()) {
 					projectText.setText(dialog.getProjectName());
-					if (getProjectPage() != null) {
+					if (null != getProjectPage()) {
 						getProjectPage().setPageComplete();
 					}
 				}
@@ -95,24 +95,24 @@ public class ProjectTrackerMappingSection extends MappingSection {
 		artifactTypeBrowseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
 				ProjectTrackerSelectionDialog dialog = new ProjectTrackerSelectionDialog(Display.getDefault().getActiveShell(), landscape, ProjectTrackerSelectionDialog.BROWSER_TYPE_ARTIFACT_TYPE, getSystemNumber());
-				if (dialog.open() == ProjectTrackerSelectionDialog.OK) {
+				if (ProjectTrackerSelectionDialog.OK == dialog.open()) {
 					projectText.setText(dialog.getProjectName());
 					issueTypeText.setText(dialog.getArtifactType());
-					if (getProjectPage() != null) {
+					if (null != getProjectPage()) {
 						getProjectPage().setPageComplete();
 					}
 				}
 			}			
 		});
 		
-		if (landscape.getRole() == Landscape.ROLE_OPERATOR) {
+		if (Landscape.ROLE_OPERATOR == landscape.getRole()) {
 			projectBrowseButton.setVisible(false);
 			artifactTypeBrowseButton.setVisible(false);
 		}
 
 		ModifyListener modifyListener = new ModifyListener() {
 			public void modifyText(ModifyEvent me) {
-				if (getProjectPage() != null) {
+				if (null != getProjectPage()) {
 					getProjectPage().setPageComplete();
 				}
 			}			
@@ -129,11 +129,11 @@ public class ProjectTrackerMappingSection extends MappingSection {
 	}
 
 	public boolean isPageComplete() {
-		if (projectText == null) {
+		if (null == projectText) {
 			return false;
 		}
-		if (projectText.getText().trim().length() == 0 ||
-			issueTypeText.getText().trim().length() == 0) {
+		if (0 == projectText.getText().trim().length() ||
+			0 == issueTypeText.getText().trim().length()) {
 			return false;
 		}
 		return true;
@@ -145,25 +145,25 @@ public class ProjectTrackerMappingSection extends MappingSection {
 	
 	private String getProject(SynchronizationStatus projectMapping, int type) {
 		String repositoryId;
-		if (type == IMappingSection.TYPE_SOURCE) {
+		if (IMappingSection.TYPE_SOURCE == type) {
 			repositoryId = projectMapping.getSourceRepositoryId();
 		} else {
 			repositoryId = projectMapping.getTargetRepositoryId();
 		}
 		int index = repositoryId.indexOf(":");
-		if (index == -1) return "";
+		if (-1 == index) return "";
 		else return repositoryId.substring(0, index);
 	}
 	
 	private String getIssueType(SynchronizationStatus projectMapping, int type) {
 		String repositoryId;
-		if (type == IMappingSection.TYPE_SOURCE) {
+		if (IMappingSection.TYPE_SOURCE == type) {
 			repositoryId = projectMapping.getSourceRepositoryId();
 		} else {
 			repositoryId = projectMapping.getTargetRepositoryId();
 		}
 		int index = repositoryId.indexOf(":");
-		if (index == -1) return "";
+		if (-1 == index) return "";
 		else return repositoryId.substring(index + 1);
 	}
 

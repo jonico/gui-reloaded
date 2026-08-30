@@ -111,7 +111,7 @@ public class DateUtil {
 		int minutes = cal.get(Calendar.MINUTE);
 		int seconds = cal.get(Calendar.SECOND);
 		int milliseconds = cal.get(Calendar.MILLISECOND);
-		if(hour ==0 && minutes == 0 && seconds == 0 && milliseconds == 0){
+		if(0 ==hour && 0 == minutes && 0 == seconds && 0 == milliseconds){
 			return true;
 		}
 		else {

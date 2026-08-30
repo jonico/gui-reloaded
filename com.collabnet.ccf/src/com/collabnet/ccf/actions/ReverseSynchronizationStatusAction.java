@@ -42,7 +42,7 @@ public class ReverseSynchronizationStatusAction extends ActionDelegate {
 				
 				ProjectMappings projectMappings = status.getProjectMappings();
 				ReverseProjectMappingDialog dialog = new ReverseProjectMappingDialog(Display.getDefault().getActiveShell(), projectMappings, status);
-				if (dialog.open() == ReverseProjectMappingDialog.OK && CcfExplorerView.getView() != null) {
+				if (ReverseProjectMappingDialog.OK == dialog.open() && null != CcfExplorerView.getView()) {
 					Activator.notifyChanged(projectMappings);
 				}
 			}

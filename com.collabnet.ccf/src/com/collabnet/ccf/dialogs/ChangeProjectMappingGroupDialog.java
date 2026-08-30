@@ -74,7 +74,7 @@ public class ChangeProjectMappingGroupDialog extends CcfDialog {
 			public void verifyText(VerifyEvent e) {
 		    	String text = e.text;
 		    	for (int i = 0; i < text.length(); i++) {
-		    		if (text.substring(i, i+1).trim().length() > 0 && !text.substring(i, i+1).matches("\\p{Alnum}+")) {
+		    		if (0 < text.substring(i, i+1).trim().length() && !text.substring(i, i+1).matches("\\p{Alnum}+")) {
 		    			e.doit = false;
 		    			break;
 		    		}
@@ -91,7 +91,7 @@ public class ChangeProjectMappingGroupDialog extends CcfDialog {
 		groupBrowseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {		
 				GroupSelectionDialog dialog = new GroupSelectionDialog(getShell(), database);
-				if (dialog.open() == GroupSelectionDialog.OK) {
+				if (GroupSelectionDialog.OK == dialog.open()) {
 					groupText.setText(dialog.getSelectedGroup());
 				}
 			}			
@@ -104,7 +104,7 @@ public class ChangeProjectMappingGroupDialog extends CcfDialog {
 	
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
 			if (!multipleGroupsSelected) {
 				okButton.setEnabled(false);
@@ -115,7 +115,7 @@ public class ChangeProjectMappingGroupDialog extends CcfDialog {
 	
 	@Override
 	protected void okPressed() {
-		if (multipleGroupsSelected && groupText.getText().trim().length() == 0) {
+		if (multipleGroupsSelected && 0 == groupText.getText().trim().length()) {
 			if (!MessageDialog.openQuestion(getShell(), "Change Project Mapping Group", "Are you sure you want to change all the selected project mappings to have no group?")) {
 				return;
 			}
@@ -137,7 +137,7 @@ public class ChangeProjectMappingGroupDialog extends CcfDialog {
 							dataProvider.updateSynchronizationStatuses(status.getLandscape(), updates, filters);
 						}
 					}
-					if (groupText.getText().trim().length() > 0 && !groupText.getText().trim().equals(currentGroup)) {
+					if (0 < groupText.getText().trim().length() && !groupText.getText().trim().equals(currentGroup)) {
 						if (!dataProvider.groupExists(groupText.getText().trim(), database)) {
 							dataProvider.addGroup(groupText.getText().trim(), database);
 						}
@@ -155,12 +155,12 @@ public class ChangeProjectMappingGroupDialog extends CcfDialog {
 	private String getCurrentGroup() {
 		String currentGroup = null;
 		for (SynchronizationStatus projectMapping : projectMappings) {
-			if (currentGroup != null && (projectMapping.getGroup() == null || !projectMapping.getGroup().equals(currentGroup))) {
+			if (null != currentGroup && (null == projectMapping.getGroup() || !projectMapping.getGroup().equals(currentGroup))) {
 				currentGroup = "(Multiple groups selected)";
 				multipleGroupsSelected = true;
 				break;
 			}
-			if (projectMapping.getGroup() == null) {
+			if (null == projectMapping.getGroup()) {
 				currentGroup = "";
 			} else {
 				currentGroup = projectMapping.getGroup();

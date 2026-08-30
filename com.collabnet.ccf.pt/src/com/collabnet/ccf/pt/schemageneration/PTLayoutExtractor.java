@@ -120,7 +120,7 @@ public class PTLayoutExtractor implements RepositoryLayoutExtractor {
 		StringBuffer documentation = new StringBuffer();
 		documentation.append(displayName + " (" + fieldValueType+ ")\n");
 	
-		if (fieldValues != null) {
+		if (null != fieldValues) {
 			documentation.append(" Values: [");
 			Set<String> sortedValues = new TreeSet<String>();
 			for (Option fieldValue : fieldValues) {
@@ -134,7 +134,7 @@ public class PTLayoutExtractor implements RepositoryLayoutExtractor {
 			for (String fieldValueOption : sortedValues) {
 				documentation.append(" '"+fieldValueOption+ "',");	
 			}
-			if (fieldValues.length == 0) {
+			if (0 == fieldValues.length) {
 				documentation.append("<empty>,");
 			}
 			documentation.deleteCharAt(documentation.length()-1);
@@ -185,7 +185,7 @@ public class PTLayoutExtractor implements RepositoryLayoutExtractor {
 				trackerArtifactType = metadataHelper.getTrackerArtifactType(
 						repositoryKey, artifactTypeDisplayName, twsclient);
 
-				if (trackerArtifactType == null) {
+				if (null == trackerArtifactType) {
 					throw new CCFRuntimeException(
 							"Artifact type for repository "
 									+ repositoryKey
@@ -208,7 +208,7 @@ public class PTLayoutExtractor implements RepositoryLayoutExtractor {
 				for (String attributeName : attributeNames) {
 					TrackerAttribute trackerAttribute = attributeMap
 							.get(attributeName);
-					if (trackerAttribute == null)
+					if (null == trackerAttribute)
 						continue;
 
 					String ptAttributeType = trackerAttribute
@@ -324,7 +324,7 @@ public class PTLayoutExtractor implements RepositoryLayoutExtractor {
 				throw new CCFRuntimeException(message, e);
 			}
 		} finally {
-			if (twsclient != null) {
+			if (null != twsclient) {
 				disconnect(twsclient);
 			}
 		}
@@ -340,10 +340,10 @@ public class PTLayoutExtractor implements RepositoryLayoutExtractor {
 		String password = getPassword();
 
 		String projectName = null;
-		if (repositoryId != null) {
+		if (null != repositoryId) {
 			String[] splitProjectName = repositoryId.split(":");
-			if (splitProjectName != null) {
-				if (splitProjectName.length >= 1) {
+			if (null != splitProjectName) {
+				if (1 <= splitProjectName.length) {
 					projectName = splitProjectName[0];
 				} else {
 					throw new IllegalArgumentException(

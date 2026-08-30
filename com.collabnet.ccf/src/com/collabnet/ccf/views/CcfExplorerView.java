@@ -113,9 +113,9 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 			sortOrder = settings.getInt(PROJECT_MAPPING_SORT_ORDER);
 			sortRepositoryType = settings.get(PROJECT_MAPPING_SORT_ORDER_REPOSITORY_TYPE);
 		} catch (Exception e) {}
-		if (sortOrder == -1) {
+		if (-1 == sortOrder) {
 			sortRepositoryType = Activator.getDefault().getDefaultSortType();
-			if (sortRepositoryType == null) {
+			if (null == sortRepositoryType) {
 				sortOrder = 0;
 			} else {
 				sortOrder = 4;
@@ -139,7 +139,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 		treeViewer.addOpenListener(new IOpenListener() {
 			public void open(OpenEvent se) {
 				IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
-				if (selection != null && selection.size() == 1) {
+				if (null != selection && 1 == selection.size()) {
 					ActionDelegate action = null;
 					if (selection.getFirstElement() instanceof Landscape && activeRole.isEditLandscape()) {
 						action = new EditLandscapeAction();
@@ -149,22 +149,22 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 					}
 					else if (selection.getFirstElement() instanceof SynchronizationStatus) {
 						SynchronizationStatus status = (SynchronizationStatus)selection.getFirstElement();
-						if (status.getLandscape().getRole() == Landscape.ROLE_ADMINISTRATOR && activeRole.isChangeProjectMapping()) {
+						if (Landscape.ROLE_ADMINISTRATOR == status.getLandscape().getRole() && activeRole.isChangeProjectMapping()) {
 							action = new ChangeSynchronizationStatusAction();
 						}
 					}
 					else if (selection.getFirstElement() instanceof Exception) {
 						Exception exception = (Exception)selection.getFirstElement();
 						StringBuffer errorMessage = new StringBuffer("An unexpected error occurred.  Review error log for more details.");
-						if (exception.getLocalizedMessage() != null) {
+						if (null != exception.getLocalizedMessage()) {
 							errorMessage.append("\n\n" + exception.getLocalizedMessage());
 						}
-						if (exception.getCause() != null && exception.getCause().getLocalizedMessage() != null) {
+						if (null != exception.getCause() && null != exception.getCause().getLocalizedMessage()) {
 							errorMessage.append("\n\nCause:\n\n" + exception.getCause().getLocalizedMessage());
 						}
 						MessageDialog.openError(Display.getCurrent().getActiveShell(), "Exception", errorMessage.toString());					
 					}
-					if (action != null) {
+					if (null != action) {
 						action.selectionChanged(null, selection);
 						action.run(null);						
 					}
@@ -180,9 +180,9 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 		DragSourceListener dragSourceListener = new ActiveViewSelectionDragAdapter(treeViewer) {
 			@Override
 			protected boolean isDragable(ISelection selection) {
-				if (selection == null || selection.isEmpty()) return false;
+				if (null == selection || selection.isEmpty()) return false;
 				IStructuredSelection structuredSelection = (IStructuredSelection)selection;
-				if (structuredSelection.size() > 1) return false;
+				if (1 < structuredSelection.size()) return false;
 				Object selectedObject = structuredSelection.getFirstElement();
 				return (selectedObject instanceof Landscape || selectedObject instanceof SynchronizationStatus);
 			}			
@@ -272,7 +272,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
         		Role[] roles = Activator.getDefault().getRoles();
         		for (Role role : roles) {
         			RoleAction roleAction = new RoleAction(role, activeRole != null && role.getName().equals(activeRole.getName()));
-        			if (activeRole != null && role.getName().equals(activeRole.getName())) {
+        			if (null != activeRole && role.getName().equals(activeRole.getName())) {
         				roleAction.setChecked(true);
         			}
         			roleMenu.add(roleAction);
@@ -295,7 +295,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 		manager.add(new Separator());
 		
 		IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
-		if (selection.size() == 1 && selection.getFirstElement() instanceof Landscape) {
+		if (1 == selection.size() && selection.getFirstElement() instanceof Landscape) {
 
 			manager.add(new JmxConsoleAction((Landscape)selection.getFirstElement()));
 			
@@ -328,7 +328,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 	public void refresh(Object object) {
 		Object[] expandedElements = treeViewer.getExpandedElements();
 		
-		if (object == null) {
+		if (null == object) {
 			TreeItem[] items = treeViewer.getTree().getItems();
 			for (TreeItem item : items) {
 				if (item.getData() instanceof Landscape) {
@@ -345,7 +345,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 				if (obj.equals(object)) {
 					treeViewer.refresh(obj);
 				}
-				if (obj instanceof ProjectMappings && object == null) {
+				if (obj instanceof ProjectMappings && null == object) {
 					treeViewer.refresh(obj);
 				}
 			}
@@ -377,12 +377,12 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 	public void dispose() {
 		Activator.removeChangeListener(this);
 		view = null;
-		if (italicFont != null && !italicFont.isDisposed()) italicFont.dispose();
+		if (null != italicFont && !italicFont.isDisposed()) italicFont.dispose();
 		super.dispose();
 	}
 	
 	public CcfDataProvider getDataProvider() {
-		if (dataProvider == null) dataProvider = new CcfDataProvider();
+		if (null == dataProvider) dataProvider = new CcfDataProvider();
 		return dataProvider;
 	}
 	
@@ -396,7 +396,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 	}
 	
 	private Font getItalicFont() {
-		if (italicFont == null) {
+		if (null == italicFont) {
 			Font defaultFont = JFaceResources.getDefaultFont();
 	        FontData[] data = defaultFont.getFontData();
 	        for (int i = 0; i < data.length; i++) {
@@ -429,7 +429,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 		public String getText(Object element) {
 			if (element instanceof Landscape) return ((Landscape) element).getDescription();
 			else if (element instanceof Exception) {
-				if (((Exception)element).getMessage() == null) return super.getText(element);
+				if (null == ((Exception)element).getMessage()) return super.getText(element);
 				else return ((Exception)element).getMessage();
 			}
 			else return super.getText(element);
@@ -438,13 +438,13 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 		public Font getFont(Object obj) {
 			if (obj instanceof SynchronizationStatus) {
 				SynchronizationStatus synchronizationStatus = (SynchronizationStatus)obj;
-				if (synchronizationStatus.getHospitalEntries() > 0) {
+				if (0 < synchronizationStatus.getHospitalEntries()) {
 					return getItalicFont();
 				}
 			}
 			if (obj instanceof MappingGroup) {
 				MappingGroup mappingGroup = (MappingGroup)obj;
-				if (mappingGroup.getHospitalEntries() > 0) {
+				if (0 < mappingGroup.getHospitalEntries()) {
 					return getItalicFont();
 				}
 			}
@@ -475,7 +475,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 			}
 			else if (parentElement instanceof Landscape) {
 				ProjectMappings projectMappings = null;
-				if (((Landscape)parentElement).getRole() == Landscape.ROLE_ADMINISTRATOR) {
+				if (Landscape.ROLE_ADMINISTRATOR == ((Landscape)parentElement).getRole()) {
 					projectMappings = new AdministratorProjectMappings((Landscape)parentElement);
 				} else {
 					projectMappings = new ProjectMappings((Landscape)parentElement);
@@ -494,7 +494,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 						try {
 							synchronizationStatuses = getFilteredSynchronizationStatuses(getDataProvider().getSynchronizationStatuses(projectMappings.getLandscape(), projectMappings));
 							IProjectMappingVisibilityChecker[] visibilityCheckers = Activator.getVisibilityCheckers();
-							if (visibilityCheckers != null && visibilityCheckers.length > 0) {
+							if (null != visibilityCheckers && 0 < visibilityCheckers.length) {
 								List<Object> visibleMappingList = new ArrayList<Object>();
 								List<SynchronizationStatus> hiddenMappingList = new ArrayList<SynchronizationStatus>();
 								for (Object object : synchronizationStatuses) {
@@ -535,22 +535,22 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 					}					
 				});
 				
-				if (synchronizationStatuses.length == 0 || synchronizationStatuses[0] instanceof SynchronizationStatus) {
-					if (ccfComparator != null && ccfComparator.getSortOrder() == SORT_BY_REPOSITORY_TYPE) {
+				if (0 == synchronizationStatuses.length || synchronizationStatuses[0] instanceof SynchronizationStatus) {
+					if (null != ccfComparator && SORT_BY_REPOSITORY_TYPE == ccfComparator.getSortOrder()) {
 						String repositoryType = ccfComparator.getRepositoryType();
-						if (repositoryType != null) {
+						if (null != repositoryType) {
 							if (projectMappings.getLandscape().getType1().equals(repositoryType) || projectMappings.getLandscape().getType2().equals(repositoryType)) {
 								ICcfParticipant participant = null;
 								try {
 									participant = Activator.getCcfParticipantForType(repositoryType);
 								} catch (Exception e) {}
-								if (participant != null) {
+								if (null != participant) {
 									SynchronizationStatus[] projectMappingArray = new SynchronizationStatus[synchronizationStatuses.length];
 									for (int i = 0; i < synchronizationStatuses.length; i++) {
 										projectMappingArray[i] = (SynchronizationStatus)synchronizationStatuses[i];
 									}
 									MappingGroup[] mappingGroups = participant.getMappingGroups(projectMappings, projectMappingArray, hiddenSynchronizationStatuses);
-									if (mappingGroups != null) {
+									if (null != mappingGroups) {
 										synchronizationStatuses = mappingGroups;
 									}
 								}
@@ -594,18 +594,18 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 			boolean showHospitalCount = Activator.getDefault().getPreferenceStore().getBoolean(Activator.PREFERENCES_SHOW_HOSPITAL_COUNT);
 			for (SynchronizationStatus status : statuses) {
 				if (showHospitalCount && hospitalEntriesOnly) {
-					if (status.getHospitalEntries() == 0) continue;
+					if (0 == status.getHospitalEntries()) continue;
 				}
 				if (!isEmpty(sourceRepository)) {
 					if (sourceRepositoryCompare.equals("contains")) {
-						if (status.getSourceRepositoryId().indexOf(sourceRepository) == -1) continue;
+						if (-1 == status.getSourceRepositoryId().indexOf(sourceRepository)) continue;
 					} else {
 						if (!status.getSourceRepositoryId().equals(sourceRepository)) continue;
 					}
 				}
 				if (!isEmpty(targetRepository)) {
 					if (targetRepositoryCompare.equals("contains")) {
-						if (status.getTargetRepositoryId().indexOf(targetRepository) == -1) continue;
+						if (-1 == status.getTargetRepositoryId().indexOf(targetRepository)) continue;
 					} else {
 						if (!status.getTargetRepositoryId().equals(targetRepository)) continue;
 					}
@@ -676,19 +676,19 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 					cmp2 = s2.getTargetRepositoryId() + s2.getSourceRepositoryId();	
 					break;
 				case SORT_BY_GROUP:
-					if (s1.getGroup() == null) {
+					if (null == s1.getGroup()) {
 						cmp1 = "";
 					} else {
 						cmp1 = s1.getGroup();
 					}
-					if (s2.getGroup() == null) {
+					if (null == s2.getGroup()) {
 						cmp2 = "";
 					} else {
 						cmp2 = s2.getGroup();
 					}					
 					break;					
 				case SORT_BY_REPOSITORY_TYPE:
-					if (repositoryType != null) {
+					if (null != repositoryType) {
 						if (s1.getSourceSystemKind().startsWith(repositoryType)) {
 							cmp1 = s1.getSourceRepositoryId() + s1.getTargetRepositoryId();
 						} else {
@@ -760,7 +760,7 @@ public class CcfExplorerView extends ViewPart implements IProjectMappingsChangeL
 			if (isActiveRole) return;
 			if (role.isPasswordRequired()) {
 				RoleLoginDialog dialog = new RoleLoginDialog(Display.getDefault().getActiveShell(), role);
-				if (dialog.open() != RoleLoginDialog.OK) return;
+				if (RoleLoginDialog.OK != dialog.open()) return;
 			}
 			Activator.getDefault().getPreferenceStore().putValue(Activator.PREFERENCES_ACTIVE_ROLE, role.getName());
 			roleChanged(role);

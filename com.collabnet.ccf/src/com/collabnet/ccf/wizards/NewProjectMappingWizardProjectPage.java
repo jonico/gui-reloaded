@@ -40,23 +40,23 @@ public class NewProjectMappingWizardProjectPage extends WizardPage implements IP
 		
 		MappingGroup mappingGroup = ((NewProjectMappingWizard)getWizard()).getMappingGroup();
 		
-		if (ccfParticipant1 != null) {
+		if (null != ccfParticipant1) {
 			mappingSection1 = ccfParticipant1.getMappingSection(1);
-			if (mappingSection1 != null) {
+			if (null != mappingSection1) {
 				mappingSection1.getComposite(outerContainer, projectMappings.getLandscape());
 				mappingSection1.setProjectPage(this);
-				if (mappingGroup != null) {
+				if (null != mappingGroup) {
 					mappingSection1.initializeComposite(mappingGroup);
 				}
 			}
 		}
 		
-		if (ccfParticipant2 != null) {
+		if (null != ccfParticipant2) {
 			mappingSection2 = ccfParticipant2.getMappingSection(2);
-			if (mappingSection2 != null) {
+			if (null != mappingSection2) {
 				mappingSection2.getComposite(outerContainer, projectMappings.getLandscape());
 				mappingSection2.setProjectPage(this);
-				if (mappingGroup != null) {
+				if (null != mappingGroup) {
 					mappingSection2.initializeComposite(mappingGroup);
 				}
 			}
@@ -72,10 +72,10 @@ public class NewProjectMappingWizardProjectPage extends WizardPage implements IP
 	}
 	
 	private boolean canFinish() {
-		if (mappingSection1 != null && !mappingSection1.isPageComplete()) {
+		if (null != mappingSection1 && !mappingSection1.isPageComplete()) {
 			return false;
 		}
-		if (mappingSection2 != null && !mappingSection2.isPageComplete()) {
+		if (null != mappingSection2 && !mappingSection2.isPageComplete()) {
 			return false;
 		}
 		return true;
@@ -85,11 +85,11 @@ public class NewProjectMappingWizardProjectPage extends WizardPage implements IP
 		Landscape landscape = projectMappings.getLandscape();
 		try {
 			ccfParticipant1 = Activator.getCcfParticipantForId(landscape.getParticipantId1());
-			if (ccfParticipant1 == null) {
+			if (null == ccfParticipant1) {
 				ccfParticipant1 = Activator.getCcfParticipantForType(landscape.getType1());
 			}
 			ccfParticipant2 = Activator.getCcfParticipantForId(landscape.getParticipantId2());
-			if (ccfParticipant2 == null) {
+			if (null == ccfParticipant2) {
 				ccfParticipant2 = Activator.getCcfParticipantForType(landscape.getType2());
 			}
 		} catch (Exception e) {

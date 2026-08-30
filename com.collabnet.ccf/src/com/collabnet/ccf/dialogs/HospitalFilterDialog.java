@@ -366,13 +366,13 @@ public class HospitalFilterDialog extends CcfDialog {
 		updateFilterList(filterList, CcfDataProvider.HOSPITAL_DATA_TYPE, true, dataTypeText, dataTypeCombo, settings);	
 		updateFilterList(filterList, CcfDataProvider.HOSPITAL_ARTIFACT_TYPE, true, artifactTypeText, artifactTypeCombo, settings);	
 		updateFilterList(filterList, CcfDataProvider.HOSPITAL_GENERIC_ARTIFACT, true, genericArtifactText, genericArtifactCombo, settings);			
-		if (reprocessedCombo.getText().length() > 0) {
+		if (0 < reprocessedCombo.getText().length()) {
 			Filter filter = new Filter(CcfDataProvider.HOSPITAL_REPROCESSED, reprocessedCombo.getText(), false, Filter.FILTER_TYPE_EQUAL);
 			filterList.add(filter);		
 			settings.put(Filter.HOSPITAL_FILTER_VALUE + CcfDataProvider.HOSPITAL_REPROCESSED, filter.getValue());
 			settings.put(Filter.HOSPITAL_FILTER_TYPE + CcfDataProvider.HOSPITAL_REPROCESSED, filter.getFilterType());
 		}
-		if (fixedCombo.getText().length() > 0) {
+		if (0 < fixedCombo.getText().length()) {
 			Filter filter = new Filter(CcfDataProvider.HOSPITAL_FIXED, fixedCombo.getText(), false, Filter.FILTER_TYPE_EQUAL);
 			filterList.add(filter);			
 			settings.put(Filter.HOSPITAL_FILTER_VALUE + CcfDataProvider.HOSPITAL_FIXED, filter.getValue());
@@ -389,7 +389,7 @@ public class HospitalFilterDialog extends CcfDialog {
 	}
 	
 	private void updateFilterList(List<Filter> filterList, String columnName, boolean stringValue, Text text, Combo combo, IDialogSettings settings) {
-		if (text.getText().trim().length() > 0) {
+		if (0 < text.getText().trim().length()) {
 			int filterType = getFilterType(combo);
 			Filter filter = new Filter(columnName, text.getText().trim(), stringValue, filterType);
 			filterList.add(filter);						
@@ -414,10 +414,10 @@ public class HospitalFilterDialog extends CcfDialog {
 		filtersActiveButton.setSelection(filtersActive);
 		
 		Filter[] filters;
-		if (this.filters == null) filters = null;
+		if (null == this.filters) filters = null;
 		else filters = this.filters[0];
 		
-		if (filters != null) {
+		if (null != filters) {
 			for (int i = 0; i < filters.length; i++) {
 				if (filters[i].getColumnName().equals(CcfDataProvider.HOSPITAL_ERROR_CODE)) {
 					errorCodeText.setText(filters[i].getValue());
@@ -537,7 +537,7 @@ public class HospitalFilterDialog extends CcfDialog {
 	}
 	
 	private void setComboSelection(Combo combo, Filter filter) {
-		if (filter.getFilterType() == Filter.FILTER_TYPE_LIKE) combo.select(1);
+		if (Filter.FILTER_TYPE_LIKE == filter.getFilterType()) combo.select(1);
 		else combo.select(0);
 	}
 

@@ -36,7 +36,7 @@ public class HospitalEditor extends FormEditor {
 		createDetailsPage();
 		try {
 			String activePage = settings.get(HospitalEditorPage.ACTIVE_PAGE);
-			if (activePage != null) {
+			if (null != activePage) {
 				setActivePage(activePage);	
 			}
 		} catch (Exception e) {

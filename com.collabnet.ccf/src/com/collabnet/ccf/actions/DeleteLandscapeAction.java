@@ -29,7 +29,7 @@ public class DeleteLandscapeAction extends ActionDelegate {
 			if (object instanceof Landscape) {
 				Landscape landscape = (Landscape)object;
 				Preferences node = landscape.getNode();
-				if (node != null) {
+				if (null != node) {
 					try {
 						node.removeNode();
 						landscapeDeleted = true;
@@ -39,7 +39,7 @@ public class DeleteLandscapeAction extends ActionDelegate {
 				}
 			}
 		}
-		if (landscapeDeleted && CcfExplorerView.getView() != null) {
+		if (landscapeDeleted && null != CcfExplorerView.getView()) {
 			CcfExplorerView.getView().refresh();
 		}
 	}
@@ -48,7 +48,7 @@ public class DeleteLandscapeAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isDeleteLandscape());
 		}
 	}	

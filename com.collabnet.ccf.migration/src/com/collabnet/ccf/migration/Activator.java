@@ -77,7 +77,7 @@ public class Activator extends AbstractUIPlugin {
 	
 	public IProxyService getProxyService() {
 		IProxyService proxyService = null;
-		if (proxyServiceTracker != null) {
+		if (null != proxyServiceTracker) {
 			proxyService = (IProxyService)proxyServiceTracker.getService();
 		}
 		return proxyService;
@@ -86,14 +86,14 @@ public class Activator extends AbstractUIPlugin {
 	@SuppressWarnings("deprecation")
 	public static Proxy getPlatformProxy(String url) {
 		IProxyService service = getDefault().getProxyService();
-		if (service != null && service.isProxiesEnabled()) {
+		if (null != service && service.isProxiesEnabled()) {
 			String host = Proxy.getDomain(url);
 			IProxyData data = null;
 			if (url.toLowerCase().startsWith("https://")) //$NON-NLS-1$
 				data = service.getProxyDataForHost(host, IProxyData.HTTPS_PROXY_TYPE);
 			else
 				data = service.getProxyDataForHost(host, IProxyData.HTTP_PROXY_TYPE);
-			if (data != null && data.getHost() != null) {
+			if (null != data && null != data.getHost()) {
 				return new Proxy(data.getHost(), data.getPort(), data.isRequiresAuthentication(),
 						data.getUserId(), data.getPassword());
 			}

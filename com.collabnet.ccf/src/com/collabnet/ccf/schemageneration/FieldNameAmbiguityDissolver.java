@@ -56,7 +56,7 @@ public class FieldNameAmbiguityDissolver {
 	 */
 	private static String makeValidElementName(String name) {
 		StringBuffer elementName = new StringBuffer();
-		if (name == null)
+		if (null == name)
 			name = "";
 
 		name = name.trim();
@@ -67,12 +67,12 @@ public class FieldNameAmbiguityDissolver {
 
 		for (i = 0; i < size; i++) {
 			char ch = ncChars[i];
-			if (((i == 0)
-					&& !(Character.isJavaIdentifierStart(ch) && (ch != '$')) && !Character
+			if (((0 == i)
+					&& !(Character.isJavaIdentifierStart(ch) && ('$' != ch)) && !Character
 					.isDigit(ch))
-					|| ((i > 0) && !(Character.isJavaIdentifierPart(ch) && (ch != '$')))) {
+					|| ((0 < i) && !(Character.isJavaIdentifierPart(ch) && ('$' != ch)))) {
 				String replace = getReplacement(ch);
-				if (replace != null) {
+				if (null != replace) {
 					elementName.insert(elementName.length(), replace);
 
 				} else {
@@ -82,10 +82,10 @@ public class FieldNameAmbiguityDissolver {
 				elementName.append(ncChars[i]);
 			}
 		}
-		if ((i > 0) && Character.isDigit(elementName.charAt(0))) {
+		if ((0 < i) && Character.isDigit(elementName.charAt(0))) {
 			elementName.insert(0, "X_");
 		}
-		if ((i > 0) && elementName.charAt(0) == '_') {
+		if ((0 < i) && '_' == elementName.charAt(0)) {
 			elementName.insert(0, "X");
 		}
 		return elementName.toString();

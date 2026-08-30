@@ -76,7 +76,7 @@ public class ProjectMappingFilterDialog extends CcfDialog {
 	@Override
 	protected void okPressed() {
 		settings.put("ProjectMappingFilter.filtersActive", filtersActiveButton.getSelection());
-		if (hospitalEntriesButton == null) settings.put("ProjectMappingFilter.hospitalOnly", false);
+		if (null == hospitalEntriesButton) settings.put("ProjectMappingFilter.hospitalOnly", false);
 		else settings.put("ProjectMappingFilter.hospitalOnly", hospitalEntriesButton.getSelection());
 		settings.put("ProjectMappingFilter.sourceRepository", sourceRepositoryIdText.getText().trim());
 		settings.put("ProjectMappingFilter.sourceRepositoryCompare", sourceRepositoryIdCombo.getText());
@@ -112,12 +112,12 @@ public class ProjectMappingFilterDialog extends CcfDialog {
 			filtersActive = true;
 		}
 		filtersActiveButton.setSelection(filtersActive);
-		if (hospitalEntriesButton != null) hospitalEntriesButton.setSelection(hospitalEntriesOnly);
-		if (sourceRepository != null) sourceRepositoryIdText.setText(sourceRepository);
-		if (sourceRepositoryCompare != null) sourceRepositoryIdCombo.setText(sourceRepositoryCompare);
+		if (null != hospitalEntriesButton) hospitalEntriesButton.setSelection(hospitalEntriesOnly);
+		if (null != sourceRepository) sourceRepositoryIdText.setText(sourceRepository);
+		if (null != sourceRepositoryCompare) sourceRepositoryIdCombo.setText(sourceRepositoryCompare);
 		else sourceRepositoryIdCombo.setText("equals");
-		if (targetRepository != null) targetRepositoryIdText.setText(targetRepository);
-		if (targetRepositoryCompare != null) targetRepositoryIdCombo.setText(targetRepositoryCompare);
+		if (null != targetRepository) targetRepositoryIdText.setText(targetRepository);
+		if (null != targetRepositoryCompare) targetRepositoryIdCombo.setText(targetRepositoryCompare);
 		else targetRepositoryIdCombo.setText("equals");
 	}
 	

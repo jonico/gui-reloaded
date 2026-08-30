@@ -73,19 +73,19 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			m_childIdCol = childIdCol;
 			m_childDisplayCol = childDisplayCol;
 
-			if (m_parentTable == null)
+			if (null == m_parentTable)
 				throw new IllegalArgumentException(
 						"Parent table name for joined field can't be null");
-			if (m_parentCol == null)
+			if (null == m_parentCol)
 				throw new IllegalArgumentException(
 						"Parent column name for joined field can't be null");
-			if (m_childTable == null)
+			if (null == m_childTable)
 				throw new IllegalArgumentException(
 						"Child table name of joined field can't be null");
-			if (m_childIdCol == null)
+			if (null == m_childIdCol)
 				throw new IllegalArgumentException(
 						"ID column of joined field can't be null");
-			if (m_childDisplayCol == null)
+			if (null == m_childDisplayCol)
 				throw new IllegalArgumentException(
 						"Display column of joined field can't be null");
 		}
@@ -133,7 +133,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			+" FROM SYSTEM_FIELD WHERE (SF_TABLE_NAME='BUG' OR SF_TABLE_NAME='REQ') AND SF_REFERENCE_TABLE IS NOT NULL";
 
 		ArrayList<JoinedField> joinedFields = s_JoinedFields;
-		if (s_JoinedFields == null) {
+		if (null == s_JoinedFields) {
 			// we're changing a static member: make sure only 1 thread at a
 			// time
 			joinedFields = new ArrayList<JoinedField>();
@@ -161,7 +161,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 				}
 				s_JoinedFields = joinedFields;
 			} finally {
-				if (rs != null) {
+				if (null != rs) {
 					rs.safeRelease();
 				}
 			}
@@ -175,7 +175,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 		IRecordSet rs = null;
 		try {
 			JoinedField f = getJoinedField(qcc, parentTable, fieldName);
-			if (f == null) {
+			if (null == f) {
 				throw new IllegalArgumentException("Not a joined field: \""
 						+ String.valueOf(parentTable) + "\".\""
 						+ String.valueOf(fieldName) + "\"");
@@ -185,14 +185,14 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 					+ f.childTable();
 			rs = executeSQL(qcc, sql);
 			//String id = rs.getFieldValueAsString(f.childIdCol());
-			if (rs != null)  {
+			if (null != rs)  {
 				int count = rs.getRecordCount();
 				for (int i = 0; i < count; ++i, rs.next()) {
 					result.add(rs.getFieldValueAsString(f.childDisplayCol()));
 				}
 			}
 		} finally {
-			if (rs != null)
+			if (null != rs)
 				rs.safeRelease();
 		}
 		return result;
@@ -223,11 +223,11 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			boolean isDefect, String parentCol, String displayValue) {
 		String parentTable = isDefect ? "BUG" : "REQ";
 		String id = null;
-		if (displayValue != null) {
+		if (null != displayValue) {
 			IRecordSet rs = null;
 			try {
 				JoinedField f = getJoinedField(qcc, parentTable, parentCol);
-				if (f == null) {
+				if (null == f) {
 					throw new IllegalArgumentException("Not a joined field: \""
 							+ String.valueOf(parentTable) + "\".\""
 							+ String.valueOf(parentCol) + "\"");
@@ -239,12 +239,12 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 				rs = executeSQL(qcc, sql);
 				id = rs.getFieldValueAsString(f.childIdCol());
 			} finally {
-				if (rs != null)
+				if (null != rs)
 					rs.safeRelease();
 			}
 		}
 
-		if (id == null) {
+		if (null == id) {
 			String msg = new StringBuilder(
 					"Invalid value for Quality Center field ").append(
 					parentTable).append(".").append(parentCol).append(": ")
@@ -287,11 +287,11 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 	 */
 	static boolean isJoinedField(IConnection qcc, String tableName,
 			String fieldName) {
-		if ("9".equals(qcc.getMajorVersion()) && Integer.parseInt(qcc.getMinorVersion()) <= HIGHEST_KNOWN_QC_9_0_BUILD_NUMBER) {
+		if ("9".equals(qcc.getMajorVersion()) && HIGHEST_KNOWN_QC_9_0_BUILD_NUMBER >= Integer.parseInt(qcc.getMinorVersion())) {
 			return false;
 		}
 		boolean isRField = false;
-		if (fieldName != null && tableName != null) {
+		if (null != fieldName && null != tableName) {
 			JoinedField jf = getJoinedField(qcc, tableName, fieldName);
 			isRField = jf != null;
 		}
@@ -375,10 +375,10 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			String username, String password) {
 		String domain = null;
 		String project = null;
-		if (repositoryId != null) {
+		if (null != repositoryId) {
 			String[] splitRepoId = repositoryId.split(PARAM_DELIMITER);
-			if (splitRepoId != null) {
-				if (splitRepoId.length == 2 || splitRepoId.length == 3) {
+			if (null != splitRepoId) {
+				if (2 == splitRepoId.length || 3 == splitRepoId.length) {
 					domain = splitRepoId[0];
 					project = splitRepoId[1];
 				} else {
@@ -453,7 +453,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 				return getSchemaFieldsForRequirement(qcConnection, technicalReleaseId);
 			}
 		} finally {
-			if (qcConnection != null) {
+			if (null != qcConnection) {
 				closeConnection(qcConnection);
 			}
 			tearDownCOM();
@@ -472,7 +472,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			qcConnection = createConnection(serverUrl, domain + PARAM_DELIMITER + project, userName,
 					password);
 		} finally {
-			if (qcConnection != null) {
+			if (null != qcConnection) {
 				closeConnection(qcConnection);
 			}
 		}
@@ -501,13 +501,13 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 					requirementTypes.add(reqType);
 				}
 			} finally {
-				if (rs != null) {
+				if (null != rs) {
 					rs.safeRelease();
 					rs = null;
 				}
 			}
 		} finally {
-			if (qcConnection != null) {
+			if (null != qcConnection) {
 				closeConnection(qcConnection);
 			}		
 			// tearDownCOM();
@@ -541,7 +541,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 				String columnType = rs.getFieldValueAsString(sfColumnType);
 
 				String fieldDisplayName = rs.getFieldValueAsString(sfUserLabel);
-				if (fieldDisplayName == null) {
+				if (null == fieldDisplayName) {
 					continue;
 				}
 
@@ -568,7 +568,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 					String rootId = rs.getFieldValueAsString(sfRootId);
 					addFieldOptionValue(qcc, rootId, fieldValueOptions);
 
-					if (columnType.equals("char") && editStyle != null
+					if (columnType.equals("char") && null != editStyle
 							&& "Y".equals(isMultiValue)) {
 						if (editStyle.equals("ListCombo")
 								|| editStyle.equals("TreeCombo")
@@ -640,7 +640,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 
 			}
 		} finally {
-			if (rs != null) {
+			if (null != rs) {
 				rs.safeRelease();
 				rs = null;
 			}
@@ -667,12 +667,12 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 	 */
 	public static boolean isDefectRepository(String repositoryId) {
 		String[] splitRepoId = repositoryId.split(PARAM_DELIMITER);
-		if(splitRepoId != null){
+		if(null != splitRepoId){
 			// we now also accept a double hyphen to synchronize requirement types as well
-			if(splitRepoId.length == 2){
+			if(2 == splitRepoId.length){
 				return true;
 			}
-			else if (splitRepoId.length == 3) {
+			else if (3 == splitRepoId.length) {
 				return false;
 			}
 			else {
@@ -685,13 +685,13 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 	private static GenericArtifactField.FieldValueTypeValue convertQCDataTypeToGADatatype(String dataType, String editStyle, String columnName) {
 
 		// TODO: Convert the datatype, editStyle pair to a valid GA type
-		if(dataType.equals("char") && (editStyle==null || ( editStyle!=null && editStyle.equals(""))) )
+		if(dataType.equals("char") && (null==editStyle || ( null!=editStyle && editStyle.equals(""))) )
 			return GenericArtifactField.FieldValueTypeValue.STRING;
-		if(dataType.equals("char") && ( editStyle!=null && editStyle.equals("UserCombo")) )
+		if(dataType.equals("char") && ( null!=editStyle && editStyle.equals("UserCombo")) )
 			return GenericArtifactField.FieldValueTypeValue.USER;
-		if(dataType.equals("char") && ( editStyle!=null && editStyle.equals("DateCombo")) )
+		if(dataType.equals("char") && ( null!=editStyle && editStyle.equals("DateCombo")) )
 			return GenericArtifactField.FieldValueTypeValue.DATE;
-		if(dataType.equals("char") && ( editStyle!=null && editStyle.equals("ListCombo")) ) {
+		if(dataType.equals("char") && ( null!=editStyle && editStyle.equals("ListCombo")) ) {
 			//if(isMultiValue.equals("N"))
 				return GenericArtifactField.FieldValueTypeValue.STRING;
 			//if(isMultiValue.equals("Y")) // MULTI_SELECT_LIST
@@ -699,13 +699,13 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 		}
 		if(dataType.equals("memo"))
 			return GenericArtifactField.FieldValueTypeValue.HTMLSTRING;
-		if(dataType.equals("char") && ( editStyle!=null && editStyle.equals("TreeCombo")) ) {
+		if(dataType.equals("char") && ( null!=editStyle && editStyle.equals("TreeCombo")) ) {
 			//if(isMultiValue.equals("N"))
 				return GenericArtifactField.FieldValueTypeValue.STRING;
 			//if(isMultiValue.equals("Y")) // MULTI_SELECT_LIST
 			//	return GenericArtifactField.FieldValueTypeValue.STRING;
 		}
-		if(dataType.equals("char") && ( editStyle!=null && editStyle.equals("ReqTreeCombo")) ) {
+		if(dataType.equals("char") && ( null!=editStyle && editStyle.equals("ReqTreeCombo")) ) {
 			//if(isMultiValue.equals("N"))
 				return GenericArtifactField.FieldValueTypeValue.STRING;
 			//if(isMultiValue.equals("Y")) // MULTI_SELECT_LIST
@@ -714,9 +714,9 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 
 		if(dataType.equals("number"))
 			return GenericArtifactField.FieldValueTypeValue.INTEGER;
-		if(dataType.equals("DATE") && (editStyle!=null && editStyle.equals("DateCombo")) )
+		if(dataType.equals("DATE") && (null!=editStyle && editStyle.equals("DateCombo")) )
 			return GenericArtifactField.FieldValueTypeValue.DATE;
-		if(dataType.equals("DATE") && editStyle==null)
+		if(dataType.equals("DATE") && null==editStyle)
 			return GenericArtifactField.FieldValueTypeValue.DATE;
 		if(dataType.equals("time"))
 			return GenericArtifactField.FieldValueTypeValue.DATETIME;
@@ -729,7 +729,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			FieldValueTypeValue fieldValueType, List<String> fieldValues) {
 		StringBuffer documentation = new StringBuffer();
 		documentation.append(fieldDisplayName + " (" + fieldValueType + ")\n");
-		if (fieldValues != null && fieldValues.size() != 0) {
+		if (null != fieldValues && 0 != fieldValues.size()) {
 			Collections.sort(fieldValues);
 			documentation.append(" Values: [");
 			for (String fieldValue : fieldValues) {
@@ -765,7 +765,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 
 				String columnType = rs.getFieldValueAsString(sfColumnType);
 				String fieldDisplayName = rs.getFieldValueAsString(sfUserLabel);
-				if (fieldDisplayName == null) {
+				if (null == fieldDisplayName) {
 					continue;
 				}
 				List<String> fieldValueOptions = new ArrayList<String>();
@@ -792,9 +792,9 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 					String isMultiValue = rs
 							.getFieldValueAsString(sfIsMultiValue);
 
-					if (columnType.equals("char") && editStyle != null
-							&& isMultiValue != null
-							&& isMultiValue.trim().length() > 0
+					if (columnType.equals("char") && null != editStyle
+							&& null != isMultiValue
+							&& 0 < isMultiValue.trim().length()
 //							&& !StringUtils.isEmpty(isMultiValue)
 							&& isMultiValue.equals("Y")) {
 						if (editStyle.equals("ListCombo")
@@ -817,10 +817,10 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 				// Only for the Comments field, the action value of the
 				// GenericArtifactField is set to APPEND. Later, this feature
 				// can be upgraded.
-				if (columnName != null && columnName.equals(BG_DEV_COMMENTS))
+				if (null != columnName && columnName.equals(BG_DEV_COMMENTS))
 					field
 							.setFieldAction(GenericArtifactField.FieldActionValue.APPEND);
-				if (columnName != null
+				if (null != columnName
 						&& !(columnName.equals(BG_DEV_COMMENTS)))
 					field
 							.setFieldAction(GenericArtifactField.FieldActionValue.REPLACE);
@@ -852,7 +852,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 				}
 			}
 		} finally {
-			if (rs != null) {
+			if (null != rs) {
 				rs.safeRelease();
 				rs = null;
 			}
@@ -896,7 +896,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			}
 			rsDetails = executeSQL(qcc, detailSQL);
 			int detailRowCount = rsDetails.getRecordCount();
-			if (detailRowCount == 0) {
+			if (0 == detailRowCount) {
 				// No records retrieved, return false
 				return false;
 			}
@@ -911,7 +911,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			// records retrieved, return true
 			return true;
 		} finally {
-			if (rsDetails != null) {
+			if (null != rsDetails) {
 				rsDetails.safeRelease();
 				rsDetails = null;
 			}
@@ -943,12 +943,12 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 	public static String extractTechnicalRequirementsType (String repositoryId, IConnection qcc) {
 		// first lookup the map
 		String requirementsType = repositoryIdToTechnicalRequirementsTypeIdMap.get(repositoryId);
-		if (requirementsType == null) {
+		if (null == requirementsType) {
 			// we have to extract the requirements type now
 			String[] splitRepoId = repositoryId.split(PARAM_DELIMITER);
-			if(splitRepoId != null){
+			if(null != splitRepoId){
 				// we now also accept a double hyphen to synchronize requirement types as well
-				if(splitRepoId.length == 3){
+				if(3 == splitRepoId.length){
 					requirementsType = splitRepoId[2];
 					// now we have to retrieve the technical id for the requirements type
 					String technicalId = getRequirementTypeTechnicalId(qcc, requirementsType);
@@ -973,7 +973,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			rs = executeSQL(qcc,
 					"SELECT TPR_TYPE_ID FROM REQ_TYPE WHERE TPR_NAME = '"
 							+ requirementTypeName + "'");
-			if (rs.getRecordCount() != 1) {
+			if (1 != rs.getRecordCount()) {
 				throw new CCFRuntimeException(
 						"Could not retrieve technical id for requirements type "
 								+ requirementTypeName);
@@ -981,7 +981,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 				return rs.getFieldValueAsString("TPR_TYPE_ID");
 			}
 		} finally {
-			if (rs != null) {
+			if (null != rs) {
 				rs.safeRelease();
 				rs = null;
 			}
@@ -995,7 +995,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			qcConnection = new Connection(getServerUrl(), userName, password);
 			return qcConnection.getUserVisibleDomains();
 		} finally {
-			if (qcConnection != null) {
+			if (null != qcConnection) {
 				closeConnection(qcConnection);
 			}		
 		}
@@ -1008,7 +1008,7 @@ public class QCLayoutExtractor implements RepositoryLayoutExtractor {
 			qcConnection = new Connection(getServerUrl(), userName, password);
 			return qcConnection.getUserVisibleProjects(domain);
 		} finally {
-			if (qcConnection != null) {
+			if (null != qcConnection) {
 				closeConnection(qcConnection);
 			}		
 		}

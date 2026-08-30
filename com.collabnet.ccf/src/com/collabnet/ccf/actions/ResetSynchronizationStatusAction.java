@@ -52,7 +52,7 @@ public class ResetSynchronizationStatusAction extends ActionDelegate {
 		}
 		
 		final ResetProjectMappingDialog dialog = new ResetProjectMappingDialog(Display.getDefault().getActiveShell(), needsPause, showDate, showVersion);
-		if (dialog.open() == ResetProjectMappingDialog.CANCEL) return;
+		if (ResetProjectMappingDialog.CANCEL == dialog.open()) return;
 		
 		final List<ProjectMappings> projectMappingsList = new ArrayList<ProjectMappings>();
 		final CcfDataProvider dataProvider = new CcfDataProvider();
@@ -82,7 +82,7 @@ public class ResetSynchronizationStatusAction extends ActionDelegate {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
 		}
-		if (action != null) {
+		if (null != action) {
 			action.setEnabled(Activator.getDefault().getActiveRole().isResetSynchronizationStatus());
 		}
 	}	

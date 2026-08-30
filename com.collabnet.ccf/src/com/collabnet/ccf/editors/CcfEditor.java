@@ -45,7 +45,7 @@ public class CcfEditor extends FormEditor implements ISaveablePart2 {
         setPartName(input.getName());
 		CcfEditorInput ccfEditorInput = (CcfEditorInput)getEditorInput();
 		landscape = ccfEditorInput.getLandscape();	
-		if (landscape != null && landscape.getRole() == Landscape.ROLE_ADMINISTRATOR) {
+		if (null != landscape && Landscape.ROLE_ADMINISTRATOR == landscape.getRole()) {
 			getMonitors();
 		}
         setTitleImage(Activator.getImage(landscape));
@@ -65,18 +65,18 @@ public class CcfEditor extends FormEditor implements ISaveablePart2 {
 	@Override
 	protected void addPages() {
 		createCcfPage();
-		if (landscape.getRole() == Landscape.ROLE_ADMINISTRATOR) {
+		if (Landscape.ROLE_ADMINISTRATOR == landscape.getRole()) {
 			try {
 				ICcfParticipant ccfParticipant1 = Activator.getCcfParticipantForType(landscape.getType1());
 				page1 = ccfParticipant1.getEditorPage1(this, getEditorInput().getName());
-				if (page1 != null) {
+				if (null != page1) {
 			        int index1 = addPage(page1);
 			        setPageText(index1, ccfParticipant1.getName() + " Properties");
 			        pages.add(page1);
 				}
 				ICcfParticipant ccfParticipant2 = Activator.getCcfParticipantForType(landscape.getType2());
 				page2 = ccfParticipant2.getEditorPage2(this, getEditorInput().getName());
-				if (page2 != null) {
+				if (null != page2) {
 			        int index2 = addPage(page2);
 			        setPageText(index2, ccfParticipant2.getName() + " Properties");
 			        pages.add(page2);
@@ -88,7 +88,7 @@ public class CcfEditor extends FormEditor implements ISaveablePart2 {
 		createMappingsPage();
 		try {
 			String activePage = settings.get(CcfEditorPage.ACTIVE_PAGE);
-			if (activePage != null) {
+			if (null != activePage) {
 				setActivePage(activePage);	
 			}
 		} catch (Exception e) {}
@@ -105,11 +105,11 @@ public class CcfEditor extends FormEditor implements ISaveablePart2 {
 		String oldTimezone1 = landscape.getTimezone1();
 		String oldTimezone2 = landscape.getTimezone2();
 		
-		if (page1 != null) {
+		if (null != page1) {
 			page1.doSave(monitor);
 		}
 		
-		if (page2 != null) {
+		if (null != page2) {
 			page2.doSave(monitor);
 		}
 		
@@ -140,16 +140,16 @@ public class CcfEditor extends FormEditor implements ISaveablePart2 {
 		
 		setDirty();
 		
-		if (CcfExplorerView.getView() != null) {
+		if (null != CcfExplorerView.getView()) {
 			CcfExplorerView.getView().refresh();
 		}
 		
-		if ((monitor1 != null && monitor1.isAlive()) || (monitor2 != null && monitor2.isAlive())) {
+		if ((null != monitor1 && monitor1.isAlive()) || (null != monitor2 && monitor2.isAlive())) {
 			if (MessageDialog.openQuestion(Display.getDefault().getActiveShell(), "Landscape","Changes will take effect when CCF is restarted.\n\nDo you wish to restart now?")) {
-				if (monitor1 != null && monitor1.isAlive()) {
+				if (null != monitor1 && monitor1.isAlive()) {
 					monitor1.restartCCFInstance();
 				}
-				if (monitor2 != null && monitor2.isAlive()) {
+				if (null != monitor2 && monitor2.isAlive()) {
 					monitor2.restartCCFInstance();
 				}
 			}

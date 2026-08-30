@@ -97,7 +97,7 @@ public class DomainProjectSelectionDialog extends CcfDialog {
 		
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
-				if (okButton != null) {
+				if (null != okButton) {
 					okButton.setEnabled(canFinish());
 				}
 			}		
@@ -109,8 +109,8 @@ public class DomainProjectSelectionDialog extends CcfDialog {
             }
         });  
         
-        if (previouslySelectedDomain != null) {
-        	if (type == BROWSER_TYPE_PROJECT) {
+        if (null != previouslySelectedDomain) {
+        	if (BROWSER_TYPE_PROJECT == type) {
         		treeViewer.expandToLevel(previouslySelectedDomain, TreeViewer.ALL_LEVELS);
         		treeViewer.reveal(previouslySelectedDomain);
         	} else {
@@ -118,7 +118,7 @@ public class DomainProjectSelectionDialog extends CcfDialog {
         	}
         }
         
-        if (type == BROWSER_TYPE_PROJECT && previouslySelectedProject != null) {
+        if (BROWSER_TYPE_PROJECT == type && null != previouslySelectedProject) {
         	treeViewer.setSelection(getSelection(previouslySelectedProject));
         }
  
@@ -156,12 +156,12 @@ public class DomainProjectSelectionDialog extends CcfDialog {
 	
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
         Button button = super.createButton(parent, id, label, defaultButton);
-		if (id == IDialogConstants.OK_ID) {
+		if (IDialogConstants.OK_ID == id) {
 			okButton = button;
-			if (type == BROWSER_TYPE_DOMAIN && previouslySelectedDomain == null) {
+			if (BROWSER_TYPE_DOMAIN == type && null == previouslySelectedDomain) {
 				okButton.setEnabled(false);
 			}
-			if (type == BROWSER_TYPE_PROJECT && previouslySelectedProject == null) {
+			if (BROWSER_TYPE_PROJECT == type && null == previouslySelectedProject) {
 				okButton.setEnabled(false);
 			}
 		}
@@ -187,7 +187,7 @@ public class DomainProjectSelectionDialog extends CcfDialog {
 		IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
 		if (selection.isEmpty()) return false;
 		Object firstSelection = selection.getFirstElement();
-		if (type == BROWSER_TYPE_PROJECT) return (firstSelection instanceof Project);
+		if (BROWSER_TYPE_PROJECT == type) return (firstSelection instanceof Project);
 		else return (!(firstSelection instanceof Project));
 	}
 	
@@ -221,7 +221,7 @@ public class DomainProjectSelectionDialog extends CcfDialog {
 					domains = new ArrayList<DomainProjectSelectionDialog.Domain>();
 					for (String qcDomain : domainList) {
 						Domain addDomain = new Domain(qcDomain);
-						if (domain != null && domain.equals(qcDomain)) {
+						if (null != domain && domain.equals(qcDomain)) {
 							previouslySelectedDomain = addDomain;
 						}
 						domains.add(addDomain);
@@ -236,16 +236,16 @@ public class DomainProjectSelectionDialog extends CcfDialog {
 	
 	private List<Project> getProjects(final String domain) {
 		domainProjects = projectMap.get(domain);
-		if (domainProjects == null) {
+		if (null == domainProjects) {
 			BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
 				public void run() {
 					try {
 						List<String> projectList = qcLayoutExtractor.getProjects(domain);
-						if (projectList != null) {
+						if (null != projectList) {
 							domainProjects = new ArrayList<DomainProjectSelectionDialog.Project>();
 							for (String qcProject : projectList) {
 								Project addProject = new Project(domain, qcProject);
-								if (previouslySelectedDomain != null && domain.equals(previouslySelectedDomain.toString()) && project != null && project.equals(qcProject)) {
+								if (null != previouslySelectedDomain && domain.equals(previouslySelectedDomain.toString()) && null != project && project.equals(qcProject)) {
 									previouslySelectedProject = addProject;
 								}
 								domainProjects.add(addProject);
@@ -280,7 +280,7 @@ public class DomainProjectSelectionDialog extends CcfDialog {
 			if (element instanceof Domain) {
 				Domain domain = (Domain)element;
 				domainProjects = getProjects(domain.toString());
-				if (domainProjects != null) {
+				if (null != domainProjects) {
 					return domainProjects.toArray();
 				}
 			}

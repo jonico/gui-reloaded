@@ -34,7 +34,7 @@ public class Proxy {
 	 * @param client
 	 */
 	public void setProxy(HttpClient client) {
-		if (host == null)
+		if (null == host)
 			return;
 		client.getHostConfiguration().setProxy(host, port);
 		if (authRequired) {
@@ -52,7 +52,7 @@ public class Proxy {
 		String result = repositoryUrl;
 		int colonSlashSlash = repositoryUrl.indexOf("://"); //$NON-NLS-1$
 
-		if (colonSlashSlash >= 0) {
+		if (0 <= colonSlashSlash) {
 			result = repositoryUrl.substring(colonSlashSlash + 3);
 		}
 
@@ -62,11 +62,11 @@ public class Proxy {
 		int substringEnd;
 
 		// minimum positive, or string length
-		if (colonPort > 0 && requestPath > 0)
+		if (0 < colonPort && 0 < requestPath)
 			substringEnd = Math.min(colonPort, requestPath);
-		else if (colonPort > 0)
+		else if (0 < colonPort)
 			substringEnd = colonPort;
-		else if (requestPath > 0)
+		else if (0 < requestPath)
 			substringEnd = requestPath;
 		else
 			substringEnd = result.length();

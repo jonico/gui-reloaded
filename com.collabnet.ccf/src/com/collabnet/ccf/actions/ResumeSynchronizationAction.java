@@ -63,13 +63,13 @@ public class ResumeSynchronizationAction extends ActionDelegate {
 	public void selectionChanged(IAction action, ISelection sel) {
 		if (sel instanceof IStructuredSelection) {
 			fSelection= (IStructuredSelection) sel;
-			if (action != null) action.setEnabled(isEnabledForSelection());
+			if (null != action) action.setEnabled(isEnabledForSelection());
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
 	private boolean isEnabledForSelection() {
-		if (fSelection == null || !Activator.getDefault().getActiveRole().isResumeSynchronization()) return false;
+		if (null == fSelection || !Activator.getDefault().getActiveRole().isResumeSynchronization()) return false;
 		Iterator iter = fSelection.iterator();
 		while (iter.hasNext()) {
 			Object object = iter.next();
@@ -90,7 +90,7 @@ public class ResumeSynchronizationAction extends ActionDelegate {
 	
 	private boolean hasPausedMappings(MappingGroup mappingGroup) {
 		SynchronizationStatus[] childMappings = mappingGroup.getChildMappings();
-		if (childMappings != null) {
+		if (null != childMappings) {
 			for (SynchronizationStatus status : childMappings) {
 				if (status.isPaused() && !status.isHiddenMapping()) {
 					return true;
@@ -98,7 +98,7 @@ public class ResumeSynchronizationAction extends ActionDelegate {
 			}
 		}
 		MappingGroup[] childGroups = mappingGroup.getChildGroups();
-		if (childGroups != null) {
+		if (null != childGroups) {
 			for (MappingGroup childGroup : childGroups) {
 				if (hasPausedMappings(childGroup)) {
 					return true;
@@ -110,7 +110,7 @@ public class ResumeSynchronizationAction extends ActionDelegate {
 	
 	private void resumeSynchronization(MappingGroup mappingGroup) throws Exception {
 		SynchronizationStatus[] childMappings = mappingGroup.getChildMappings();
-		if (childMappings != null) {
+		if (null != childMappings) {
 			for (SynchronizationStatus status : childMappings) {
 				if (status.isPaused() && !status.isHiddenMapping()) {
 					dataProvider.resumeSynchronization(status);
@@ -121,7 +121,7 @@ public class ResumeSynchronizationAction extends ActionDelegate {
 			}
 		}
 		MappingGroup[] childGroups = mappingGroup.getChildGroups();
-		if (childGroups != null) {
+		if (null != childGroups) {
 			for (MappingGroup childGroup : childGroups) {
 				resumeSynchronization(childGroup);
 			}

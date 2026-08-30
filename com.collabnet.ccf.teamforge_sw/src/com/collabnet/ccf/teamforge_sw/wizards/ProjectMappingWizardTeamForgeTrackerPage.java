@@ -129,7 +129,7 @@ public class ProjectMappingWizardTeamForgeTrackerPage extends WizardPage {
 					if (event.getSource() == newPbiTrackerButton) {
 						if (newPbiTrackerButton.getSelection()) {
 							pbiViewer.getTable().deselectAll();
-							if (newPbiTrackerText.getText().trim().length() == 0) {
+							if (0 == newPbiTrackerText.getText().trim().length()) {
 								newPbiTrackerText.setFocus();
 							}
 						}
@@ -137,7 +137,7 @@ public class ProjectMappingWizardTeamForgeTrackerPage extends WizardPage {
 					if (event.getSource() == newTaskTrackerButton) {
 						if (newTaskTrackerButton.getSelection()) {
 							taskViewer.getTable().deselectAll();
-							if (newTaskTrackerText.getText().trim().length() == 0) {
+							if (0 == newTaskTrackerText.getText().trim().length()) {
 								newTaskTrackerText.setFocus();
 							}
 						}
@@ -198,13 +198,13 @@ public class ProjectMappingWizardTeamForgeTrackerPage extends WizardPage {
 		if (!newPbiTrackerButton.getSelection() && pbiSelection.isEmpty()) {
 			pageComplete = false;
 		}
-		else if (newPbiTrackerButton.getSelection() && newPbiTrackerText.getText().trim().length() == 0) {
+		else if (newPbiTrackerButton.getSelection() && 0 == newPbiTrackerText.getText().trim().length()) {
 			pageComplete = false;
 		}
 		else if (!newTaskTrackerButton.getSelection() && taskSelection.isEmpty()) {
 			pageComplete = false;
 		}
-		else if (newTaskTrackerButton.getSelection() && newTaskTrackerText.getText().trim().length() == 0) {
+		else if (newTaskTrackerButton.getSelection() && 0 == newTaskTrackerText.getText().trim().length()) {
 			pageComplete = false;
 		}
 		else if (!newPbiTrackerButton.getSelection() && !newTaskTrackerButton.getSelection() && selectedPbiTracker.getId().equals(selectedTaskTracker.getId())) {
@@ -214,20 +214,20 @@ public class ProjectMappingWizardTeamForgeTrackerPage extends WizardPage {
 		else {
 			pageComplete = true;
 		}
-		if (pageComplete && ((ProjectMappingWizard)getWizard()).getSelectedProject() != null) {
+		if (pageComplete && null != ((ProjectMappingWizard)getWizard()).getSelectedProject()) {
 			StringBuffer errorMessage = null;
 			if (newPbiTrackerButton.getSelection() && trackerTitles.contains(newPbiTrackerText.getText().trim())) {
 				errorMessage = new StringBuffer("Tracker " + newPbiTrackerText.getText().trim() + " already exists.");
 			}
 			if (newTaskTrackerButton.getSelection() && trackerTitles.contains(newTaskTrackerText.getText().trim())) {
-				if (errorMessage == null) {
+				if (null == errorMessage) {
 					errorMessage = new StringBuffer();
 				} else {
 					errorMessage.append("\n");
 				}
 				errorMessage.append("Tracker " + newTaskTrackerText.getText().trim() + " already exists.");
 			}
-			if (errorMessage != null) {
+			if (null != errorMessage) {
 				setErrorMessage(errorMessage.toString());
 				pageComplete = false;
 			}
@@ -270,12 +270,12 @@ public class ProjectMappingWizardTeamForgeTrackerPage extends WizardPage {
 		super.setVisible(visible);
 		if (visible) {	
 			String selectedProjectId = null;
-			if (((ProjectMappingWizard)getWizard()).getSelectedProject() != null) {
+			if (null != ((ProjectMappingWizard)getWizard()).getSelectedProject()) {
 				selectedProjectId = ((ProjectMappingWizard)getWizard()).getSelectedProject().getId();
 			}
-			if (projectId == null || !projectId.equals(selectedProjectId)) {
+			if (null == projectId || !projectId.equals(selectedProjectId)) {
 				ProjectRow selectedProject = ((ProjectMappingWizard)getWizard()).getSelectedProject();
-				if (selectedProject == null) {
+				if (null == selectedProject) {
 					projectId = null;
 					trackers = new TrackerRow[0];
 					pbiViewer.refresh();
@@ -332,7 +332,7 @@ public class ProjectMappingWizardTeamForgeTrackerPage extends WizardPage {
 	private TrackerRow[] getTrackers(final String projectId) {
 		getTrackersError = null;
 		trackers = trackerMap.get(projectId);
-		if (trackers == null) {
+		if (null == trackers) {
 			
 			IRunnableWithProgress runnable = new IRunnableWithProgress() {
 				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
@@ -342,7 +342,7 @@ public class ProjectMappingWizardTeamForgeTrackerPage extends WizardPage {
 					monitor.subTask("");
 					try {
 						trackers = ((ProjectMappingWizard)getWizard()).getSoapClient().getAllTrackersOfProject(projectId);
-						if (trackers != null) {
+						if (null != trackers) {
 							trackerMap.put(projectId, trackers);
 						}
 					} catch (RemoteException e) {
@@ -359,7 +359,7 @@ public class ProjectMappingWizardTeamForgeTrackerPage extends WizardPage {
 				Activator.handleError(e);
 				getTrackersError = e;
 			}
-			if (getTrackersError != null) {
+			if (null != getTrackersError) {
 				setErrorMessage("An unexpected error occurred while getting TeamForge trackers.  See error log for details.");
 			}
 
@@ -389,7 +389,7 @@ public class ProjectMappingWizardTeamForgeTrackerPage extends WizardPage {
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		}
 		public Object[] getElements(Object obj) {
-			if (trackers == null) {
+			if (null == trackers) {
 				return new TrackerRow[0];
 			}
 			return trackers;

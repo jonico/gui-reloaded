@@ -88,7 +88,7 @@ public class TrackerArtifactType implements Serializable {
 
 			TrackerAttribute trackerAttribute = new TrackerAttribute(attributeDisplayName, attributeTagName,
 					attributeNamespace, attributeType.getValue());
-			if(attribute.getRequired() != null)
+			if(null != attribute.getRequired())
 				trackerAttribute.setRequired(attribute.getRequired());
 			setReadOnlyAndHidden(trackerAttribute);
 			addAttribute(trackerAttribute);
@@ -160,7 +160,7 @@ public class TrackerArtifactType implements Serializable {
 	public TrackerAttribute getAttribute(String key) {
 
 		TrackerAttribute attribute = attributes.get(key);
-		if (attribute != null)
+		if (null != attribute)
 			return attribute;
 		return null;
 	}
@@ -183,7 +183,7 @@ public class TrackerArtifactType implements Serializable {
 	 * @return
 	 */
 	public String getFuzzyTagName(String tagName) {
-		if(tagName == null)
+		if(null == tagName)
 			return null;
 		for(String testKey : namespaceMap.keySet()){
 			if(testKey.endsWith(tagName))

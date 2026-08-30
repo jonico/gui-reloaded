@@ -378,7 +378,7 @@ public class IdentityMappingFilterDialog extends CcfDialog {
 	}
 	
 	private void updateFilterList(List<Filter> filterList, String columnName, boolean stringValue, Text text, Combo combo, IDialogSettings settings) {
-		if (text.getText().trim().length() > 0) {
+		if (0 < text.getText().trim().length()) {
 			int filterType = getFilterType(combo);
 			Filter filter = new Filter(columnName, text.getText().trim(), stringValue, filterType);
 			filterList.add(filter);						
@@ -403,10 +403,10 @@ public class IdentityMappingFilterDialog extends CcfDialog {
 		filtersActiveButton.setSelection(filtersActive);
 		
 		Filter[] filters;
-		if (this.filters == null) filters = null;
+		if (null == this.filters) filters = null;
 		else filters = this.filters[0];
 		
-		if (filters != null) {
+		if (null != filters) {
 			for (int i = 0; i < filters.length; i++) {
 				if (filters[i].getColumnName().equals(CcfDataProvider.IDENTITY_MAPPING_SOURCE_SYSTEM_ID)) {
 					sourceSystemIdText.setText(filters[i].getValue());
@@ -528,7 +528,7 @@ public class IdentityMappingFilterDialog extends CcfDialog {
 	}
 	
 	private void setComboSelection(Combo combo, Filter filter) {
-		if (filter.getFilterType() == Filter.FILTER_TYPE_LIKE) combo.select(1);
+		if (Filter.FILTER_TYPE_LIKE == filter.getFilterType()) combo.select(1);
 		else combo.select(0);
 	}
 

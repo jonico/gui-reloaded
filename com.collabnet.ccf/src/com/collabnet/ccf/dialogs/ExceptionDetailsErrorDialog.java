@@ -54,7 +54,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
     }
 
     protected void buttonPressed(int id) {
-        if (id == IDialogConstants.DETAILS_ID) {
+        if (IDialogConstants.DETAILS_ID == id) {
             toggleDetailsArea();
         } else {
             super.buttonPressed(id);
@@ -99,18 +99,18 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
         super.createDialogAndButtonArea(parent);
         if (this.dialogArea instanceof Composite) {
             Composite dialogComposite = (Composite) dialogArea;
-            if (dialogComposite.getChildren().length == 0) {
+            if (0 == dialogComposite.getChildren().length) {
 				new Label(dialogComposite, SWT.NULL);
 			}
         }
     }
 
     protected Image getImage() {
-        if (status != null) {
-            if (status.getSeverity() == IStatus.WARNING) {
+        if (null != status) {
+            if (IStatus.WARNING == status.getSeverity()) {
 				return getWarningImage();
 			}
-            if (status.getSeverity() == IStatus.INFO) {
+            if (IStatus.INFO == status.getSeverity()) {
 				return getInfoImage();
 			}
         }
@@ -190,7 +190,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
 	        incrementNesting= true;
        	}
         	
-        if (!isCoreException && t != null) {
+        if (!isCoreException && null != t) {
 	        StringBuffer sb = new StringBuffer();
 	        for (int i = 0; i < nesting; i++) {
 	            sb.append(NESTING_INDENT);
@@ -201,7 +201,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
 			t.printStackTrace(pw );
 			
 	        String message = sw.getBuffer().toString();
-	        if (message == null) {
+	        if (null == message) {
 				message = t.toString();
 			}
 	        	
@@ -217,7 +217,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
         if (isCoreException) {
             CoreException ce = (CoreException)t;
             IStatus eStatus = ce.getStatus();
-            if (message == null || message.indexOf(eStatus.getMessage()) == -1) {
+            if (null == message || -1 == message.indexOf(eStatus.getMessage())) {
                 populateList(listToPopulate, eStatus, nesting, true);
             }
         }
@@ -230,7 +230,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
 
     protected static boolean shouldDisplay(IStatus status, int mask) {
         IStatus[] children = status.getChildren();
-        if (children == null || children.length == 0) {
+        if (null == children || 0 == children.length) {
             return status.matches(mask);
         }
         for (int i = 0; i < children.length; i++) {
@@ -283,7 +283,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
     }
 
     private void copyToClipboard() {
-        if (clipboard != null) {
+        if (null != clipboard) {
 			clipboard.dispose();
 		}
         StringBuffer statusBuffer = new StringBuffer();
@@ -294,7 +294,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
     }
 
     public boolean close() {
-        if (clipboard != null) {
+        if (null != clipboard) {
 			clipboard.dispose();
 		}
         return super.close();
@@ -303,7 +303,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
     protected final void showDetailsArea() {
         if (!listCreated) {
             Control control = getContents();
-            if (control != null && ! control.isDisposed()) {
+            if (null != control && ! control.isDisposed()) {
 				toggleDetailsArea();
 			}
         }
@@ -324,7 +324,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
     }
  
     private void repopulateList() {
-        if (text != null && !text.isDisposed()) {
+        if (null != text && !text.isDisposed()) {
 	        text.setText("");
 	        populateList(text);
         }

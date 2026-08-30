@@ -52,13 +52,13 @@ public class ExaminePayloadAction extends ActionDelegate {
 				IWorkbenchPage page = Activator.getDefault().getWorkbench()
 						.getActiveWorkbenchWindow().getActivePage();
 				final Patient patient = (Patient) object;
-				if (patient.getGenericArtifact() != null
-						&& patient.getGenericArtifact().trim().length() > 0) {
+				if (null != patient.getGenericArtifact()
+						&& 0 < patient.getGenericArtifact().trim().length()) {
 					try {
 						
 						IFile checkFile = Activator.getQuarantinedArtifactFile(patient, false);
 						IEditorInput checkInput = new FileEditorInput(checkFile);
-						if (page.findEditor(checkInput) != null) {
+						if (null != page.findEditor(checkInput)) {
 							// If editor is already open for selected hospital entry, reuse it.
 							quarantineFile = checkFile;
 							input = checkInput;
@@ -73,7 +73,7 @@ public class ExaminePayloadAction extends ActionDelegate {
 								.getDefaultEditor("file.xml");
 
 						String id;
-						if (descriptor == null) {
+						if (null == descriptor) {
 							id = "org.eclipse.ui.DefaultTextEditor"; //$NON-NLS-1$
 						} else {
 							id = descriptor.getId();
@@ -119,8 +119,8 @@ public class ExaminePayloadAction extends ActionDelegate {
 																										.getLandscape(),
 																								updates,
 																								filters);
-																				if (HospitalView
-																						.getView() != null) {
+																				if (null != HospitalView
+																						.getView()) {
 																					HospitalView
 																							.getView()
 																							.refresh();
@@ -178,7 +178,7 @@ public class ExaminePayloadAction extends ActionDelegate {
 	public void selectionChanged(IAction action, ISelection sel) {
 		if (sel instanceof IStructuredSelection) {
 			fSelection = (IStructuredSelection) sel;
-			if (action != null)
+			if (null != action)
 				action.setEnabled(isEnabledForSelection());
 		}
 	}
@@ -198,7 +198,7 @@ public class ExaminePayloadAction extends ActionDelegate {
 
 	@SuppressWarnings("unchecked")
 	private boolean isEnabledForSelection() {
-		if (fSelection == null
+		if (null == fSelection
 				|| !Activator.getDefault().getActiveRole()
 						.isEditQuarantinedArtifact())
 			return false;
@@ -207,8 +207,8 @@ public class ExaminePayloadAction extends ActionDelegate {
 			Object object = iter.next();
 			if (object instanceof Patient) {
 				Patient patient = (Patient) object;
-				if (patient.getGenericArtifact() == null
-						|| patient.getGenericArtifact().trim().length() == 0)
+				if (null == patient.getGenericArtifact()
+						|| 0 == patient.getGenericArtifact().trim().length())
 					return false;
 			}
 		}
@@ -228,7 +228,7 @@ public class ExaminePayloadAction extends ActionDelegate {
 		public void partBroughtToTop(IWorkbenchPartReference partRef) {}
 		public void partClosed(IWorkbenchPartReference partRef) {
 			IWorkbenchPart part = partRef.getPart(true);
-			if (part != null && part.equals(editorPart)) {
+			if (null != part && part.equals(editorPart)) {
 				try {
 					file.delete(true, null);
 				} catch (CoreException e) {

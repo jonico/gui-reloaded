@@ -61,7 +61,7 @@ public class ChangeSynchronizationStatusAction extends ActionDelegate {
 				File reverseTargetRepositorySchemaToGenericArtifactFile = null;
 				File reverseMfdFile = null;
 				
-				if (reverseStatus != null) {
+				if (null != reverseStatus) {
 					reverseXslFile = reverseStatus.getXslFile();
 					reverseGraphicalXslFile = reverseStatus.getGraphicalXslFile();
 					reverseSourceRepositorySchemaFile = reverseStatus.getSourceRepositorySchemaFile();
@@ -76,7 +76,7 @@ public class ChangeSynchronizationStatusAction extends ActionDelegate {
 				final String oldSourceRepositoryId = status.getSourceRepositoryId();
 				final String oldTargetRepositoryId = status.getTargetRepositoryId();
 				final ChangeProjectMappingDialog dialog = new ChangeProjectMappingDialog(Display.getDefault().getActiveShell(), status, reverseStatus);
-				if (dialog.open() == ChangeProjectMappingDialog.CANCEL) return;
+				if (ChangeProjectMappingDialog.CANCEL == dialog.open()) return;
 				if (!projectMappingsList.contains(status.getProjectMappings())) {
 					projectMappingsList.add(status.getProjectMappings());
 				}
@@ -103,7 +103,7 @@ public class ChangeSynchronizationStatusAction extends ActionDelegate {
 					File newReverseTargetRepositorySchemaToGenericArtifactFile = null;
 					File newReverseMfdFile = null;
 					
-					if (reverseStatus != null) {
+					if (null != reverseStatus) {
 						newReverseXslFile = new File(reverseXslFile.getParentFile(), reverseStatus.getXslFileName());
 						newReverseGraphicalXslFile = new File(reverseGraphicalXslFile.getParentFile(), reverseStatus.getGraphicalXslFileName());
 						newReverseSourceRepositorySchemaFile = new File(reverseSourceRepositorySchemaFile.getParentFile(), reverseStatus.getSourceRepositorySchemaFileName());
@@ -115,80 +115,80 @@ public class ChangeSynchronizationStatusAction extends ActionDelegate {
 						newReverseMfdFile = new File(reverseMfdFile.getParentFile(), reverseStatus.getMFDFileName());						
 					}
 	
-					if ((xslFile != null && xslFile.exists() && !newXslFile.exists()) ||
-						(graphicalXslFile != null && graphicalXslFile.exists() && !newGraphicalXslFile.exists()) ||
-						(mfdFile != null && mfdFile.exists() && !newMfdFile.exists()) ||
-						(sourceRepositorySchemaFile != null && sourceRepositorySchemaFile.exists() && !newSourceRepositorySchemaFile.exists()) ||
-						(targetRepositorySchemaFile != null && targetRepositorySchemaFile.exists() && !newTargetRepositorySchemaFile.exists()) ||
-						(genericArtifactToSourceRepositorySchemaFile != null && genericArtifactToSourceRepositorySchemaFile.exists() && !newGenericArtifactToSourceRepositorySchemaFile.exists()) ||					
-						(genericArtifactToTargetRepositorySchemaFile != null && genericArtifactToTargetRepositorySchemaFile.exists() && !newGenericArtifactToTargetRepositorySchemaFile.exists()) ||					
-						(sourceRepositorySchemaToGenericArtifactFile != null && sourceRepositorySchemaToGenericArtifactFile.exists() && !newSourceRepositorySchemaToGenericArtifactFile.exists()) ||			
-						(targetRepositorySchemaToGenericArtifactFile != null && targetRepositorySchemaToGenericArtifactFile.exists() && !newTargetRepositorySchemaToGenericArtifactFile.exists()) ||						
-						(reverseXslFile != null && reverseXslFile.exists() && !newReverseXslFile.exists()) ||
-						(reverseGraphicalXslFile != null && reverseGraphicalXslFile.exists() && !newReverseGraphicalXslFile.exists()) ||
-						(reverseMfdFile != null && reverseMfdFile.exists() && !newReverseMfdFile.exists()) ||
-						(reverseSourceRepositorySchemaFile != null && reverseSourceRepositorySchemaFile.exists() && !newReverseSourceRepositorySchemaFile.exists()) ||
-						(reverseTargetRepositorySchemaFile != null && reverseTargetRepositorySchemaFile.exists() && !newReverseTargetRepositorySchemaFile.exists()) ||
-						(reverseGenericArtifactToSourceRepositorySchemaFile != null && reverseGenericArtifactToSourceRepositorySchemaFile.exists() && !newReverseGenericArtifactToSourceRepositorySchemaFile.exists()) ||					
-						(reverseGenericArtifactToTargetRepositorySchemaFile != null && reverseGenericArtifactToTargetRepositorySchemaFile.exists() && !newReverseGenericArtifactToTargetRepositorySchemaFile.exists()) ||					
-						(reverseSourceRepositorySchemaToGenericArtifactFile != null && reverseSourceRepositorySchemaToGenericArtifactFile.exists() && !newReverseSourceRepositorySchemaToGenericArtifactFile.exists()) ||			
-						(reverseTargetRepositorySchemaToGenericArtifactFile != null && reverseTargetRepositorySchemaToGenericArtifactFile.exists() && !newReverseTargetRepositorySchemaToGenericArtifactFile.exists())) {		
+					if ((null != xslFile && xslFile.exists() && !newXslFile.exists()) ||
+						(null != graphicalXslFile && graphicalXslFile.exists() && !newGraphicalXslFile.exists()) ||
+						(null != mfdFile && mfdFile.exists() && !newMfdFile.exists()) ||
+						(null != sourceRepositorySchemaFile && sourceRepositorySchemaFile.exists() && !newSourceRepositorySchemaFile.exists()) ||
+						(null != targetRepositorySchemaFile && targetRepositorySchemaFile.exists() && !newTargetRepositorySchemaFile.exists()) ||
+						(null != genericArtifactToSourceRepositorySchemaFile && genericArtifactToSourceRepositorySchemaFile.exists() && !newGenericArtifactToSourceRepositorySchemaFile.exists()) ||					
+						(null != genericArtifactToTargetRepositorySchemaFile && genericArtifactToTargetRepositorySchemaFile.exists() && !newGenericArtifactToTargetRepositorySchemaFile.exists()) ||					
+						(null != sourceRepositorySchemaToGenericArtifactFile && sourceRepositorySchemaToGenericArtifactFile.exists() && !newSourceRepositorySchemaToGenericArtifactFile.exists()) ||			
+						(null != targetRepositorySchemaToGenericArtifactFile && targetRepositorySchemaToGenericArtifactFile.exists() && !newTargetRepositorySchemaToGenericArtifactFile.exists()) ||						
+						(null != reverseXslFile && reverseXslFile.exists() && !newReverseXslFile.exists()) ||
+						(null != reverseGraphicalXslFile && reverseGraphicalXslFile.exists() && !newReverseGraphicalXslFile.exists()) ||
+						(null != reverseMfdFile && reverseMfdFile.exists() && !newReverseMfdFile.exists()) ||
+						(null != reverseSourceRepositorySchemaFile && reverseSourceRepositorySchemaFile.exists() && !newReverseSourceRepositorySchemaFile.exists()) ||
+						(null != reverseTargetRepositorySchemaFile && reverseTargetRepositorySchemaFile.exists() && !newReverseTargetRepositorySchemaFile.exists()) ||
+						(null != reverseGenericArtifactToSourceRepositorySchemaFile && reverseGenericArtifactToSourceRepositorySchemaFile.exists() && !newReverseGenericArtifactToSourceRepositorySchemaFile.exists()) ||					
+						(null != reverseGenericArtifactToTargetRepositorySchemaFile && reverseGenericArtifactToTargetRepositorySchemaFile.exists() && !newReverseGenericArtifactToTargetRepositorySchemaFile.exists()) ||					
+						(null != reverseSourceRepositorySchemaToGenericArtifactFile && reverseSourceRepositorySchemaToGenericArtifactFile.exists() && !newReverseSourceRepositorySchemaToGenericArtifactFile.exists()) ||			
+						(null != reverseTargetRepositorySchemaToGenericArtifactFile && reverseTargetRepositorySchemaToGenericArtifactFile.exists() && !newReverseTargetRepositorySchemaToGenericArtifactFile.exists())) {		
 						ProjectMappingRenameDialog renameDialog = new ProjectMappingRenameDialog(Display.getDefault().getActiveShell(), true, true);
 						renameDialog.open();
 						if (renameDialog.isRenameFiles()) {
-							if (xslFile != null && xslFile.exists() && !newXslFile.exists()) {
+							if (null != xslFile && xslFile.exists() && !newXslFile.exists()) {
 								xslFile.renameTo(newXslFile);
 							}
-							if (graphicalXslFile != null && graphicalXslFile.exists() && !newGraphicalXslFile.exists()) {
+							if (null != graphicalXslFile && graphicalXslFile.exists() && !newGraphicalXslFile.exists()) {
 								graphicalXslFile.renameTo(newGraphicalXslFile);
 							}
-							if (mfdFile != null && mfdFile.exists() && !newMfdFile.exists()) {
+							if (null != mfdFile && mfdFile.exists() && !newMfdFile.exists()) {
 								mfdFile.renameTo(newMfdFile);
 							}
-							if (sourceRepositorySchemaFile != null && sourceRepositorySchemaFile.exists() && !newSourceRepositorySchemaFile.exists()) {
+							if (null != sourceRepositorySchemaFile && sourceRepositorySchemaFile.exists() && !newSourceRepositorySchemaFile.exists()) {
 								sourceRepositorySchemaFile.renameTo(newSourceRepositorySchemaFile);
 							}
-							if (targetRepositorySchemaFile != null && targetRepositorySchemaFile.exists() && !newTargetRepositorySchemaFile.exists()) {
+							if (null != targetRepositorySchemaFile && targetRepositorySchemaFile.exists() && !newTargetRepositorySchemaFile.exists()) {
 								targetRepositorySchemaFile.renameTo(newTargetRepositorySchemaFile);
 							}
-							if (genericArtifactToSourceRepositorySchemaFile != null && genericArtifactToSourceRepositorySchemaFile.exists() && !newGenericArtifactToSourceRepositorySchemaFile.exists()) {
+							if (null != genericArtifactToSourceRepositorySchemaFile && genericArtifactToSourceRepositorySchemaFile.exists() && !newGenericArtifactToSourceRepositorySchemaFile.exists()) {
 								genericArtifactToSourceRepositorySchemaFile.renameTo(newGenericArtifactToSourceRepositorySchemaFile);
 							}	
-							if (genericArtifactToTargetRepositorySchemaFile != null && genericArtifactToTargetRepositorySchemaFile.exists() && !newGenericArtifactToTargetRepositorySchemaFile.exists()) {
+							if (null != genericArtifactToTargetRepositorySchemaFile && genericArtifactToTargetRepositorySchemaFile.exists() && !newGenericArtifactToTargetRepositorySchemaFile.exists()) {
 								genericArtifactToTargetRepositorySchemaFile.renameTo(newGenericArtifactToTargetRepositorySchemaFile);
 							}	
-							if (sourceRepositorySchemaToGenericArtifactFile != null && sourceRepositorySchemaToGenericArtifactFile.exists() && !newSourceRepositorySchemaToGenericArtifactFile.exists()) {
+							if (null != sourceRepositorySchemaToGenericArtifactFile && sourceRepositorySchemaToGenericArtifactFile.exists() && !newSourceRepositorySchemaToGenericArtifactFile.exists()) {
 								sourceRepositorySchemaToGenericArtifactFile.renameTo(newSourceRepositorySchemaToGenericArtifactFile);
 							}	
-							if (targetRepositorySchemaToGenericArtifactFile != null && targetRepositorySchemaToGenericArtifactFile.exists() && !newTargetRepositorySchemaToGenericArtifactFile.exists()) {
+							if (null != targetRepositorySchemaToGenericArtifactFile && targetRepositorySchemaToGenericArtifactFile.exists() && !newTargetRepositorySchemaToGenericArtifactFile.exists()) {
 								targetRepositorySchemaToGenericArtifactFile.renameTo(newTargetRepositorySchemaToGenericArtifactFile);
 							}
 							// Rename reverse files
-							if (reverseXslFile != null && reverseXslFile.exists() && !newReverseXslFile.exists()) {
+							if (null != reverseXslFile && reverseXslFile.exists() && !newReverseXslFile.exists()) {
 								reverseXslFile.renameTo(newReverseXslFile);
 							}
-							if (reverseGraphicalXslFile != null && reverseGraphicalXslFile.exists() && !newReverseGraphicalXslFile.exists()) {
+							if (null != reverseGraphicalXslFile && reverseGraphicalXslFile.exists() && !newReverseGraphicalXslFile.exists()) {
 								reverseGraphicalXslFile.renameTo(newReverseGraphicalXslFile);
 							}
-							if (reverseMfdFile != null && reverseMfdFile.exists() && !newReverseMfdFile.exists()) {
+							if (null != reverseMfdFile && reverseMfdFile.exists() && !newReverseMfdFile.exists()) {
 								reverseMfdFile.renameTo(newReverseMfdFile);
 							}
-							if (reverseSourceRepositorySchemaFile != null && reverseSourceRepositorySchemaFile.exists() && !newReverseSourceRepositorySchemaFile.exists()) {
+							if (null != reverseSourceRepositorySchemaFile && reverseSourceRepositorySchemaFile.exists() && !newReverseSourceRepositorySchemaFile.exists()) {
 								reverseSourceRepositorySchemaFile.renameTo(newReverseSourceRepositorySchemaFile);
 							}
-							if (reverseTargetRepositorySchemaFile != null && reverseTargetRepositorySchemaFile.exists() && !newReverseTargetRepositorySchemaFile.exists()) {
+							if (null != reverseTargetRepositorySchemaFile && reverseTargetRepositorySchemaFile.exists() && !newReverseTargetRepositorySchemaFile.exists()) {
 								reverseTargetRepositorySchemaFile.renameTo(newReverseTargetRepositorySchemaFile);
 							}
-							if (reverseGenericArtifactToSourceRepositorySchemaFile != null && reverseGenericArtifactToSourceRepositorySchemaFile.exists() && !newReverseGenericArtifactToSourceRepositorySchemaFile.exists()) {
+							if (null != reverseGenericArtifactToSourceRepositorySchemaFile && reverseGenericArtifactToSourceRepositorySchemaFile.exists() && !newReverseGenericArtifactToSourceRepositorySchemaFile.exists()) {
 								reverseGenericArtifactToSourceRepositorySchemaFile.renameTo(newReverseGenericArtifactToSourceRepositorySchemaFile);
 							}	
-							if (reverseGenericArtifactToTargetRepositorySchemaFile != null && reverseGenericArtifactToTargetRepositorySchemaFile.exists() && !newReverseGenericArtifactToTargetRepositorySchemaFile.exists()) {
+							if (null != reverseGenericArtifactToTargetRepositorySchemaFile && reverseGenericArtifactToTargetRepositorySchemaFile.exists() && !newReverseGenericArtifactToTargetRepositorySchemaFile.exists()) {
 								reverseGenericArtifactToTargetRepositorySchemaFile.renameTo(newReverseGenericArtifactToTargetRepositorySchemaFile);
 							}	
-							if (reverseSourceRepositorySchemaToGenericArtifactFile != null && reverseSourceRepositorySchemaToGenericArtifactFile.exists() && !newReverseSourceRepositorySchemaToGenericArtifactFile.exists()) {
+							if (null != reverseSourceRepositorySchemaToGenericArtifactFile && reverseSourceRepositorySchemaToGenericArtifactFile.exists() && !newReverseSourceRepositorySchemaToGenericArtifactFile.exists()) {
 								reverseSourceRepositorySchemaToGenericArtifactFile.renameTo(newReverseSourceRepositorySchemaToGenericArtifactFile);
 							}	
-							if (reverseTargetRepositorySchemaToGenericArtifactFile != null && reverseTargetRepositorySchemaToGenericArtifactFile.exists() && !newReverseTargetRepositorySchemaToGenericArtifactFile.exists()) {
+							if (null != reverseTargetRepositorySchemaToGenericArtifactFile && reverseTargetRepositorySchemaToGenericArtifactFile.exists() && !newReverseTargetRepositorySchemaToGenericArtifactFile.exists()) {
 								reverseTargetRepositorySchemaToGenericArtifactFile.renameTo(newReverseTargetRepositorySchemaToGenericArtifactFile);
 							}							
 						}	

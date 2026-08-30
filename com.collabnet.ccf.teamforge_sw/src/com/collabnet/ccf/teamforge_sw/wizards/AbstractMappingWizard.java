@@ -38,7 +38,7 @@ public abstract class AbstractMappingWizard extends Wizard {
 	}
 
 	public TFSoapClient getSoapClient() {
-		if (soapClient == null) {
+		if (null == soapClient) {
 			Landscape landscape = projectMapping.getProjectMappings().getLandscape();
 			Properties properties = null;
 			if (landscape.getType1().equals("TF")) {
@@ -46,7 +46,7 @@ public abstract class AbstractMappingWizard extends Wizard {
 			} else {
 				properties = landscape.getProperties2();
 			}
-			if (properties != null) {
+			if (null != properties) {
 				String serverUrl = properties.getProperty(Activator.PROPERTIES_SFEE_URL);
 				String userId = properties.getProperty(Activator.PROPERTIES_SFEE_USER);
 				String password = Activator.decodePassword(properties.getProperty(Activator.PROPERTIES_SFEE_PASSWORD));
@@ -65,7 +65,7 @@ public abstract class AbstractMappingWizard extends Wizard {
 //	}
 	
 	public ScrumWorksAPIService getScrumWorksEndpoint() throws MalformedURLException {
-		if (scrumWorksEndpoint == null) {
+		if (null == scrumWorksEndpoint) {
 			Landscape landscape = projectMapping.getProjectMappings().getLandscape();
 			scrumWorksEndpoint = com.collabnet.ccf.sw.Activator.getScrumWorksEndpoint(landscape);
 		}
@@ -88,9 +88,9 @@ public abstract class AbstractMappingWizard extends Wizard {
 		        projectMapping.getTargetRepositoryId().endsWith("-Release")) {
 				repositoryId = projectMapping.getTargetRepositoryId();
 		}
-		if (repositoryId != null) {
+		if (null != repositoryId) {
 			int index = repositoryId.lastIndexOf("(");
-			if (index == -1) {
+			if (-1 == index) {
 				index = repositoryId.lastIndexOf("-");
 			}
 			String product = repositoryId.substring(0, index);

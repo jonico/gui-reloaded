@@ -125,7 +125,7 @@ public class CCFXSLTSchemaAndXSLTFileGenerator implements CCFSchemaAndXSLTFileGe
 			throw new CCFRuntimeException("Could not load XSLT file " + xsltFile + ": "
 					+ e.getMessage(), e);
 		} finally {
-			if (inputStream != null) {
+			if (null != inputStream) {
 				try {
 					inputStream.close();
 				} catch (IOException e) {}
