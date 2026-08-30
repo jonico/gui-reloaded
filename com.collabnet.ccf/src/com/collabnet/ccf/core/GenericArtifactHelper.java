@@ -537,7 +537,9 @@ public class GenericArtifactHelper {
 	private static List<Element> getAllFieldElements(Element root) {
 		// our XPath-Expression matches only elements, so this conversion is
 		// type-safe
-		List<Element> fieldElements = fieldSelector.selectNodes(root);
+		// dom4j 2.x narrowed XPath.selectNodes() from raw List to List<Node>
+		List<Element> fieldElements = (List<Element>) (List<?>) fieldSelector
+				.selectNodes(root);
 		if (fieldElements == null)
 			return new ArrayList<Element>();
 		else
