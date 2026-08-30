@@ -11,10 +11,12 @@ LICENSE file. However 62 of its 267 source files carry an explicit per-file head
     Copyright 2009 CollabNet, Inc. ("CollabNet")
     Licensed under the Apache License, Version 2.0 (the "License");
 
-The LICENSE file in this repository records that existing declaration. It is not a
-relicensing: no license was chosen for this code, and the copyright remains CollabNet's.
-Source files without such a header are unchanged from upstream and carry no explicit
-license; treat them accordingly.
+The LICENSE file in this repository records that declaration. It is not a relicensing:
+the copyright remains CollabNet's.
+
+The CCF project is Apache-2.0 licensed in its entirety - attested by the project's former
+lead and main contributor, who also owns the upstream repository - so the files that lack a
+per-file header are covered too; the header was simply not restated in every file.
 
 This repository additionally contains vendored third-party binaries inherited unchanged
 from upstream, including proprietary SDKs (Microsoft TFS SDK, ScrumWorks, JACOB). Their
